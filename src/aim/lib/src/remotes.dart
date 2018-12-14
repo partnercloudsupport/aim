@@ -1,0 +1,1 @@
+export 'remote/news.dart';

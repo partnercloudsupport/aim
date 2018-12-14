@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen>{
   int _tabIndex = 0;
 
   // tab items
-  List<BottomNavigationBarItem> _tabItems = <BottomNavigationBarItem>[
+  final List<BottomNavigationBarItem> _tabItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('资讯')),
     BottomNavigationBarItem(icon: Icon(Icons.mail), title: Text('行情')),
     BottomNavigationBarItem(icon: Icon(Icons.list), title: Text('自选')),
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen>{
   ];
 
   // home page tab option widgets
-  List<Widget> _tabWidgets = <Widget>[
+  final List<Widget> _tabWidgets = <Widget>[
     NewsWidget(),
     MarketWidget(),
     SelfChoiceWidget(),

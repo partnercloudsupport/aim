@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ui/screen/home.dart';
+import 'screens.dart' as screens;
 
 
 class AimApp extends StatelessWidget{
@@ -10,7 +10,7 @@ class AimApp extends StatelessWidget{
      *
      */
     return new MaterialApp(
-      home: HomeScreen(),
+      home: screens.HomeScreen(),
     );
   }
 }
