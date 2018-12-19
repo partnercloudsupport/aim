@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import '../reduxs.dart';
 
 class MineWidget extends StatefulWidget {
   @override
@@ -12,7 +14,29 @@ class MineWidget extends StatefulWidget {
 
 class _MineWidgetState extends State<MineWidget> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    var state = StoreProvider.of<AppState>(context).state;
+    print(state);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var state = StoreProvider.of<AppState>(context).state;
+    print(state);
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(

@@ -1,19 +1,17 @@
 import 'dart:core';
 import 'dart:async';
 
-import 'package:dio/dio.dart';
-
 import 'service.dart';
-import '../models.dart' as models;
+import '../models.dart';
 
 
-Future<List<models.NewsCategory>> getNewsCategories() async {
+Future<List<ModelNewsCategory>> getNewsCategories() async {
   String path =  '/news/categories';
   try{
-    List<models.NewsCategory> categories = [];
+    List<ModelNewsCategory> categories = [];
     var result = await aim.get(path);
     for (var item in result){
-      categories.add(models.NewsCategory.fromJson(item));
+      categories.add(ModelNewsCategory.fromJson(item));
     }
     return categories;
   } catch(e) {
@@ -22,13 +20,13 @@ Future<List<models.NewsCategory>> getNewsCategories() async {
 }
 
 
-Future<List<models.NewsItem>> getNewsItems(String category, int page) async {
+Future<List<ModelNewsItem>> getNewsItems(String category, int page) async {
   String path = '/news/list?category=$category&page=$page';
   try{
-    List<models.NewsItem> items = [];
+    List<ModelNewsItem> items = [];
     var result = await aim.get(path);
     for (var item in result){
-      items.add(models.NewsItem.fromJson(item));
+      items.add(ModelNewsItem.fromJson(item));
     }
     return items;
   } catch(e) {
@@ -37,24 +35,12 @@ Future<List<models.NewsItem>> getNewsItems(String category, int page) async {
 }
 
 
-Future<models.NewsDetail> getNewsDetail(String code) async{
+Future<ModelNewsDetail> getNewsDetail(String code) async{
   String path = '/news/detail?code=$code';
   try {
     var result = await aim.get(path);
-    return models.NewsDetail.fromJson(result);
+    return ModelNewsDetail.fromJson(result);
   } catch(e) {
     rethrow;
   }
-}
-
-void main() {
-  print('start');
-  getNewsCategories().then((lst) {
-    print(lst);
-  }).catchError((error){
-    print(error);
-  }).whenComplete((){
-    print('completed');
-  });
-  print('end');
 }

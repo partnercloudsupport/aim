@@ -4,7 +4,7 @@ part 'news.g.dart';
 
 
 @JsonSerializable()
-class NewsCategory {
+class ModelNewsCategory {
   int id;
   String code;
   String name;
@@ -14,15 +14,15 @@ class NewsCategory {
   int ctime;
   int mtime;
 
-  NewsCategory(int id, this.code, this.name, this.brief, this.order, this.disabled, this.ctime, this.mtime);
+  ModelNewsCategory(int id, this.code, this.name, this.brief, this.order, this.disabled, this.ctime, this.mtime);
 
-  factory NewsCategory.fromJson(Map<String, dynamic> json) => _$NewsCategoryFromJson(json);
-  Map<String, dynamic> toJson() => _$NewsCategoryToJson(this);
+  factory ModelNewsCategory.fromJson(Map<String, dynamic> json) => _$ModelNewsCategoryFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelNewsCategoryToJson(this);
 }
 
 
 @JsonSerializable()
-class NewsItem {
+class ModelNewsItem {
   int id;
   String code;
   String title;
@@ -33,15 +33,15 @@ class NewsItem {
   int ctime;
   int mtime;
 
-  NewsItem(this.id, this.code, this.title, this.brief, this.images, this.disabled, this.ptime, this.ctime, this.mtime);
+  ModelNewsItem(this.id, this.code, this.title, this.brief, this.images, this.disabled, this.ptime, this.ctime, this.mtime);
 
-  factory NewsItem.fromJson(Map<String, dynamic> json) => _$NewsItemFromJson(json);
-  Map<String, dynamic> toJson() => _$NewsItemToJson(this);
+  factory ModelNewsItem.fromJson(Map<String, dynamic> json) => _$ModelNewsItemFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelNewsItemToJson(this);
 }
 
 
 @JsonSerializable()
-class NewsDetail {
+class ModelNewsDetail {
   int id;
   String code;
   String title;
@@ -53,8 +53,8 @@ class NewsDetail {
   int ctime;
   int mtime;
 
-  NewsDetail(this.id, this.code, this.title, this.brief, this.body, this.images, this.disabled, this.ptime, this.ctime, this.mtime);
+  ModelNewsDetail(this.id, this.code, this.title, this.brief, this.body, this.images, this.disabled, this.ptime, this.ctime, this.mtime);
 
-  factory NewsDetail.fromJson(Map<String, dynamic> json) => _$NewsDetailFromJson(json);
-  Map<String, dynamic> toJson() => _$NewsDetailToJson(this);
+  factory ModelNewsDetail.fromJson(Map<String, dynamic> json) => _$ModelNewsDetailFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelNewsDetailToJson(this);
 }

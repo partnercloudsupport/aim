@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import 'screens.dart' as screens;
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
+import 'screens.dart';
+import 'reduxs.dart';
 
 
 class AimApp extends StatelessWidget{
+  final Store<AppState> store = Store<AppState>(appReducer, initialState: AppState(), middleware: appMiddleware);
 
   @override
   Widget build(BuildContext context) {
-    /**
-     *
-     */
-    return new MaterialApp(
-      home: screens.HomeScreen(),
+    return StoreProvider(
+      store: store,
+      child: new MaterialApp(
+        home: HomeScreen(),
+      ),
     );
   }
 }

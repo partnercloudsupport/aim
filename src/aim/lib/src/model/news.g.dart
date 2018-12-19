@@ -6,8 +6,8 @@ part of 'news.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NewsCategory _$NewsCategoryFromJson(Map<String, dynamic> json) {
-  return NewsCategory(
+ModelNewsCategory _$ModelNewsCategoryFromJson(Map<String, dynamic> json) {
+  return ModelNewsCategory(
       json['id'] as int,
       json['code'] as String,
       json['name'] as String,
@@ -18,7 +18,7 @@ NewsCategory _$NewsCategoryFromJson(Map<String, dynamic> json) {
       json['mtime'] as int);
 }
 
-Map<String, dynamic> _$NewsCategoryToJson(NewsCategory instance) =>
+Map<String, dynamic> _$ModelNewsCategoryToJson(ModelNewsCategory instance) =>
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
@@ -30,8 +30,8 @@ Map<String, dynamic> _$NewsCategoryToJson(NewsCategory instance) =>
       'mtime': instance.mtime
     };
 
-NewsItem _$NewsItemFromJson(Map<String, dynamic> json) {
-  return NewsItem(
+ModelNewsItem _$ModelNewsItemFromJson(Map<String, dynamic> json) {
+  return ModelNewsItem(
       json['id'] as int,
       json['code'] as String,
       json['title'] as String,
@@ -43,7 +43,8 @@ NewsItem _$NewsItemFromJson(Map<String, dynamic> json) {
       json['mtime'] as int);
 }
 
-Map<String, dynamic> _$NewsItemToJson(NewsItem instance) => <String, dynamic>{
+Map<String, dynamic> _$ModelNewsItemToJson(ModelNewsItem instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'title': instance.title,
@@ -55,8 +56,8 @@ Map<String, dynamic> _$NewsItemToJson(NewsItem instance) => <String, dynamic>{
       'mtime': instance.mtime
     };
 
-NewsDetail _$NewsDetailFromJson(Map<String, dynamic> json) {
-  return NewsDetail(
+ModelNewsDetail _$ModelNewsDetailFromJson(Map<String, dynamic> json) {
+  return ModelNewsDetail(
       json['id'] as int,
       json['code'] as String,
       json['title'] as String,
@@ -69,7 +70,7 @@ NewsDetail _$NewsDetailFromJson(Map<String, dynamic> json) {
       json['mtime'] as int);
 }
 
-Map<String, dynamic> _$NewsDetailToJson(NewsDetail instance) =>
+Map<String, dynamic> _$ModelNewsDetailToJson(ModelNewsDetail instance) =>
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
