@@ -14,5 +14,6 @@ class StateNewsCategories {
 
 
 class StateNewsItems {
-
+  List<ModelNewsItem> items;
+  StateNewsItems({this.items});
 }

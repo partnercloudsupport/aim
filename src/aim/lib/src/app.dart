@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'screens.dart';
 import 'reduxs.dart';
+import 'widget/home.dart';
+
 
 
 class AimApp extends StatelessWidget{
@@ -14,7 +15,9 @@ class AimApp extends StatelessWidget{
     return StoreProvider(
       store: store,
       child: new MaterialApp(
-        home: HomeScreen(),
+        debugShowMaterialGrid: false,
+        showSemanticsDebugger: false,
+        home: HomePage(),
       ),
     );
   }

@@ -4,8 +4,8 @@ import '../state/news.dart';
 import '../action/news.dart';
 
 
-
-final newsReducer = combineReducers<StateNewsCategories>([
+/////////// new categories reducer //////////////
+final newsCategoriesReducer = combineReducers<StateNewsCategories>([
   TypedReducer<StateNewsCategories, ActionLoadNewsCategories>(_loadNewsCategories),
   TypedReducer<StateNewsCategories, ActionLoadNewsCategoriesSucceed>(_loadNewsCategoriesSucceed),
   TypedReducer<StateNewsCategories, ActionLoadNewsCategoriesFailed>(_loadNewsCategoriesFailed),
@@ -27,4 +27,15 @@ StateNewsCategories _loadNewsCategoriesFailed(StateNewsCategories state, ActionL
 
 StateNewsCategories _switchNewsCategories(StateNewsCategories state, ActionSwitchNewsCategories action){
   return StateNewsCategories(status: state.status, selected: action.selected, categories: state.categories);
+}
+
+
+/////////// new items reducer //////////////
+final newsItemsReducer = combineReducers<StateNewsItems>([
+  TypedReducer<StateNewsItems, ActionLoadNewsItemsSucceed>(_loadNewsItemsSucceed),
+
+]);
+
+StateNewsItems _loadNewsItemsSucceed(StateNewsItems state, ActionLoadNewsItemsSucceed action) {
+  return StateNewsItems(items: action.items);
 }

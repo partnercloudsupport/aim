@@ -27,13 +27,14 @@ class ModelNewsItem {
   String code;
   String title;
   String brief;
-  String images;
+  List<String> images;
+  String source;
   int disabled;
   int ptime;
   int ctime;
   int mtime;
 
-  ModelNewsItem(this.id, this.code, this.title, this.brief, this.images, this.disabled, this.ptime, this.ctime, this.mtime);
+  ModelNewsItem(this.id, this.code, this.title, this.brief, this.images, this.source, this.disabled, this.ptime, this.ctime, this.mtime);
 
   factory ModelNewsItem.fromJson(Map<String, dynamic> json) => _$ModelNewsItemFromJson(json);
   Map<String, dynamic> toJson() => _$ModelNewsItemToJson(this);
