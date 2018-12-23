@@ -118,7 +118,7 @@ class _NewsTitleWidget extends StatelessWidget {
         title,
         maxLines: 3,
         style: TextStyle(
-          fontSize: 16.0,
+          fontSize: 18.0,
         ),
         overflow: TextOverflow.ellipsis,
       ),
@@ -133,7 +133,7 @@ class _NewsImageWidget extends StatelessWidget {
   final double height;
   final double width;
 
-  _NewsImageWidget({Key key, @required this.src, this.height, this.width}): super(key: key);
+  _NewsImageWidget({Key key, @required this.src, this.height=95.0, this.width}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

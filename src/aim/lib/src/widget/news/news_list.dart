@@ -20,6 +20,7 @@ class NewsListWidget extends StatefulWidget {
 
 class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveClientMixin {
   final RefreshController _refreshController = RefreshController();
+  bool _isLoading = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -30,17 +31,30 @@ class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveC
       if(up){
         _refreshController.sendBack(up, RefreshStatus.completed);
       } else {
-        TestData.newsItemsList.addAll(TestData.newsItemsList);
-        setState(() {
-
-        });
+        _loadMoreItems();
         _refreshController.sendBack(up, RefreshStatus.canRefresh);
       }
     });
   }
 
   void _onOffsetChange(bool up, double offset) {
-    print('offset: $up, $offset');
+    //print('offset: $up, $offset');
+  }
+
+  void _loadMoreItems() {
+    if(_isLoading){
+      return;
+    }
+    _isLoading = true;
+
+    Future.delayed(Duration(seconds: 3)).then((val){
+      print('load more...');
+      setState(() {
+        List<ModelNewsItem> items = List<ModelNewsItem>.filled(5, TestData.newsItemsList[1]);
+        TestData.newsItemsList.addAll(items);
+        _isLoading = false;
+      });
+    });
   }
 
   Widget _buildHeader(context, mode) {
@@ -80,7 +94,9 @@ class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveC
       child: ListView.builder(
           itemCount: TestData.newsItemsList.length,
           itemBuilder: (context, index) {
-            print('list: $index');
+            if(TestData.newsItemsList.length-index < 5 && !_isLoading){
+              _loadMoreItems();
+            }
             return NewsItemWidget(item: TestData.newsItemsList[index]);
           }
       ),
