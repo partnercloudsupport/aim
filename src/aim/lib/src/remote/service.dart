@@ -26,7 +26,8 @@ class Rpc {
 // remote aim service
 Rpc aim = Rpc(Dio(
     Options(
-      baseUrl: 'http://192.168.10.239:9002',
+      //baseUrl: 'http://192.168.10.239:9002',
+      baseUrl: 'http://10.0.0.7:9002',
       connectTimeout: 5000,
       receiveTimeout: 10000,
     )

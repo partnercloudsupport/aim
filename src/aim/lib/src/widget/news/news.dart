@@ -1,31 +1,55 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
-import '../../reduxs.dart';
-
+import '../../models.dart';
+import '../../remotes.dart' as remotes;
 import 'news_tabs.dart';
 
 
-class NewsPage extends StatelessWidget {
+class NewsPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _NewsPageStage();
+  }
+}
+
+class _NewsPageStage extends State<NewsPage> {
+  // loading status
+  String _status = 'pending';
+  // news categories
+  List<ModelNewsCategory> _categories;
+
+  void _loadCategories() {
+    remotes.getNewsCategories().then((categories){
+      setState(() {
+        _categories = categories;
+      });
+    }).catchError((){
+      setState(() {
+
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // load categories
+    _loadCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, StateNewsCategories>(
-      converter: (store)=>store.state.newsCategories,
-      builder: (context, categories) {
-        // load categories
-        var appstate = StoreProvider.of<AppState>(context);
-        if(categories == null || categories.status != 'succeed') {
-          appstate.dispatch(ActionLoadNewsCategories());
-          return Center(child: CircularProgressIndicator(),);
-        }
+    if (_categories == null){
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
 
-        return DefaultTabController(
-          length: categories.length,
-          initialIndex: categories.selected??=0,
-          child: NewsTabsWidget()
-        );
-      }
+    return DefaultTabController(
+      length: _categories.length,
+      initialIndex: 0,
+      child: NewsTabsWidget(categories: _categories)
     );
   }
 }

@@ -7,44 +7,26 @@ import '../../reduxs.dart';
 import 'news_list.dart';
 
 // news tabs of category
-class NewsTabsWidget extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return NewsTabsWidgetState();
-  }
-}
-
-class NewsTabsWidgetState extends State<NewsTabsWidget> {
-  @override
-  void deactivate() {
-    // save current selected categories
-    var index = DefaultTabController.of(context).index;
-    StoreProvider.of<AppState>(context).dispatch(ActionSwitchNewsCategories(index));
-
-    super.deactivate();
-  }
+class NewsTabsWidget extends StatelessWidget {
+  final List<ModelNewsCategory> categories;
+  NewsTabsWidget({Key key, @required this.categories}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, List<ModelNewsCategory>>(
-        converter: (store)=>store.state.newsCategories.categories,
-        builder: (context, categories) {
-          return Scaffold(
-              appBar: AppBar(
-                title: TabBar(
-                    isScrollable: true,
-                    tabs: categories.map((category) {
-                      return Tab(text: category.name);
-                    }).toList()
-                ),
-              ),
-              body: TabBarView(
-                  children: categories.map((category) {
-                    return NewsListWidget(category: category);
-                  }).toList()
-              )
-          );
-        }
+    return Scaffold(
+        appBar: AppBar(
+          title: TabBar(
+              isScrollable: true,
+              tabs: categories.map((category) {
+                return Tab(text: category.name);
+              }).toList()
+          ),
+        ),
+        body: TabBarView(
+            children: categories.map((category) {
+              return NewsListWidget(category: category);
+            }).toList()
+        )
     );
   }
 }
