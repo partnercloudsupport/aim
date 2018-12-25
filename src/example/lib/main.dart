@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'src/stack.dart';
 import 'src/push_to_refresh.dart';
 import 'src/offstage.dart';
@@ -49,7 +49,7 @@ class HomePageWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           return RaisedButton(
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>_examples[index].widget));
+              Navigator.of(context).push(CupertinoPageRoute(builder: (context)=>_examples[index].widget));
             }, 
             child: Text(_examples[index].name),
             padding: EdgeInsets.all(4.0),

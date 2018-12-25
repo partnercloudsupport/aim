@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
 
 class FlutterHtmlViewExamplePage extends StatefulWidget {
@@ -15,7 +16,7 @@ class FlutterHtmlViewExamplePageState extends State<FlutterHtmlViewExamplePage> 
   @override
   void initState() {
     super.initState();
-    DefaultAssetBundle.of(context).loadString('static/test1.html').then((value){
+    DefaultAssetBundle.of(context).loadString('static/test3.html').then((value){
       setState(() {
         html = value;
       });
@@ -24,23 +25,23 @@ class FlutterHtmlViewExamplePageState extends State<FlutterHtmlViewExamplePage> 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: FlatButton(
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        leading: CupertinoButton(
           onPressed: ()=>Navigator.pop(context),
           child: Icon(
-            Icons.arrow_back,
+            CupertinoIcons.back,
           ),
         ),
-        title: Text('stack example'),
+        middle: Text('stack example'),
       ),
-      body: SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Center(
           child: HtmlView(
             data: html,
             baseURL: "https://images.unsplash.com",
             onLaunchFail: (url){
-              Scaffold.of(context).showSnackBar(SnackBar(content: url));
+              //Scaffold.of(context).showSnackBar(SnackBar(content: url));
             },
           ),
         ),
