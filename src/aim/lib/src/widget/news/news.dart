@@ -14,8 +14,6 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageStage extends State<NewsPage> {
-  // loading status
-  String _status = 'pending';
   // news categories
   List<ModelNewsCategory> _categories;
 

@@ -22,7 +22,7 @@ class NewsItemWidget extends StatelessWidget {
       child: FlatButton(
         padding: EdgeInsets.all(8.0),
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context)=>NewsDetailPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsDetailPage(title: item.title, url: 'https://emwap.eastmoney.com/info/detail/201812251013511436',)));
         },
         child: item.images.length==0 ? _NewsItemWithoutImage(item: item) : item.images.length<3 ? _NewsItemWithOneImage(item: item) : _NewsItemWithThreeImage(item: item)
       ),

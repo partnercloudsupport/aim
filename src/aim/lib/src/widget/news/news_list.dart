@@ -20,7 +20,7 @@ class NewsListWidget extends StatefulWidget {
 
 class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveClientMixin {
   // news items
-  List<ModelNewsItem> _newsItems;
+  List<ModelNewsItem> _newsItems = [];
   // list refresh controller
   ListLoaderController _controller = ListLoaderController();
 
@@ -56,17 +56,13 @@ class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveC
   @override
   void initState() {
     super.initState();
-    _loadMore();
+    Future.delayed(Duration(milliseconds: 100)).then((value){
+      _controller.loadMore();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if(_newsItems == null){
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
     return ListLoaderWidget(
       controller: _controller,
       onRefresh: _refresh,
