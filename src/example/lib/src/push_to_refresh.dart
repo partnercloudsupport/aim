@@ -5,7 +5,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class PushToRefreshExamplePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _PushToRefreshExamplePageState();
   }
 }
@@ -15,7 +14,7 @@ class _PushToRefreshExamplePageState extends State<PushToRefreshExamplePage> {
   List<int> _items = [];
   RefreshController _refreshController = RefreshController();
 
-  bool reverse = false;
+  bool reverse = true;
 
   void _onRefresh(bool up) {
     if (up) {

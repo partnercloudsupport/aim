@@ -6,6 +6,7 @@ import '../../models.dart';
 import '../../config.dart';
 import '../../utils.dart';
 
+import '../widgets.dart';
 import 'news_detail.dart';
 
 // news item of list
@@ -14,6 +15,18 @@ class NewsItemWidget extends StatelessWidget {
 
   NewsItemWidget({Key key, @required this.item}): super(key:key);
 
+  Widget _buildItem() {
+    if (item.images == null || item.images.length==0){
+      return _NewsItemWithoutImage(item: item);
+    } else {
+      if (item.images.length < 3){
+        return _NewsItemWithOneImage(item: item);
+      } else {
+        return _NewsItemWithThreeImage(item: item);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,10 +34,12 @@ class NewsItemWidget extends StatelessWidget {
       margin: EdgeInsets.only(top: 1.0, bottom: 1.0),
       child: FlatButton(
         padding: EdgeInsets.all(8.0),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsDetailPage(title: item.title, url: 'https://emwap.eastmoney.com/info/detail/201812251013511436',)));
+        onPressed: (){
+          push(context, (context){
+            return NewsDetailPage(item: item,);
+          });
         },
-        child: item.images.length==0 ? _NewsItemWithoutImage(item: item) : item.images.length<3 ? _NewsItemWithOneImage(item: item) : _NewsItemWithThreeImage(item: item)
+        child: _buildItem()
       ),
     );
   }

@@ -9,7 +9,7 @@ Future<List<ModelNewsCategory>> getNewsCategories() async {
   String path =  '/news/categories';
   try{
     List<ModelNewsCategory> categories = [];
-    var result = await aim.get(path);
+    var result = await alm.get(path);
     for (var item in result){
       categories.add(ModelNewsCategory.fromJson(item));
     }
@@ -24,7 +24,7 @@ Future<List<ModelNewsItem>> getNewsItems(String category, int page) async {
   String path = '/news/list?category=$category&page=$page';
   try{
     List<ModelNewsItem> items = [];
-    var result = await aim.get(path);
+    var result = await alm.get(path);
     for (var item in result){
       items.add(ModelNewsItem.fromJson(item));
     }
@@ -38,7 +38,7 @@ Future<List<ModelNewsItem>> getNewsItems(String category, int page) async {
 Future<ModelNewsDetail> getNewsDetail(String code) async{
   String path = '/news/detail?code=$code';
   try {
-    var result = await aim.get(path);
+    var result = await alm.get(path);
     return ModelNewsDetail.fromJson(result);
   } catch(e) {
     rethrow;

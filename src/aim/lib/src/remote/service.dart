@@ -33,5 +33,15 @@ Rpc aim = Rpc(Dio(
     )
 ));
 
+// remote alm service
+Rpc alm = Rpc(Dio(
+    Options(
+      //baseUrl: 'http://192.168.10.239:9002',
+      baseUrl: 'http://10.0.0.7:9004',
+      connectTimeout: 5000,
+      receiveTimeout: 10000,
+    )
+));
+
 
 

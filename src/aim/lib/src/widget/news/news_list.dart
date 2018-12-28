@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models.dart';
-import '../../datas.dart';
+import '../../remotes.dart' as remotes;
 
 import '../widgets.dart';
 import 'news_item.dart';
@@ -19,38 +19,42 @@ class NewsListWidget extends StatefulWidget {
 }
 
 class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveClientMixin {
+  // current page
+  int page = 1;
   // news items
   List<ModelNewsItem> _newsItems = [];
   // list refresh controller
   ListLoaderController _controller = ListLoaderController();
 
-  // test flag
-  bool _reversed = true;
-
   @override
   bool get wantKeepAlive => true;
 
   void _refresh() {
-    Future.delayed(Duration(seconds: 1)).then((val){
+    // reset page
+    page = 1;
+    // request data
+    remotes.getNewsItems(widget.category.code, page).then((items){
       setState(() {
-        _newsItems = List<ModelNewsItem>.from(_reversed ? TestData.newsItemsList.reversed : TestData.newsItemsList);
-        _reversed = !_reversed;
+        _newsItems = items;
+        _controller.notifyRefreshCompleted();
       });
-      _controller.notifyRefreshCompleted();
+    }).catchError((error){
+      showError(context, error);
+      _controller.notifyRefreshFailed();
     });
   }
 
   void _loadMore() {
-    Future.delayed(Duration(seconds: 1)).then((val){
+    // request data
+    remotes.getNewsItems(widget.category.code, page).then((items){
       setState(() {
-        if(_newsItems == null){
-          _newsItems = List<ModelNewsItem>.from(TestData.newsItemsList);
-        } else {
-          _newsItems.addAll(TestData.newsItemsList);
-          _controller.notifyHasMoreData();
-        }
+        _newsItems.addAll(items);
+        _controller.notifyHasMoreData();
       });
-    });
+    }).catchError((error){
+      showError(context, error);
+      _controller.notifyLoadMoreFailed();
+    });    
   }
 
   @override

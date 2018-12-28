@@ -22,7 +22,7 @@ class _NewsPageStage extends State<NewsPage> {
       setState(() {
         _categories = categories;
       });
-    }).catchError((){
+    }).catchError((error){
       setState(() {
 
       });

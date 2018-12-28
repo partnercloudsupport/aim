@@ -18,7 +18,7 @@ class NewsTabsWidget extends StatelessWidget {
           title: TabBar(
               isScrollable: true,
               tabs: categories.map((category) {
-                return Tab(text: category.name);
+                return Tab(child: Text(category.name, style: TextStyle(fontSize: 16.0),),);
               }).toList()
           ),
         ),
