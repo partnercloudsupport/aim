@@ -1,9 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import '../../models.dart';
 import '../../remotes.dart' as remotes;
 
+
+final flutterWebViewPlugin = FlutterWebviewPlugin();
+
+class WebViewExamplePage extends StatelessWidget {
+  final String code;
+  WebViewExamplePage({Key key, @required this.code}):super(key:key);
+
+  @override
+  Widget build(BuildContext context) {
+    return WebviewScaffold(
+      url: 'http://10.0.0.7:9004/news/detail/'+code,
+      appBar: AppBar(
+        //title: Text('web view example'),
+        //backgroundColor: Colors.grey,
+        leading: FlatButton(
+          onPressed: ()=>Navigator.pop(context),
+          child: Icon(
+            Icons.arrow_back,
+          ),
+        ),
+      ),
+      withZoom: true,
+      withLocalStorage: true,
+      hidden: false,
+      initialChild: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+}
 
 class NewsDetailPage extends StatefulWidget {
   final ModelNewsItem item;
@@ -133,7 +164,7 @@ class _NewsDetailBodyWidget extends StatelessWidget {
         //renderNewlines: true,
         defaultTextStyle: TextStyle(
             color: Colors.black,
-            fontSize: 14.0
+            fontSize: 16.0
         ),
         onLinkTap: (url) {
           Scaffold.of(context).showSnackBar(SnackBar(content: Text(url)));

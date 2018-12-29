@@ -36,7 +36,7 @@ class NewsItemWidget extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         onPressed: (){
           push(context, (context){
-            return NewsDetailPage(item: item,);
+            return WebViewExamplePage(code:item.code);//NewsDetailPage(item: item,);
           });
         },
         child: _buildItem()

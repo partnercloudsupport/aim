@@ -12,7 +12,7 @@ class WebViewExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-      url: 'https://flutter.io/',
+      url: 'http://10.0.0.7:9004/news/detail/4fhf61mshw8eh',
       appBar: AppBar(
         title: Text('web view example'),
         leading: FlatButton(
