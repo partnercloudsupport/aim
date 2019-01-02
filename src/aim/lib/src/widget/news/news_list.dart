@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models.dart';
-import '../../remotes.dart' as remotes;
+import '../../remotes.dart';
 
 import '../widgets.dart';
 import 'news_item.dart';
@@ -33,7 +33,7 @@ class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveC
     // reset page
     page = 1;
     // request data
-    remotes.getNewsItems(widget.category.code, page).then((items){
+    RpcGetNewsItems.request(data:{'code':widget.category.code, 'page':page}).then((items){
       setState(() {
         _newsItems = items;
         _controller.notifyRefreshCompleted();
@@ -46,7 +46,7 @@ class NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveC
 
   void _loadMore() {
     // request data
-    remotes.getNewsItems(widget.category.code, page).then((items){
+    RpcGetNewsItems.request(data:{'code': widget.category.code, 'page':page}).then((items){
       setState(() {
         _newsItems.addAll(items);
         _controller.notifyHasMoreData();

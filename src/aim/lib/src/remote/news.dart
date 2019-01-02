@@ -1,46 +1,9 @@
 import 'dart:core';
-import 'dart:async';
 
-import 'service.dart';
+import 'rpc.dart';
 import '../models.dart';
 
 
-Future<List<ModelNewsCategory>> getNewsCategories() async {
-  String path =  '/news/categories';
-  try{
-    List<ModelNewsCategory> categories = [];
-    var result = await alm.get(path);
-    for (var item in result){
-      categories.add(ModelNewsCategory.fromJson(item));
-    }
-    return categories;
-  } catch(e) {
-    rethrow;
-  }
-}
-
-
-Future<List<ModelNewsItem>> getNewsItems(String category, int page) async {
-  String path = '/news/list?category=$category&page=$page';
-  try{
-    List<ModelNewsItem> items = [];
-    var result = await alm.get(path);
-    for (var item in result){
-      items.add(ModelNewsItem.fromJson(item));
-    }
-    return items;
-  } catch(e) {
-    rethrow;
-  }
-}
-
-
-Future<ModelNewsDetail> getNewsDetail(String code) async{
-  String path = '/news/detail?code=$code';
-  try {
-    var result = await alm.get(path);
-    return ModelNewsDetail.fromJson(result);
-  } catch(e) {
-    rethrow;
-  }
-}
+var RpcGetNewsCategories = AlmRpc.get(path: '/news/categories', parser: ModelNewsCategories.parse);
+var RpcGetNewsItems = AlmRpc.get(path: '/news/list', parser: ModelNewsItems.parse);
+var RpcGetNewsDetail = AlmRpc.get(path: '/news/detail', parser: ModelNewsDetail.parse);

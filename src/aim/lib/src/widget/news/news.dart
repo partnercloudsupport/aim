@@ -2,52 +2,36 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 import '../../models.dart';
-import '../../remotes.dart' as remotes;
+import '../../remotes.dart';
+
+import '../widgets.dart';
 import 'news_tabs.dart';
 
 
-class NewsPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _NewsPageStage();
-  }
-}
-
-class _NewsPageStage extends State<NewsPage> {
-  // news categories
-  List<ModelNewsCategory> _categories;
-
-  void _loadCategories() {
-    remotes.getNewsCategories().then((categories){
-      setState(() {
-        _categories = categories;
-      });
-    }).catchError((error){
-      setState(() {
-
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // load categories
-    _loadCategories();
-  }
-
+class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (_categories == null){
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
-    return DefaultTabController(
-      length: _categories.length,
-      initialIndex: 0,
-      child: NewsTabsWidget(categories: _categories)
+    return RpcLoadController(
+      rpc: RpcGetNewsCategories,
+      child: (context, model) {
+        return _NewsCategoriesWidget(categories: model.items);
+      }
     );
   }
 }
+
+class _NewsCategoriesWidget extends StatelessWidget {
+  final List<ModelNewsCategory> categories;
+
+  _NewsCategoriesWidget({Key key, @required this.categories}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+        length: categories.length,
+        initialIndex: 0,
+        child: NewsTabsWidget(categories: categories)
+    );;
+  }
+}
+

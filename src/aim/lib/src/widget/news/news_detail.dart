@@ -3,7 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import '../../models.dart';
-import '../../remotes.dart' as remotes;
+import '../../remotes.dart';
 
 
 final flutterWebViewPlugin = FlutterWebviewPlugin();
@@ -53,7 +53,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 100)).then((value) {
-      remotes.getNewsDetail(widget.item.code).then((detail) {
+      RpcGetNewsDetail.request(data:{'code':widget.item.code}).then((detail) {
         setState(() {
           _detail = detail;
         });

@@ -30,6 +30,20 @@ Map<String, dynamic> _$ModelNewsCategoryToJson(ModelNewsCategory instance) =>
       'mtime': instance.mtime
     };
 
+ModelNewsCategories _$ModelNewsCategoriesFromJson(Map<String, dynamic> json) {
+  return ModelNewsCategories(
+      total: json['total'] as int,
+      items: (json['items'] as List)
+          ?.map((e) => e == null
+              ? null
+              : ModelNewsCategory.fromJson(e as Map<String, dynamic>))
+          ?.toList());
+}
+
+Map<String, dynamic> _$ModelNewsCategoriesToJson(
+        ModelNewsCategories instance) =>
+    <String, dynamic>{'total': instance.total, 'items': instance.items};
+
 ModelNewsItem _$ModelNewsItemFromJson(Map<String, dynamic> json) {
   return ModelNewsItem(
       json['id'] as int,
@@ -56,6 +70,24 @@ Map<String, dynamic> _$ModelNewsItemToJson(ModelNewsItem instance) =>
       'ptime': instance.ptime,
       'ctime': instance.ctime,
       'mtime': instance.mtime
+    };
+
+ModelNewsItems _$ModelNewsItemsFromJson(Map<String, dynamic> json) {
+  return ModelNewsItems(
+      json['total'] as int,
+      json['page'] as int,
+      (json['items'] as List)
+          ?.map((e) => e == null
+              ? null
+              : ModelNewsItem.fromJson(e as Map<String, dynamic>))
+          ?.toList());
+}
+
+Map<String, dynamic> _$ModelNewsItemsToJson(ModelNewsItems instance) =>
+    <String, dynamic>{
+      'total': instance.total,
+      'page': instance.page,
+      'items': instance.items
     };
 
 ModelNewsDetail _$ModelNewsDetailFromJson(Map<String, dynamic> json) {

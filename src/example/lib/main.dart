@@ -7,6 +7,8 @@ import 'src/indicator.dart';
 import 'src/webview.dart';
 import 'src/flutter_html_view.dart';
 import 'src/flutter_html.dart';
+import 'src/http_loader.dart';
+import 'src/container.dart';
 
 void main() => runApp(MyExampleApp());
 
@@ -36,6 +38,8 @@ class HomePageWidget extends StatelessWidget {
     Example('WebView', WebViewExamplePage()),
     Example('FlutterHtmlView', FlutterHtmlViewExamplePage()),
     Example('FlutterHtml', FlutterHtmlExamplePage()),
+    Example('HttpLoader', HttpLoaderWidget(url: '')),
+    Example('Container', ContainerExampleWidget()),
   ];
 
   @override
