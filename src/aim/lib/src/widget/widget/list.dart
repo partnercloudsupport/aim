@@ -11,8 +11,11 @@ class PPListWidget extends StatelessWidget {
   final OnLoadMore onLoadMore;
   final ScrollView child;
 
+  final bool enablePullUp;
+  final bool enablePullDown;
 
-  PPListWidget({Key key, @required this.child, this.onRefresh, this.onLoadMore, this.controller}):super(key:key);
+
+  PPListWidget({Key key, @required this.child, this.onRefresh, this.onLoadMore, this.controller, this.enablePullUp:true, this.enablePullDown:true}):super(key:key);
 
   void _onRefresh(bool up) {
     if(up){
@@ -25,7 +28,7 @@ class PPListWidget extends StatelessWidget {
   Widget _buildHeader(BuildContext context, int mode) {
     return ClassicIndicator(
       mode: mode,
-      noDataText: '没有更多数据',
+      noDataText: '没有数据',
       releaseText: '松开刷新数据',
       refreshingText: '数据刷新中...',
       completeText: '刷新完成',
@@ -37,10 +40,10 @@ class PPListWidget extends StatelessWidget {
   Widget _buildFooter(BuildContext context, int mode) {
     return ClassicIndicator(
       mode: mode,
-      noDataText: '没有更多数据',
+      noDataText: '没有数据',
       releaseText: '松开加载数据',
       refreshingText: '数据加载中...',
-      completeText: '加载完成',
+      completeText: '已经是最后一页了',
       failedText: '加载数据失败',
       idleText: '上拉加载',
     );
@@ -49,7 +52,7 @@ class PPListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SmartRefresher(
-      controller: controller.controller,
+      controller: controller==null ? PPListController() : controller,
       enablePullUp: true,
       enablePullDown: true,
       onRefresh: _onRefresh,
@@ -60,38 +63,36 @@ class PPListWidget extends StatelessWidget {
   }
 }
 
-class PPListController {
-  final RefreshController controller = RefreshController();
-
+class PPListController extends RefreshController {
   void refresh() {
-    controller.requestRefresh(true);
+    requestRefresh(true);
   }
 
   void load() {
-    controller.requestRefresh(false);
+    requestRefresh(false);
   }
 
   void notifyRefreshCompleted() {
-    controller.sendBack(true, RefreshStatus.completed);
+    sendBack(true, RefreshStatus.completed);
   }
 
   void notifyRefreshFailed() {
-    controller.sendBack(true, RefreshStatus.failed);
+    sendBack(true, RefreshStatus.failed);
   }
 
   void notifyLoadMoreCompleted() {
-    controller.sendBack(false, RefreshStatus.completed);
+    sendBack(false, RefreshStatus.completed);
   }
 
   void notifyLoadMoreFailed() {
-    controller.sendBack(false, RefreshStatus.failed);
+    sendBack(false, RefreshStatus.failed);
   }
 
   void notifyHasMoreData() {
-    controller.sendBack(false, RefreshStatus.idle);
+    sendBack(false, RefreshStatus.idle);
   }
 
   void notifyNoMoreData() {
-    controller.sendBack(false, RefreshStatus.noMore);
+    sendBack(false, RefreshStatus.noMore);
   }
 }

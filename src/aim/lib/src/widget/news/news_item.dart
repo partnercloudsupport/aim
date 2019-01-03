@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
-
-import '../../models.dart';
-import '../../config.dart';
 import '../../utils.dart';
+import '../../config.dart';
+import '../../models.dart';
+import '../../remotes.dart';
 
 import '../widgets.dart';
-import 'news_detail.dart';
+
 
 // news item of list
 class NewsItemWidget extends StatelessWidget {
@@ -31,17 +30,17 @@ class NewsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: StyleConfig.card,
-      margin: EdgeInsets.only(top: 1.0, bottom: 1.0),
+      margin: EdgeInsets.only(top: 2.0, bottom: 2.0),
       child: FlatButton(
-        padding: EdgeInsets.all(8.0),
-        onPressed: (){
-          push(context, (context){
-            return WebViewExamplePage(code:item.code);//NewsDetailPage(item: item,);
-          });
-        },
-        child: _buildItem()
-      ),
-    );
+          padding: EdgeInsets.all(8.0),
+          onPressed: (){
+            Nav.push(context, (context){
+              return WebViewPage(url:Url.news_detail(item.code));
+            });
+          },
+          child: _buildItem()
+        )
+      );
   }
 }
 
@@ -65,7 +64,7 @@ class _NewsItemWithoutImage extends StatelessWidget {
 class _NewsItemWithOneImage extends StatelessWidget {
   final ModelNewsItem item;
   _NewsItemWithOneImage({Key key, @required this.item}): super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -80,10 +79,10 @@ class _NewsItemWithOneImage extends StatelessWidget {
             ],
           ),
         ),
-        
+
         Expanded(
-          flex: 1, 
-          child: _NewsImageWidget(src: item.images[0])
+            flex: 1,
+            child: _NewsImageWidget(src: item.images[0])
         )
       ],
     );
@@ -104,7 +103,7 @@ class _NewsItemWithThreeImage extends StatelessWidget {
         Row(
           children: <Widget>[
             Expanded(
-              child: _NewsImageWidget(src: item.images[0])
+                child: _NewsImageWidget(src: item.images[0])
             ),
             Expanded(
                 child: _NewsImageWidget(src: item.images[1])
@@ -134,6 +133,7 @@ class _NewsTitleWidget extends StatelessWidget {
         maxLines: 3,
         style: TextStyle(
           fontSize: 18.0,
+          //color: Colors.black
         ),
         overflow: TextOverflow.ellipsis,
       ),

@@ -12,10 +12,11 @@ class ScaffoldPageWidget extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(
       leading: FlatButton(
-      onPressed: ()=>Navigator.pop(context),
-      child: Icon(
-      Icons.arrow_back,
-      ),
+        onPressed: ()=>Navigator.pop(context),
+        child: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.white,
+        ),
       ),
       title: Text(this.title),
       ),

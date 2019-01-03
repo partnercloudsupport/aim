@@ -9,28 +9,26 @@ enum LoadStatus {loading, loaded, failed}
 typedef Widget ItemBuilder(BuildContext context, item);
 
 // rpc loader widget
-class RpcLoadController extends StatefulWidget {
+class WidgetLoadController extends StatefulWidget {
   final Rpc rpc; //rpc service
   final Map params; //rpc request parameters
 
   final ItemBuilder child; //widget build by data item object
 
-  RpcLoadController({@required this.rpc, this.params, @required this.child});
+  WidgetLoadController({@required this.rpc, this.params, @required this.child});
 
   @override
   State<StatefulWidget> createState() {
-    return _RpcLoadControllerState();
+    return _WidgetLoadControllerState();
   }
 }
 
 
-class _RpcLoadControllerState extends State<RpcLoadController> {
+class _WidgetLoadControllerState extends State<WidgetLoadController> {
   LoadStatus _status = LoadStatus.loading;
-
   String _error;
-  dynamic _model;
 
-  _RpcLoadControllerState();
+  dynamic _model;
 
   void _load() {
     if (_status != LoadStatus.loading) {
@@ -97,24 +95,24 @@ class _RpcLoadControllerState extends State<RpcLoadController> {
 }
 
 
-class PagerLoadController extends StatefulWidget {
+class PagingLoadController extends StatefulWidget {
   final Rpc rpc; //rpc service
   Map params = {}; //rpc request parameters
 
   final ItemBuilder itemBuilder; //item widget builder
 
-  PagerLoadController({Key key, @required this.rpc, this.params, @required this.itemBuilder}): super(key: key);
+  PagingLoadController({Key key, @required this.rpc, this.params, @required this.itemBuilder}): super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _PagerLoadControllerState();
+    return _PagingLoadControllerState();
   }
 }
 
 
-class _PagerLoadControllerState extends State<PagerLoadController> {
+class _PagingLoadControllerState extends State<PagingLoadController> with AutomaticKeepAliveClientMixin{
   // pplist controller
-  PPListController _controller;
+  final PPListController _controller = PPListController();
   // page list items
   List<dynamic> _items = [];
   // current page
@@ -125,9 +123,14 @@ class _PagerLoadControllerState extends State<PagerLoadController> {
     var params = Map.of(widget.params);
     params['page'] = _page;
     widget.rpc.request(data: params).then((model){
-
+      if(model.items.length > 0) {
+        setState(() {
+          _items.addAll(model.items);
+        });
+      }
+      _controller.notifyRefreshCompleted();
     }).catchError((error){
-
+      _controller.notifyRefreshFailed();
     });
   }
 
@@ -136,11 +139,26 @@ class _PagerLoadControllerState extends State<PagerLoadController> {
     var params = Map.of(widget.params);
     params['page'] = _page;
     widget.rpc.request(data: params).then((model){
+      if(model.items.length > 0){
+        setState(() {
+          _items.addAll(model.items);
+        });
 
+        if(_page < model.total){
+          _controller.notifyHasMoreData();
+        } else{
+          _controller.notifyLoadMoreCompleted();
+        }
+      } else {
+        _controller.notifyLoadMoreCompleted();
+      }
     }).catchError((error){
-
+      _controller.notifyLoadMoreFailed();
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {

@@ -18,6 +18,7 @@ class AimApp extends StatelessWidget{
         debugShowMaterialGrid: false,
         showSemanticsDebugger: false,
         home: HomePage(),
+        theme: ThemeData.light(),
       ),
     );
   }
