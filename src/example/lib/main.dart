@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'theme.dart';
-
 import 'src/stack.dart';
 import 'src/push_to_refresh.dart';
 import 'src/offstage.dart';
@@ -13,6 +12,8 @@ import 'src/flutter_html.dart';
 import 'src/http_loader.dart';
 import 'src/container.dart';
 import 'src/button.dart';
+import 'src/card.dart';
+
 
 void main() => runApp(MyExampleApp());
 
@@ -23,7 +24,7 @@ class MyExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePageWidget(),
-      theme: ThemeData.light().copyWith(platform: TargetPlatform.android)
+      theme: AimTheme.theme1
     );
   }
 }
@@ -45,7 +46,8 @@ class HomePageWidget extends StatelessWidget {
     Example('FlutterHtml', FlutterHtmlExamplePage()),
     Example('HttpLoader', HttpLoaderWidget(url: '')),
     Example('Container', ContainerExampleWidget()),
-    Example('Button', ButtonExampleWidget(),)
+    Example('Button', ButtonExampleWidget(),),
+    Example('Card', CardExamples()),
   ];
 
   @override
