@@ -3,7 +3,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'reduxs.dart';
-import 'widget/home.dart';
+import 'view/home.dart';
 
 
 

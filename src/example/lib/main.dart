@@ -13,6 +13,7 @@ import 'src/http_loader.dart';
 import 'src/container.dart';
 import 'src/button.dart';
 import 'src/card.dart';
+import 'src/aim/widgets.dart';
 
 
 void main() => runApp(MyExampleApp());
@@ -48,6 +49,7 @@ class HomePageWidget extends StatelessWidget {
     Example('Container', ContainerExampleWidget()),
     Example('Button', ButtonExampleWidget(),),
     Example('Card', CardExamples()),
+    Example('Aim', AimExamples()),
   ];
 
   @override
