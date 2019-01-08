@@ -32,7 +32,7 @@ class NewsItemWidget extends StatelessWidget {
       color: StyleConfig.card,
       margin: EdgeInsets.only(top: 2.0, bottom: 2.0),
       child: FlatButton(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(0.0),
           onPressed: (){
             Nav.push(context, (context){
               return WebViewPage(url:Url.news_detail(item.code));
@@ -53,7 +53,7 @@ class _NewsItemWithoutImage extends StatelessWidget {
     return Container(
       height: 110.0,
       color: Colors.white,
-      margin: EdgeInsets.only(bottom: 2.0),
+      margin: EdgeInsets.only(top: 1.0, bottom: 2.0),
       padding: EdgeInsets.all(5.0),
       child: Container(
         //height: 110.0,
@@ -113,7 +113,7 @@ class _NewsItemWithOneImage extends StatelessWidget {
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
-      margin: EdgeInsets.only(bottom: 2.0),
+      margin: EdgeInsets.only(top:1.0, bottom: 1.0),
       padding: EdgeInsets.all(5.0),
       child: Container(
         //height: 120.0,
@@ -196,7 +196,7 @@ class _NewsItemWithThreeImage extends StatelessWidget {
       //height: 180.0,
       color: Colors.white,
       alignment: Alignment.center,
-      margin: EdgeInsets.only(bottom: 2.0),
+      margin: EdgeInsets.only(top:1.0, bottom: 1.0),
       padding: EdgeInsets.all(5.0),
       child: Column(
         children: <Widget>[
