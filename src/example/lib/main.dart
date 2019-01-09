@@ -14,7 +14,8 @@ import 'src/container.dart';
 import 'src/button.dart';
 import 'src/card.dart';
 import 'src/aim/widgets.dart';
-
+import 'src/chip.dart';
+import 'src/divider.dart';
 
 void main() => runApp(MyExampleApp());
 
@@ -38,6 +39,8 @@ class Example {
 
 class HomePageWidget extends StatelessWidget {
   List<Example> _examples = [
+    Example('Divider', DividerExampleWidget()),
+    Example('Chip', ChipExampleWidget()),
     Example('Stack', StackExamplePage()),
     Example('PullToRefresh', PushToRefreshExamplePage()),
     Example('OffStage', OffstageExamplePage()),

@@ -19,7 +19,7 @@ class ScaffoldPageWidget extends StatelessWidget{
       ),
       title: Text(this.title),
       ),
-      body:this.child
+      body: this.child
     );
   }
 }
