@@ -9,22 +9,22 @@ enum LoadStatus {loading, loaded, failed}
 typedef Widget ItemBuilder(BuildContext context, item);
 
 // rpc loader widget
-class WidgetLoadController extends StatefulWidget {
+class RpcLoadController extends StatefulWidget {
   final Rpc rpc; //rpc service
   final Map params; //rpc request parameters
 
   final ItemBuilder child; //widget build by data item object
 
-  WidgetLoadController({@required this.rpc, this.params, @required this.child});
+  RpcLoadController({@required this.rpc, this.params, @required this.child});
 
   @override
   State<StatefulWidget> createState() {
-    return _WidgetLoadControllerState();
+    return _RpcLoadControllerState();
   }
 }
 
 
-class _WidgetLoadControllerState extends State<WidgetLoadController> {
+class _RpcLoadControllerState extends State<RpcLoadController> {
   LoadStatus _status = LoadStatus.loading;
   String _error;
 

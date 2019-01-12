@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import 'reduxs.dart';
 import 'view/home.dart';
+import 'view/theme.dart';
 
 
 
@@ -18,7 +19,7 @@ class AimApp extends StatelessWidget{
         debugShowMaterialGrid: false,
         showSemanticsDebugger: false,
         home: HomePage(),
-        theme: ThemeData.light(),
+        theme: AimTheme.theme,
       ),
     );
   }

@@ -54,8 +54,8 @@ class Rpc {
 
 
 class AlmRpc extends Rpc {
-  AlmRpc(String method, String path, [Parser parser]): super(method: method, baseurl: Service.ALM, path:path, parser:parser);
+  AlmRpc(String method, String path, [Parser parser]): super(method: method, baseurl: BaseUrl.ALM, path:path, parser:parser);
 
-  AlmRpc.get({String path, Parser parser}):super(method:'GET', baseurl:Service.ALM, path:path, parser:parser);
-  AlmRpc.post({String path, Parser parser}):super(method:'POST', baseurl:Service.ALM, path:path, parser:parser);
+  AlmRpc.get({String path, Parser parser}):super(method:'GET', baseurl:BaseUrl.ALM, path:path, parser:parser);
+  AlmRpc.post({String path, Parser parser}):super(method:'POST', baseurl:BaseUrl.ALM, path:path, parser:parser);
 }

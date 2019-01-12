@@ -6,10 +6,10 @@ import '../widgets.dart';
 import 'news_tabs.dart';
 
 
-class NewsPage extends StatelessWidget {
+class NewsHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WidgetLoadController(
+    return RpcLoadController(
       rpc: RpcGetNewsCategories,
       child: (context, model) {
         return NewsTabsWidget(categories: model.items);
