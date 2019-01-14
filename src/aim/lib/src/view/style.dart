@@ -21,28 +21,6 @@ class AimFontWeight {
 
 // 文本样式
 class AimTextStyle {
-  // 列表列名
-  final listTitle = TextStyle(
-    color: Colors.grey,
-    fontWeight: AimFontWeight.bold,
-    fontSize: AimFontSize.normal
-  );
-
-  // 股票名称
-  final stockName = TextStyle(
-    color: Colors.black,
-    fontWeight: AimFontWeight.bold,
-    fontSize: AimFontSize.normal
-  );
-
-  // 股票代码
-  final stockCode = TextStyle(
-    color: Colors.grey,
-    fontWeight: AimFontWeight.thin,
-    fontSize: AimFontSize.medium
-  );
-
-
   final largeBold = TextStyle(
     fontSize: AimFontSize.large,
     fontWeight: AimFontWeight.bold,
@@ -101,5 +79,47 @@ class AimTextStyle {
   final smallThin = TextStyle(
     fontSize: AimFontSize.small,
     fontWeight: AimFontWeight.thin,
+  );
+
+  // 列表列名
+  final listTitle = TextStyle(
+      color: Colors.grey,
+      fontWeight: AimFontWeight.bold,
+      fontSize: AimFontSize.normal
+  );
+
+  // 股票名称
+  final stockName = TextStyle(
+      color: Colors.black,
+      fontWeight: AimFontWeight.bold,
+      fontSize: AimFontSize.normal
+  );
+
+  // 股票代码
+  final stockCode = TextStyle(
+      color: Colors.grey,
+      fontWeight: AimFontWeight.thin,
+      fontSize: AimFontSize.medium
+  );
+
+  // 新闻标题
+  final newsTitle = TextStyle(
+    color: Colors.black,
+    fontSize: AimFontSize.large,
+    fontWeight: AimFontWeight.regular
+  );
+
+  // 新闻简介
+  final newsBrief = TextStyle(
+    color: Colors.black,
+    fontSize: AimFontSize.large,
+    fontWeight: AimFontWeight.regular
+  );
+
+  // 新闻来源
+  final newsSource = TextStyle(
+    color: Colors.grey,
+    fontSize: AimFontSize.small,
+    fontWeight: AimFontWeight.thin
   );
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import 'theme.dart';
 import 'src/stack.dart';
@@ -17,17 +19,26 @@ import 'src/aim/widgets.dart';
 import 'src/chip.dart';
 import 'src/divider.dart';
 import 'src/material/examples.dart';
+import 'src/redux/state.dart';
+import 'src/redux/reducer.dart';
+import 'src/redux/middleware.dart';
+import 'src/redux/view/examples.dart';
 
 void main() => runApp(MyExampleApp());
 
 
 class MyExampleApp extends StatelessWidget {
 
+  final Store<AppState> store = Store<AppState>(appReducer, initialState: AppState(), middleware: appMiddleware);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePageWidget(),
-      theme: AimTheme.theme1
+    return StoreProvider<AppState>(
+      store: this.store,
+      child: MaterialApp(
+          home: HomePageWidget(),
+          theme: AimTheme.theme1
+      ),
     );
   }
 }
@@ -42,6 +53,7 @@ class HomePageWidget extends StatelessWidget {
   List<Example> _examples = [
     Example('Aim', AimExamples()),
     Example('Material', MaterialExamples()),
+    Example('Redux', ReduxExamples()),
     Example('Divider', DividerExampleWidget()),
     Example('Chip', ChipExampleWidget()),
     Example('Stack', StackExamplePage()),
