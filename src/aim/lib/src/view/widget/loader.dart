@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../redux/state/const.dart';
 import '../../remotes.dart' show Rpc;
-import 'list.dart';
 
 // load status for loader
 enum LoadStatus {loading, loaded, failed}
@@ -95,91 +95,95 @@ class _RpcLoadControllerState extends State<RpcLoadController> {
 }
 
 
-class PagingLoadController extends StatefulWidget {
-  final Rpc rpc; //rpc service
-  Map params = {}; //rpc request parameters
+class LoadingController extends StatelessWidget {
+  final Status status;
 
-  final ItemBuilder itemBuilder; //item widget builder
+  final String error;
+  final Function onReload;
 
-  PagingLoadController({Key key, @required this.rpc, this.params, @required this.itemBuilder}): super(key: key);
+  final Widget loading;
+  final Widget loaded;
+  final Widget failed;
 
-  @override
-  State<StatefulWidget> createState() {
-    return _PagingLoadControllerState();
-  }
-}
+  LoadingController({Key key, @required this.status, this.error, this.onReload, this.loading, this.loaded, this.failed}):super(key:key);
 
 
-class _PagingLoadControllerState extends State<PagingLoadController> with AutomaticKeepAliveClientMixin{
-  // pplist controller
-  final PPListController _controller = PPListController();
-  // page list items
-  List<dynamic> _items = [];
-  // current page
-  int _page = 0;
-
-  void _loadFirstPage() {
-    _page = 1;
-    var params = Map.of(widget.params);
-    params['page'] = _page;
-    widget.rpc.request(data: params).then((model){
-      if(model.items.length > 0) {
-        setState(() {
-          _items.addAll(model.items);
-        });
-      }
-      _controller.notifyRefreshCompleted();
-    }).catchError((error){
-      _controller.notifyRefreshFailed();
-    });
-  }
-
-  void _loadNextPage() {
-    _page += 1;
-    var params = Map.of(widget.params);
-    params['page'] = _page;
-    widget.rpc.request(data: params).then((model){
-      if(model.items.length > 0){
-        setState(() {
-          _items.addAll(model.items);
-        });
-
-        if(_page < model.total){
-          _controller.notifyHasMoreData();
-        } else{
-          _controller.notifyLoadMoreCompleted();
-        }
-      } else {
-        _controller.notifyLoadMoreCompleted();
-      }
-    }).catchError((error){
-      _controller.notifyLoadMoreFailed();
-    });
-  }
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(milliseconds: 100)).then((value){
-      _controller.load();
-    });
+  int getIndex() {
+    switch(status) {
+      case Status.loading:
+        return 0;
+      case Status.loaded:
+        return 1;
+      case Status.failed:
+        return 2;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return PPListWidget(
-      controller: _controller,
-      onRefresh: _loadFirstPage,
-      onLoadMore: _loadNextPage,
-      child: ListView.builder(
-        itemCount: _items.length,
-        itemBuilder: (context, index){
-          return widget.itemBuilder(context, _items[index]);
+    return IndexedStack(
+      index: getIndex(),
+      children: <Widget>[
+        loading!=null ? loading : LoadingIndicatorWidget(),
+        LoadedIndicatorWidget(child: loaded),
+        failed!=null ?failed : FailedIndicatorWidget(error: error, onReload: onReload)
+      ],
+    );
+  }
+}
+
+
+class LoadingIndicatorWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: 1.0,
+      duration: Duration(milliseconds: 500),
+      child: Container(
+        alignment: Alignment.center,
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+}
+
+
+class LoadedIndicatorWidget extends StatelessWidget {
+  final Widget child;
+  LoadedIndicatorWidget({Key key, @required this.child}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: 1.0,
+      duration: Duration(milliseconds: 800),
+      child: this.child,
+    );
+  }
+}
+
+
+class FailedIndicatorWidget extends StatelessWidget {
+  final String error;
+  final Function onReload;
+
+  FailedIndicatorWidget({Key key, this.error, this.onReload}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: 1.0,
+      duration: Duration(milliseconds: 800),
+      child: FlatButton(
+        child: Center(
+          child: this.error!=null ? this.error : Text('加载失败，点击屏幕重试'),
+        ),
+        onPressed: (){
+          if(this.onReload != null)
+            this.onReload();
         },
       ),
     );
   }
 }
+

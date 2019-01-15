@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models.dart';
 import '../../remotes.dart';
 
-import '../widgets.dart';
+import '../widget/pager.dart';
 import 'news_item.dart';
 
 

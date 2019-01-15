@@ -8,8 +8,8 @@ class BaseUrl{
 
 
 // http urls
-class Url{
-  static String news_detail(code){
+class PageUrl{
+  static String newsDetail(code){
     return BaseUrl.ALM+'/news/detail/$code';
   }
 }

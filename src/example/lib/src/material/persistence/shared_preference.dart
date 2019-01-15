@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoadingWidget extends StatelessWidget {
+
+class SharedPreferenceExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return null;

@@ -6,9 +6,9 @@ part 'index.g.dart';
 @JsonSerializable()
 class ModelIndexItem {
   String zqdm;
-  String name;
+  String zqmc;
 
-  ModelIndexItem(this.zqdm, this.name);
+  ModelIndexItem(this.zqdm, this.zqmc);
 
   factory ModelIndexItem.fromJson(Map<String, dynamic> json) => _$ModelIndexItemFromJson(json);
   Map<String, dynamic> toJson() => _$ModelIndexItemToJson(this);
@@ -31,7 +31,8 @@ class ModelMainIndexes {
 
 @JsonSerializable()
 class ModelIndexQuote {
-  String zqdm;
+  String zqdm; // 证券代码
+  String zqmc; // 证券名称
   double jkj; // 今开价
   double zsj; // 昨收价
   double dqj; // 当前价
@@ -43,8 +44,36 @@ class ModelIndexQuote {
   double cje; // 成交额，单位：元
   String time; // 数据时间
 
+  ModelIndexQuote(this.zqdm, this.zqmc, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
 
-  ModelIndexQuote(this.zqdm, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
+  double get zde {
+    if(dqj == null || zsj == null){
+      return null;
+    }
+    return dqj-zsj;
+  }
+
+  double get zdf {
+    if(dqj == null || zsj == null || zsj==0.0){
+      return null;
+    }
+    return (dqj-zsj)/zsj;
+  }
+
+  String getZqdm() => zqdm??'--';
+  String getZqmc() => zqmc??'--';
+  String getJkj() => jkj!=null ? jkj.toStringAsFixed(2) : '--';
+  String getZsj() => zsj!=null ? zsj.toStringAsFixed(2) : '--';
+  String getDqj() => dqj!=null ? dqj.toStringAsFixed(2) : '--';
+  String getZgj() => zgj!=null ? zgj.toStringAsFixed(2) : '--';
+  String getZdj() => zdj!=null ? zdj.toStringAsFixed(2) : '--';
+  String getZtj() => ztj!=null ? ztj.toStringAsFixed(2) : '--';
+  String getDtj() => dtj!=null ? dtj.toStringAsFixed(2) : '--';
+  String getCjl() => cjl!=null ? cjl.toString() : '--';
+  String getCje() => cje!=null ? cje.toStringAsFixed(2) : '--';
+  String getTime() => time!=null ? time : '--';
+  String getZde() => zde!=null ? zde.toStringAsFixed(2) : '--';   // 涨跌额
+  String getZdf() => zdf!=null ? '${(100*zdf).toStringAsFixed(2)}%' : '--';   // 涨跌幅
 
   factory ModelIndexQuote.fromJson(Map<String, dynamic> json) => _$ModelIndexQuoteFromJson(json);
   Map<String, dynamic> toJson() => _$ModelIndexQuoteToJson(this);
@@ -63,3 +92,4 @@ class ModelIndexQuotes {
 
   static ModelIndexQuotes parse(json) => ModelIndexQuotes.fromJson(json);
 }
+

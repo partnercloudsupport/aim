@@ -7,6 +7,9 @@ import 'listview.dart';
 import 'scaffold.dart';
 import 'card.dart';
 import 'container.dart';
+import 'animations/examples.dart';
+import 'layouts/examples.dart';
+import 'buttons/examples.dart';
 
 
 class MaterialExamples extends StatelessWidget {
@@ -18,6 +21,9 @@ class MaterialExamples extends StatelessWidget {
     Example('TextField', TextFieldPage()),
     Example('PagedDataTable', PagedDataTableExample()),
     Example('ListView', ListViewExample()),
+    Example('Animations', AnimationExamples()),
+    Example('Layouts', LayoutExamples()),
+    Example('Buttons', ButtonExamples()),
   ];
 
   @override

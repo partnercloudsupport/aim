@@ -7,11 +7,11 @@ part of 'index.dart';
 // **************************************************************************
 
 ModelIndexItem _$ModelIndexItemFromJson(Map<String, dynamic> json) {
-  return ModelIndexItem(json['zqdm'] as String, json['name'] as String);
+  return ModelIndexItem(json['zqdm'] as String, json['zqmc'] as String);
 }
 
 Map<String, dynamic> _$ModelIndexItemToJson(ModelIndexItem instance) =>
-    <String, dynamic>{'zqdm': instance.zqdm, 'name': instance.name};
+    <String, dynamic>{'zqdm': instance.zqdm, 'zqmc': instance.zqmc};
 
 ModelMainIndexes _$ModelMainIndexesFromJson(Map<String, dynamic> json) {
   return ModelMainIndexes(
@@ -29,6 +29,7 @@ Map<String, dynamic> _$ModelMainIndexesToJson(ModelMainIndexes instance) =>
 ModelIndexQuote _$ModelIndexQuoteFromJson(Map<String, dynamic> json) {
   return ModelIndexQuote(
       json['zqdm'] as String,
+      json['zqmc'] as String,
       (json['jkj'] as num)?.toDouble(),
       (json['zsj'] as num)?.toDouble(),
       (json['dqj'] as num)?.toDouble(),
@@ -44,6 +45,7 @@ ModelIndexQuote _$ModelIndexQuoteFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ModelIndexQuoteToJson(ModelIndexQuote instance) =>
     <String, dynamic>{
       'zqdm': instance.zqdm,
+      'zqmc': instance.zqmc,
       'jkj': instance.jkj,
       'zsj': instance.zsj,
       'dqj': instance.dqj,

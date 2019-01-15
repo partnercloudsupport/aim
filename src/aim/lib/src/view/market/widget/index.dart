@@ -1,49 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../theme.dart';
-import '../../format.dart';
-
-import 'basics.dart';
+import '../../../model/index.dart';
 
 
 class MainIndexesQuoteWidget extends StatelessWidget {
+  final List<ModelIndexQuote> indexes;
+  MainIndexesQuoteWidget({Key key, this.indexes}): super(key: key);
+
+  // get index at i position in the list
+  ModelIndexQuote getIndex(int i) {
+    if (indexes == null || i >= indexes.length){
+      return null;
+    }
+    return indexes[i];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        alignment: Alignment.topCenter,
-        width: double.infinity,
-        child: Card(
-          elevation: 3.0,
-          margin: EdgeInsets.only(top:5.0),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: IndexQuoteWidget(),
-              ),
-              Expanded(
-                flex: 1,
-                child: IndexQuoteWidget(),
-              ),
-              Expanded(
-                flex: 1,
-                child: IndexQuoteWidget(),
-              )
-            ],
-          ),
-        )
+      alignment: Alignment.topCenter,
+      width: double.infinity,
+      child: Card(
+        elevation: 3.0,
+        margin: EdgeInsets.only(top:5.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: IndexQuoteWidget(index: this.getIndex(0)),
+            ),
+            Expanded(
+              flex: 1,
+              child: IndexQuoteWidget(index: this.getIndex(1)),
+            ),
+            Expanded(
+              flex: 1,
+              child: IndexQuoteWidget(index: this.getIndex(2)),
+            )
+          ],
+        ),
+      )
     );
   }
 }
 
 
 class IndexQuoteWidget extends StatelessWidget {
-  final String name;
-  final double value;
-  final double change;
-  final double percent;
+  final ModelIndexQuote index;
+  IndexQuoteWidget({Key key, this.index}): super(key:key);
 
-  IndexQuoteWidget({Key key, this.name, this.value, this.change, this.percent}): super(key:key);
+  Color quoteColor() {
+    return AimTheme.colors.price(index!=null ? index.zde : null);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +69,7 @@ class IndexQuoteWidget extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Text(
-                  this.name!=null ? this.name : '--',
+                  index!=null ? index.getZqmc() : '--',
                   style: AimTheme.text.stockName,
                 )
               ),
@@ -68,8 +78,8 @@ class IndexQuoteWidget extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Text(
-                  StringFormat.quote(this.value),
-                  style: AimTheme.text.stockName,
+                  index!=null ? index.getDqj() : '--',
+                  style: AimTheme.text.stockQuote.copyWith(color: this.quoteColor()),
                 )
               ),
             ),
@@ -82,8 +92,8 @@ class IndexQuoteWidget extends StatelessWidget {
                         flex: 1,
                         child: Container(
                           child: Text(
-                            StringFormat.price(this.change),
-                            style: AimTheme.text.smallRegular.copyWith(color: ColorFormat.price(this.change)),
+                            index!=null ? index.getZde() : '--',
+                            style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
                           )
                         ),
                       ),
@@ -91,8 +101,8 @@ class IndexQuoteWidget extends StatelessWidget {
                         flex: 1,
                         child: Container(
                           child: Text(
-                            StringFormat.percent(this.percent),
-                            style: AimTheme.text.smallRegular.copyWith(color: ColorFormat.price(this.change)),
+                            index!=null ? index.getZdf() : '--',
+                            style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
                           )
                         ),
                       )

@@ -41,7 +41,7 @@ class NewsItemWidget extends StatelessWidget {
         ),
         onTap: (){
           Nav.push(context, (context){
-            return WebViewPage(url:Url.news_detail(item.code));
+            return WebViewPage(url:PageUrl.newsDetail(item.code));
           });
         })
       );
