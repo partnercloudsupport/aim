@@ -34,20 +34,58 @@ class ModelIndex {
     return (dqj-zsj)/zsj;
   }
 
-  String getZqdm() => zqdm??'--';
-  String getZqmc() => zqmc??'--';
-  String getJkj() => jkj!=null ? jkj.toStringAsFixed(2) : '--';
-  String getZsj() => zsj!=null ? zsj.toStringAsFixed(2) : '--';
-  String getDqj() => dqj!=null ? dqj.toStringAsFixed(2) : '--';
-  String getZgj() => zgj!=null ? zgj.toStringAsFixed(2) : '--';
-  String getZdj() => zdj!=null ? zdj.toStringAsFixed(2) : '--';
-  String getZtj() => ztj!=null ? ztj.toStringAsFixed(2) : '--';
-  String getDtj() => dtj!=null ? dtj.toStringAsFixed(2) : '--';
-  String getCjl() => cjl!=null ? cjl.toString() : '--';
-  String getCje() => cje!=null ? cje.toStringAsFixed(2) : '--';
-  String getTime() => time!=null ? time : '--';
-  String getZde() => zde!=null ? zde.toStringAsFixed(2) : '--';   // 涨跌额
-  String getZdf() => zdf!=null ? '${(100*zdf).toStringAsFixed(2)}%' : '--';   // 涨跌幅
+  String get strZqdm => zqdm??'--';
+  String get strZqmc => zqmc??'--';
+
+  String get strJkj => jkj!=null ? jkj.toStringAsFixed(2) : '--';
+  String get strZsj => zsj!=null ? zsj.toStringAsFixed(2) : '--';
+  String get strDqj => dqj!=null ? dqj.toStringAsFixed(2) : '--';
+  String get strZgj => zgj!=null ? zgj.toStringAsFixed(2) : '--';
+  String get strZdj => zdj!=null ? zdj.toStringAsFixed(2) : '--';
+  String get strZtj => ztj!=null ? ztj.toStringAsFixed(2) : '--';
+  String get strDtj => dtj!=null ? dtj.toStringAsFixed(2) : '--';
+
+  String get strCjl => cjl!=null ? cjl.toString() : '--';
+  String get strCje => cje!=null ? cje.toStringAsFixed(2) : '--';
+
+  String get strTime => time!=null ? time : '--';
+
+  String get strZde {
+    if(zde==null){
+      return '--';
+    }
+
+    if(zde > 0) {
+      return '+${zde.toStringAsFixed(2)}';
+    } else {
+      return zde.toStringAsFixed(2);
+    }
+  }
+
+  String get strZdf {
+    if(zdf==null){
+      return '--';
+    }
+
+    if(zdf > 0) {
+      return '+${(zdf*100).toStringAsFixed(2)}%';
+    } else {
+      return '${(zdf*100).toStringAsFixed(2)}%';
+    }
+  }
+
+  void update(ModelIndex quote) {
+    this.jkj = quote.jkj;
+    this.zsj = quote.zsj;
+    this.dqj = quote.dqj;
+    this.zgj = quote.zgj;
+    this.zdj = quote.zdj;
+    this.dtj = quote.dtj;
+    this.ztj = quote.ztj;
+    this.cjl = quote.cjl;
+    this.cje = quote.cje;
+    this.time = quote.time;
+  }
 
   factory ModelIndex.fromJson(Map<String, dynamic> json) => _$ModelIndexFromJson(json);
   Map<String, dynamic> toJson() => _$ModelIndexToJson(this);
@@ -65,6 +103,31 @@ class ModelIndexes {
       return null;
     }
     return items[pos];
+  }
+
+  List<String> indexCodes() {
+    if(items != null) {
+      return items.map((item) {
+        return item.zqdm;
+      }).toList();
+    }
+
+    return null;
+  }
+
+  void update(ModelIndexes quotes) {
+    if(quotes == null || quotes.items == null || this.items == null) {
+      return;
+    }
+
+    for (var oldItem in items) {
+      for (var newItem in quotes.items) {
+        if(oldItem.zqdm == newItem.zqdm) {
+          oldItem.update(newItem);
+          break;
+        }
+      }
+    }
   }
 
   factory ModelIndexes.fromJson(Map<String, dynamic> json) => _$ModelIndexesFromJson(json);

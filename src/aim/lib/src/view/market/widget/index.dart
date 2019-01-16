@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -7,16 +8,32 @@ import '../../theme.dart';
 import '../../../model/index.dart';
 
 
-class MainIndexesWidget extends StatelessWidget {
-  final List<ModelIndex> indexes;
-  MainIndexesWidget({Key key, this.indexes}): super(key: key);
+class MainIndexesWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MainIndexesWidgetState();
+  }
+}
 
-  // get index at i position in the list
-  ModelIndex getIndex(int i) {
-    if (indexes == null || i >= indexes.length){
-      return null;
+class MainIndexesWidgetState extends State<MainIndexesWidget> {
+  Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 5), (timer){
+      print('udpate');
+      StoreProvider.of<AppState>(context).dispatch(ActionUpdateMainIndexesQuote());
+    });
+  }
+
+  @override
+  void deactivate() {
+    if(_timer != null){
+      _timer.cancel();
+      _timer = null;
     }
-    return indexes[i];
+    super.deactivate();
   }
 
   @override
@@ -36,15 +53,15 @@ class MainIndexesWidget extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: IndexQuoteWidget(index: indexes.get(0)),
+                child: IndexQuoteWidget(index: indexes?.get(0)),
               ),
               Expanded(
                 flex: 1,
-                child: IndexQuoteWidget(index: indexes.get(1)),
+                child: IndexQuoteWidget(index: indexes?.get(1)),
               ),
               Expanded(
                 flex: 1,
-                child: IndexQuoteWidget(index: indexes.get(2)),
+                child: IndexQuoteWidget(index: indexes?.get(2)),
               )
             ],
           ),
@@ -78,7 +95,7 @@ class IndexQuoteWidget extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Text(
-                  index!=null ? index.getZqmc() : '--',
+                  index!=null ? index.strZqmc : '--',
                   style: AimTheme.text.stockName,
                 )
               ),
@@ -87,7 +104,7 @@ class IndexQuoteWidget extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Text(
-                  index!=null ? index.getDqj() : '--',
+                  index!=null ? index.strDqj : '--',
                   style: AimTheme.text.stockQuote.copyWith(color: this.quoteColor()),
                 )
               ),
@@ -102,7 +119,7 @@ class IndexQuoteWidget extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                            index!=null ? index.getZde() : '--',
+                            index!=null ? index.strZde : '--',
                             style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
                           )
                         ),
@@ -112,7 +129,7 @@ class IndexQuoteWidget extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                            index!=null ? index.getZdf() : '--',
+                            index!=null ? index.strZdf : '--',
                             style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
                           )
                         ),

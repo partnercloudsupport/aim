@@ -8,4 +8,5 @@ import 'middlewares/index.dart';
 final List<Middleware<AppState>> appMiddleware = [
   TypedMiddleware<AppState, ActionLoadNewsCategories>(fetchNewsCategories),
   TypedMiddleware<AppState, ActionLoadMainIndexes>(fetchMainIndexes),
+  TypedMiddleware<AppState, ActionUpdateMainIndexesQuote>(updateMainIndexesQuote),
 ];
