@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../redux/state/const.dart';
+import '../../redux/states/base.dart';
 import '../../remotes.dart' show Rpc;
 
 // load status for loader

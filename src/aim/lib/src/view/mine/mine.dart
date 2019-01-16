@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import '../../reduxs.dart';
-
 class MinePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -29,14 +27,10 @@ class _MinePageState extends State<MinePage> {
   void deactivate() {
     // TODO: implement deactivate
     super.deactivate();
-    var state = StoreProvider.of<AppState>(context).state;
-    print(state);
   }
 
   @override
   Widget build(BuildContext context) {
-    var state = StoreProvider.of<AppState>(context).state;
-    print(state);
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(

@@ -6,28 +6,8 @@ part of 'index.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ModelIndexItem _$ModelIndexItemFromJson(Map<String, dynamic> json) {
-  return ModelIndexItem(json['zqdm'] as String, json['zqmc'] as String);
-}
-
-Map<String, dynamic> _$ModelIndexItemToJson(ModelIndexItem instance) =>
-    <String, dynamic>{'zqdm': instance.zqdm, 'zqmc': instance.zqmc};
-
-ModelMainIndexes _$ModelMainIndexesFromJson(Map<String, dynamic> json) {
-  return ModelMainIndexes(
-      json['total'] as int,
-      (json['items'] as List)
-          ?.map((e) => e == null
-              ? null
-              : ModelIndexItem.fromJson(e as Map<String, dynamic>))
-          ?.toList());
-}
-
-Map<String, dynamic> _$ModelMainIndexesToJson(ModelMainIndexes instance) =>
-    <String, dynamic>{'total': instance.total, 'items': instance.items};
-
-ModelIndexQuote _$ModelIndexQuoteFromJson(Map<String, dynamic> json) {
-  return ModelIndexQuote(
+ModelIndex _$ModelIndexFromJson(Map<String, dynamic> json) {
+  return ModelIndex(
       json['zqdm'] as String,
       json['zqmc'] as String,
       (json['jkj'] as num)?.toDouble(),
@@ -42,7 +22,7 @@ ModelIndexQuote _$ModelIndexQuoteFromJson(Map<String, dynamic> json) {
       json['time'] as String);
 }
 
-Map<String, dynamic> _$ModelIndexQuoteToJson(ModelIndexQuote instance) =>
+Map<String, dynamic> _$ModelIndexToJson(ModelIndex instance) =>
     <String, dynamic>{
       'zqdm': instance.zqdm,
       'zqmc': instance.zqmc,
@@ -58,15 +38,14 @@ Map<String, dynamic> _$ModelIndexQuoteToJson(ModelIndexQuote instance) =>
       'time': instance.time
     };
 
-ModelIndexQuotes _$ModelIndexQuotesFromJson(Map<String, dynamic> json) {
-  return ModelIndexQuotes(
+ModelIndexes _$ModelIndexesFromJson(Map<String, dynamic> json) {
+  return ModelIndexes(
       json['total'] as int,
       (json['items'] as List)
-          ?.map((e) => e == null
-              ? null
-              : ModelIndexQuote.fromJson(e as Map<String, dynamic>))
+          ?.map((e) =>
+              e == null ? null : ModelIndex.fromJson(e as Map<String, dynamic>))
           ?.toList());
 }
 
-Map<String, dynamic> _$ModelIndexQuotesToJson(ModelIndexQuotes instance) =>
+Map<String, dynamic> _$ModelIndexesToJson(ModelIndexes instance) =>
     <String, dynamic>{'total': instance.total, 'items': instance.items};

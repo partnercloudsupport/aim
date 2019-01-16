@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../model/protocol.dart';
 import '../model/index.dart';
+import '../model/news.dart';
 import 'config.dart';
 
 // service for access aim
@@ -52,18 +53,25 @@ class AlmService {
 
 
 class RemoteService {
+  // 获取资讯分类
+  static Future<ModelNewsCategories> fetchNewsCategories() async {
+    String path = '/news/categories';
+    var data = await AlmService.get(path);
+    return ModelNewsCategories.fromJson(data);
+  }
+
   // 获取主要指数列表
-  static Future<ModelMainIndexes> fetchMainIndexes() async {
+  static Future<ModelIndexes> fetchMainIndexes() async {
     String path = '/index/main';
     var data = await AlmService.get(path);
-    return ModelMainIndexes.fromJson(data);
+    return ModelIndexes.fromJson(data);
   }
 
   // 获取指定指数行情列表
-  static Future<ModelIndexQuotes> fetchIndexQuotes(List<String> indexCodes) async {
+  static Future<ModelIndexes> fetchIndexQuotes(List<String> indexCodes) async {
     String path = '/index/quote';
     var params = {'zqdm': indexCodes.join(',')};
     var data = await AlmService.get(path, data: params);
-    return ModelIndexQuotes.fromJson(data);
+    return ModelIndexes.fromJson(data);
   }
 }

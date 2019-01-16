@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import '../../../redux/state.dart';
+import '../../../redux/action.dart';
 import '../../theme.dart';
 import '../../../model/index.dart';
 
 
-class MainIndexesQuoteWidget extends StatelessWidget {
-  final List<ModelIndexQuote> indexes;
-  MainIndexesQuoteWidget({Key key, this.indexes}): super(key: key);
+class MainIndexesWidget extends StatelessWidget {
+  final List<ModelIndex> indexes;
+  MainIndexesWidget({Key key, this.indexes}): super(key: key);
 
   // get index at i position in the list
-  ModelIndexQuote getIndex(int i) {
+  ModelIndex getIndex(int i) {
     if (indexes == null || i >= indexes.length){
       return null;
     }
@@ -19,36 +21,43 @@ class MainIndexesQuoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.topCenter,
-      width: double.infinity,
-      child: Card(
-        elevation: 3.0,
-        margin: EdgeInsets.only(top:5.0),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: IndexQuoteWidget(index: this.getIndex(0)),
-            ),
-            Expanded(
-              flex: 1,
-              child: IndexQuoteWidget(index: this.getIndex(1)),
-            ),
-            Expanded(
-              flex: 1,
-              child: IndexQuoteWidget(index: this.getIndex(2)),
-            )
-          ],
-        ),
-      )
+    return StoreConnector<AppState, ModelIndexes>(
+      converter: (store) {
+        return store.state.indexes.mainIndexesState.indexes;
+      },
+      builder: (context, indexes) {
+        return Container(
+        alignment: Alignment.topCenter,
+        width: double.infinity,
+        child: Card(
+          elevation: 3.0,
+          margin: EdgeInsets.only(top:5.0),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: IndexQuoteWidget(index: indexes.get(0)),
+              ),
+              Expanded(
+                flex: 1,
+                child: IndexQuoteWidget(index: indexes.get(1)),
+              ),
+              Expanded(
+                flex: 1,
+                child: IndexQuoteWidget(index: indexes.get(2)),
+              )
+            ],
+          ),
+        )
+        );
+      }
     );
   }
 }
 
 
 class IndexQuoteWidget extends StatelessWidget {
-  final ModelIndexQuote index;
+  final ModelIndex index;
   IndexQuoteWidget({Key key, this.index}): super(key:key);
 
   Color quoteColor() {
@@ -91,6 +100,7 @@ class IndexQuoteWidget extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
+                          alignment: Alignment.center,
                           child: Text(
                             index!=null ? index.getZde() : '--',
                             style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
@@ -100,6 +110,7 @@ class IndexQuoteWidget extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
+                          alignment: Alignment.center,
                           child: Text(
                             index!=null ? index.getZdf() : '--',
                             style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),

@@ -4,33 +4,7 @@ part 'index.g.dart';
 
 
 @JsonSerializable()
-class ModelIndexItem {
-  String zqdm;
-  String zqmc;
-
-  ModelIndexItem(this.zqdm, this.zqmc);
-
-  factory ModelIndexItem.fromJson(Map<String, dynamic> json) => _$ModelIndexItemFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexItemToJson(this);
-}
-
-
-@JsonSerializable()
-class ModelMainIndexes {
-  int total;
-  List<ModelIndexItem> items;
-
-  ModelMainIndexes(this.total, this.items);
-
-  factory ModelMainIndexes.fromJson(Map<String, dynamic> json) => _$ModelMainIndexesFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelMainIndexesToJson(this);
-
-  static ModelMainIndexes parse(json) => ModelMainIndexes.fromJson(json);
-}
-
-
-@JsonSerializable()
-class ModelIndexQuote {
+class ModelIndex {
   String zqdm; // 证券代码
   String zqmc; // 证券名称
   double jkj; // 今开价
@@ -44,7 +18,7 @@ class ModelIndexQuote {
   double cje; // 成交额，单位：元
   String time; // 数据时间
 
-  ModelIndexQuote(this.zqdm, this.zqmc, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
+  ModelIndex(this.zqdm, this.zqmc, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
 
   double get zde {
     if(dqj == null || zsj == null){
@@ -75,21 +49,27 @@ class ModelIndexQuote {
   String getZde() => zde!=null ? zde.toStringAsFixed(2) : '--';   // 涨跌额
   String getZdf() => zdf!=null ? '${(100*zdf).toStringAsFixed(2)}%' : '--';   // 涨跌幅
 
-  factory ModelIndexQuote.fromJson(Map<String, dynamic> json) => _$ModelIndexQuoteFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexQuoteToJson(this);
+  factory ModelIndex.fromJson(Map<String, dynamic> json) => _$ModelIndexFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexToJson(this);
 }
 
-
 @JsonSerializable()
-class ModelIndexQuotes {
+class ModelIndexes {
   int total;
-  List<ModelIndexQuote> items;
+  List<ModelIndex> items;
 
-  ModelIndexQuotes(this.total, this.items);
+  ModelIndexes(this.total, this.items);
 
-  factory ModelIndexQuotes.fromJson(Map<String, dynamic> json) => _$ModelIndexQuotesFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexQuotesToJson(this);
+  ModelIndex get(int pos) {
+    if (items==null || items.length<pos+1){
+      return null;
+    }
+    return items[pos];
+  }
 
-  static ModelIndexQuotes parse(json) => ModelIndexQuotes.fromJson(json);
+  factory ModelIndexes.fromJson(Map<String, dynamic> json) => _$ModelIndexesFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexesToJson(this);
+
+  static ModelIndexes parse(json) => ModelIndexes.fromJson(json);
 }
 

@@ -1,34 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
-import 'widget/index.dart';
+import '../../redux/state.dart';
+import '../../redux/action.dart';
+
+import '../widget/loader.dart';
+
 import 'search.dart';
+import 'widget/index.dart';
+import 'widget/stock.dart';
 
-class MarketHomePage extends StatefulWidget {
+class MarketHomePage extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    return MarketHomePageState();
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, Status>(
+      converter: (store) {
+        if(store.state.indexes.mainIndexesState.status == null) {
+          store.dispatch(ActionLoadMainIndexes());
+          return Status.loading;
+        }
+
+        return store.state.indexes.mainIndexesState.status;
+      },
+      builder: (context, status) {
+        return Scaffold(
+          appBar: AppBar(
+            title: StockSearchButton(),
+          ),
+          body: LoadingController(
+            status: status,
+            loaded: MarketHomeWidget(),
+            onReload: () {
+              StoreProvider.of(context).dispatch(ActionLoadMainIndexes);
+            },
+          ),
+        );
+      },
+    );
   }
 }
 
 
-class MarketHomePageState extends State<MarketHomePage> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class MarketHomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: StockSearchButton(),
-      ),
-      body: Column(
-        children: <Widget>[
-          MainIndexesQuoteWidget(),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        MainIndexesWidget(),
+        OptionalStockWidget()
+      ],
     );
   }
 }
