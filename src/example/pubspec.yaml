@@ -19,6 +19,10 @@ dependencies:
   pull_to_refresh: ^1.1.6
   flutter_webview_plugin: ^0.3.0+2
   shared_preferences: ^0.4.3
+  cached_network_image: ^0.5.1
+  connectivity: ^0.3.1
+  flutter_offline: ^0.2.2
+  sqflite: ^1.0.0
   http:
   redux:
   flutter_redux:

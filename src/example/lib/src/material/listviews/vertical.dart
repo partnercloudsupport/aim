@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../scaffold_page.dart';
+import '../../scaffold_page.dart';
 
 
-class ListViewExample extends StatelessWidget {
+class VerticalListViewExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPageWidget(
@@ -21,7 +22,7 @@ class _ListWidget extends StatelessWidget {
         children: <Widget>[
           _ListTitle(),
           Expanded(
-            child: _ListBody()
+              child: _ListBody()
           )
         ],
       ),
@@ -33,11 +34,13 @@ class _ListWidget extends StatelessWidget {
 class _ListTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: Text('title'),
+    return Center(
+      child: Text(
+        'title',
+        style: TextStyle(
+          color: Colors.red
+        ),
+      ),
     );
   }
 }

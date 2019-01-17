@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../common.dart';
 import 'shared_preference.dart';
+import 'sqlflite.dart';
 
-
-class LayoutExamples extends StatelessWidget {
+class PersistenceExamples extends StatelessWidget {
   List<Example> _examples = [
     Example('Shared Preference', SharedPreferenceExample()),
+    Example('Sqflite', SqfliteExample()),
   ];
 
   @override

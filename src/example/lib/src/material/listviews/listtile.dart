@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import '../scaffold_page.dart';
+import '../../scaffold_page.dart';
 
-class ListTilePage extends StatelessWidget {
+class ListTileExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPageWidget(
       title: 'ListTile',
-      child: Builder(
-        builder: (context) {
+      child: ListView.builder(
+        itemBuilder: (context, index){
           return _StockListItem();
-        }
+        },
       )
     );
   }

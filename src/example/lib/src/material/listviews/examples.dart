@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import '../../common.dart';
-import 'opacity.dart';
-import 'ink_well.dart';
-import 'dismissible.dart';
 
+import 'vertical.dart';
+import 'horizontal.dart';
+import 'listtile.dart';
+import 'mixture_items.dart';
 
-class AnimationExamples extends StatelessWidget {
+class ListViewExamples extends StatelessWidget {
   List<Example> _examples = [
-    Example('opacity', OpacityExample()),
-    Example('ink well', InkWellExample()),
-    Example('dismissible', DismissibleExample()),
+    Example('vertical', VerticalListViewExample()),
+    Example('horizontal', HorizontalListViewExamples()),
+    Example('list tile', ListTileExample()),
+    Example('mixture items', MixtureItemsExample()),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Animaiton Examples'),
+        title: Text('ListView Examples'),
       ),
       body: ListView.builder(
         itemCount: _examples.length,

@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../common.dart';
-import 'opacity.dart';
-import 'ink_well.dart';
-import 'dismissible.dart';
+import 'offline.dart';
+import 'connectivity.dart';
 
-
-class AnimationExamples extends StatelessWidget {
+class NetworkExamples extends StatelessWidget {
   List<Example> _examples = [
-    Example('opacity', OpacityExample()),
-    Example('ink well', InkWellExample()),
-    Example('dismissible', DismissibleExample()),
+    Example('Online/Offline', OfflineExample()),
+    Example('Connectivity', ConnectivityExample()),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Animaiton Examples'),
+        title: Text('Network Examples'),
       ),
       body: ListView.builder(
         itemCount: _examples.length,

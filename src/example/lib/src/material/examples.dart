@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import '../common.dart';
-import 'listtile.dart';
 import 'textfield.dart';
 import 'page_datatable.dart';
-import 'listview.dart';
 import 'scaffold.dart';
 import 'card.dart';
 import 'container.dart';
 import 'animations/examples.dart';
 import 'layouts/examples.dart';
 import 'buttons/examples.dart';
+import 'images/examples.dart';
+import 'listviews/examples.dart';
+import 'persistence/examples.dart';
+import 'networks/examples.dart';
+import 'dialogs/examples.dart';
 
 
 class MaterialExamples extends StatelessWidget {
@@ -17,13 +20,16 @@ class MaterialExamples extends StatelessWidget {
     Example('Container', ContainerExamplePage()),
     Example('Card', CardExamplePage()),
     Example('Scaffold', ScaffoldPage()),
-    Example('ListTile', ListTilePage()),
     Example('TextField', TextFieldPage()),
     Example('PagedDataTable', PagedDataTableExample()),
-    Example('ListView', ListViewExample()),
     Example('Animations', AnimationExamples()),
     Example('Layouts', LayoutExamples()),
     Example('Buttons', ButtonExamples()),
+    Example('Images', ImageExamples()),
+    Example('ListViews', ListViewExamples()),
+    Example('Persistence', PersistenceExamples()),
+    Example('Networks', NetworkExamples()),
+    Example('Dialogs', DialogExamples()),
   ];
 
   @override
