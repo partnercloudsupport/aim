@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 
-class OffstageExamplePage extends StatefulWidget {
+class StackExample1 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return OffstageExamplePageState();
+    return StackExample1State();
   }
 }
 
-class OffstageExamplePageState extends State<OffstageExamplePage> {
+class StackExample1State extends State<StackExample1> {
   int _tabIndex = 0;
 
   List<String> _imageUrls = [
@@ -54,8 +54,8 @@ class OffstageExamplePageState extends State<OffstageExamplePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.print),
-            title: Text('tab1')
+              icon: Icon(Icons.print),
+              title: Text('tab1')
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.map),

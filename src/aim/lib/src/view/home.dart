@@ -14,32 +14,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // current tab index
-  int _tabIndex = 0;
+  // tab index
+  int _index = 0;
+  // tab widgets
+  List<Widget> _tabs = [
+    NewsHomePage(),
+    MarketHomePage(),
+    TradePage(),
+    MinePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Offstage(
-            child: NewsHomePage(),
-            offstage: _tabIndex!=0,
-          ),
-          Offstage(
-            child: MarketHomePage(),
-            offstage: _tabIndex!=1,
-          ),
-          Offstage(
-            child: TradePage(),
-            offstage: _tabIndex!=2,
-          ),
-          Offstage(
-            child: MinePage(),
-            offstage: _tabIndex!=3,
-          )
-        ],
-      ),
+      body: _tabs[_index],
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('资讯')),
@@ -48,10 +36,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('我的')),
         ],
         type: BottomNavigationBarType.fixed,
-        currentIndex: _tabIndex,
+        currentIndex: _index,
         onTap: (index){
           setState(() {
-            _tabIndex = index;
+            _index = index;
           });
         },
       ),

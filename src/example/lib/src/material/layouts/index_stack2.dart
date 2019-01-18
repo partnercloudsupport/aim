@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 
-class OffstageExamplePage extends StatefulWidget {
+class IndexStackExample2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return OffstageExamplePageState();
+    return IndexStackExample1State();
   }
 }
 
-class OffstageExamplePageState extends State<OffstageExamplePage> {
+class IndexStackExample1State extends State<IndexStackExample2> {
   int _tabIndex = 0;
 
   List<String> _imageUrls = [
@@ -20,7 +20,6 @@ class OffstageExamplePageState extends State<OffstageExamplePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         leading: FlatButton(
@@ -31,31 +30,19 @@ class OffstageExamplePageState extends State<OffstageExamplePage> {
         ),
         title: Text('stack example'),
       ),
-      body: Stack(
-        fit: StackFit.loose,
-        alignment: AlignmentDirectional.topStart,
-        overflow: Overflow.clip,
-        textDirection: TextDirection.ltr,
+      body: IndexedStack(
+        index: _tabIndex,
         children: <Widget>[
-          Offstage(
-            offstage: _tabIndex!=0,
-            child: ImageWidget(index:0, url: _imageUrls[0]),
-          ),
-          Offstage(
-            offstage: _tabIndex!=1,
-            child: ImageWidget(index:1, url: _imageUrls[1]),
-          ),
-          Offstage(
-            offstage: _tabIndex!=2,
-            child: ImageWidget(index:2, url: _imageUrls[2]),
-          ),
+          ImageWidget(index:0, url: _imageUrls[0]),
+          ImageWidget(index:1, url: _imageUrls[1]),
+          ImageWidget(index:2, url: _imageUrls[2])
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.print),
-            title: Text('tab1')
+              icon: Icon(Icons.print),
+              title: Text('tab1')
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.map),
@@ -75,6 +62,45 @@ class OffstageExamplePageState extends State<OffstageExamplePage> {
         type: BottomNavigationBarType.fixed,
       ),
     );
+  }
+}
+
+
+class AsyncLoader extends StatefulWidget {
+  Widget child;
+  AsyncLoader({Key key, @required this.child}):super(key:key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return AsyncLoaderState();
+  }
+}
+
+
+class AsyncLoaderState extends State<AsyncLoader> {
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if(!_loaded) {
+      Future.delayed(Duration(seconds: 3)).then((value){
+        setState(() {
+          _loaded = true;
+        });
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if(_loaded)
+      return widget.child;
+    else{
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 }
 

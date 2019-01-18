@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import '../../common.dart';
 import 'flow.dart';
 import 'stack.dart';
+import 'stack1.dart';
 import 'index_stack.dart';
+import 'index_stack1.dart';
+import 'index_stack2.dart';
 
 
 class LayoutExamples extends StatelessWidget {
   List<Example> _examples = [
     Example('Flow', FlowExample()),
     Example('Stack', StackExample()),
+    Example('Stack1', StackExample1()),
     Example('Index Stack', IndexStackExample()),
+    Example('Index Stack1', IndexStackExample1()),
+    Example('Index Stack2', IndexStackExample2()),
   ];
 
   @override

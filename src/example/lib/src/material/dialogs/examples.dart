@@ -3,6 +3,7 @@ import 'alert_dialog.dart';
 import 'about_dialog.dart';
 import 'simple_dialog.dart';
 import 'custom_dialog.dart';
+import 'dialog.dart';
 
 class DialogExamples extends StatelessWidget {
   @override
@@ -25,7 +26,8 @@ class DialogsList extends StatelessWidget {
         MyAlertDialog(),
         MyAboutDialog(),
         MySimpleDialog(),
-        MyCustomDialog()
+        MyCustomDialog(),
+        MyDialog(),
       ],
     );
   }
