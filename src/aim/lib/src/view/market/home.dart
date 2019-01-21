@@ -14,6 +14,10 @@ class MarketHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Status>(
+      onInit: (store) {
+        store.dispatch(ActionLoadMainIndexes);
+      },
+
       converter: (store) {
         if(store.state.indexes.mainIndexesState.status == null) {
           store.dispatch(ActionLoadMainIndexes());
@@ -27,12 +31,11 @@ class MarketHomePage extends StatelessWidget {
           appBar: AppBar(
             title: StockSearchButton(),
           ),
-          body: LoadingController(
-            status: status,
-            loaded: MarketHomeWidget(),
-            onReload: () {
+          body: AsyncLoader(
+            loader: () {
               StoreProvider.of(context).dispatch(ActionLoadMainIndexes);
             },
+            builder: ,
           ),
         );
       },

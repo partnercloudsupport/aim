@@ -25,7 +25,6 @@ class ModelNewsCategory {
 class ModelNewsCategories {
   int total;
   List<ModelNewsCategory> items;
-
   ModelNewsCategories({this.total, this.items});
 
   factory ModelNewsCategories.fromJson(Map<String, dynamic> json) => _$ModelNewsCategoriesFromJson(json);

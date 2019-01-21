@@ -19,14 +19,25 @@ Map<String, dynamic> _$StockQuoteToJson(StockQuote instance) =>
       'jkj': instance.jkj
     };
 
+StockQuotes _$StockQuotesFromJson(Map<String, dynamic> json) {
+  return StockQuotes(
+      json['total'] as int,
+      (json['items'] as List)
+          ?.map((e) =>
+              e == null ? null : StockQuote.fromJson(e as Map<String, dynamic>))
+          ?.toList());
+}
+
+Map<String, dynamic> _$StockQuotesToJson(StockQuotes instance) =>
+    <String, dynamic>{'total': instance.total, 'items': instance.items};
+
 ProtocolStockQuote _$ProtocolStockQuoteFromJson(Map<String, dynamic> json) {
   return ProtocolStockQuote(
       json['status'] as int,
       json['msg'] as String,
-      (json['data'] as List)
-          ?.map((e) =>
-              e == null ? null : StockQuote.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+      json['data'] == null
+          ? null
+          : StockQuotes.fromJson(json['data'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$ProtocolStockQuoteToJson(ProtocolStockQuote instance) =>

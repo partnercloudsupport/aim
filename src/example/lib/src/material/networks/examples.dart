@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import '../../common.dart';
 import 'offline.dart';
 import 'connectivity.dart';
+import 'async_loader.dart';
 
 class NetworkExamples extends StatelessWidget {
   List<Example> _examples = [
     Example('Online/Offline', OfflineExample()),
     Example('Connectivity', ConnectivityExample()),
+    Example('AsyncLoader', AsyncLoaderExample()),
   ];
 
   @override

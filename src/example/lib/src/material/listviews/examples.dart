@@ -5,6 +5,7 @@ import 'vertical.dart';
 import 'horizontal.dart';
 import 'listtile.dart';
 import 'mixture_items.dart';
+import 'listview.dart';
 
 class ListViewExamples extends StatelessWidget {
   List<Example> _examples = [
@@ -12,6 +13,7 @@ class ListViewExamples extends StatelessWidget {
     Example('horizontal', HorizontalListViewExamples()),
     Example('list tile', ListTileExample()),
     Example('mixture items', MixtureItemsExample()),
+    Example('list view', ListViewExample()),
   ];
 
   @override

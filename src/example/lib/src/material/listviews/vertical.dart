@@ -53,13 +53,45 @@ class _ListBody extends StatelessWidget {
       child: ListView.builder(
         itemCount: 100,
         itemBuilder: (context, index){
-          return Container(
-            width: double.infinity,
-            alignment: Alignment.center,
-            child: Text('value$index'),
-          );
+          print('index: $index');
+          return _ListItem(content: 'item: $index');
         },
       ),
     );
+  }
+}
+
+
+class _ListItem extends StatefulWidget {
+  String content;
+  _ListItem({Key key, @required this.content}):super(key:key);
+  
+  @override
+  State<StatefulWidget> createState() {
+    return _ListItemState();
+  }
+}
+
+class _ListItemState extends State<_ListItem> {
+
+  @override
+  void initState() {
+    super.initState();
+    print('init: ${widget.content}');
+  }
+
+  @override
+  void deactivate() {
+    print('deactive: ${widget.content}');
+    super.deactivate();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.center,
+      child: Text(widget.content),
+    );;
   }
 }

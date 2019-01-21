@@ -21,43 +21,42 @@ class TimerRefreshExamplePage extends StatelessWidget {
 }
 
 
-class StockQuote extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return StockQuoteState();
-  }
-}
-
-class StockQuoteState extends State<StockQuote> {
+class StockQuote extends StatelessWidget {
   Timer timer;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-    timer.cancel();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if(timer == null){
-      timer = Timer.periodic(Duration(seconds: 3), (timer){
-        StoreProvider.of<AppState>(context).dispatch(ActionLoadStockQuote(type: Action.todo));
-        print('request');
-      });
-    }
     return StoreConnector<AppState, ProtocolStockQuote>(
-      converter: (store) {
-        if(store.state.quote==null){
+      distinct: true,
+      onInit: (store) {
+        print('init');
+        timer = Timer.periodic(Duration(seconds: 3), (timer){
+          print('request quote');
           store.dispatch(ActionLoadStockQuote(type: Action.todo));
-        }
+        });
+      },
+      onDispose: (store) {
+        print('dispose');
+        timer.cancel();
+      },
+      onInitialBuild: (model) {
+        print('init build');
+      },
+      onWillChange: (model) {
+        print('will change');
+      },
+      onDidChange: (model) {
+        print('did change');
+      },
+      converter: (store) {
         return store.state.quote;
       },
       builder: (context, quote) {
+        print('builder');
+        if(quote == null){
+          return Center(child: CircularProgressIndicator(),);
+        }
+
         return Container(
           child: _StockListItem(quote: ModelQuote(
               name: '浦发银行',
