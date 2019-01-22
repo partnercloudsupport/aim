@@ -1,15 +1,13 @@
 import 'package:redux/redux.dart';
 
-import '../state.dart';
-
-import '../actions/news.dart';
 import '../../model/news.dart';
-
 import '../../remote/service.dart';
 
-export '../actions/news.dart';
+import '../state.dart';
+import '../actions/news.dart';
 
-void fetchNewsCategories(Store<AppState> store, action, NextDispatcher dispatcher) async {
+
+void fetchNewsCategories(Store<StateApp> store, action, NextDispatcher dispatcher) async {
   // dispatch action
   dispatcher(action);
 

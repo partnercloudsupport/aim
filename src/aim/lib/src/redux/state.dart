@@ -6,15 +6,17 @@ export 'states/user.dart';
 export 'states/news.dart';
 export 'states/index.dart';
 
-class AppState {
-  UserState user;
-  NewsState news;
-  IndexesState indexes;
 
-  AppState({this.user, this.news, this.indexes});
-  AppState.init() {
-    this.user = UserState.init();
-    this.news = NewsState.init();
-    this.indexes = IndexesState.init();
-  }
+class StateApp {
+  StateUser user;
+  StateNews news;
+  StateIndexes indexes;
+
+  StateApp({this.user, this.news, this.indexes});
+
+  factory StateApp.init() => StateApp(
+    user: StateUser.init(),
+    news: StateNews.init(),
+    indexes: StateIndexes.init()
+  );
 }

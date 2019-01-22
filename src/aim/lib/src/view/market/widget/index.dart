@@ -4,45 +4,22 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../../redux/state.dart';
 import '../../../redux/action.dart';
-import '../../theme.dart';
 import '../../../model/index.dart';
 
+import '../../theme.dart';
 
-class MainIndexesWidget extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MainIndexesWidgetState();
-  }
-}
 
-class MainIndexesWidgetState extends State<MainIndexesWidget> {
-  Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(Duration(seconds: 5), (timer){
-      print('udpate');
-      StoreProvider.of<AppState>(context).dispatch(ActionUpdateMainIndexesQuote());
-    });
-  }
-
-  @override
-  void deactivate() {
-    if(_timer != null){
-      _timer.cancel();
-      _timer = null;
-    }
-    super.deactivate();
-  }
-
+class MainIndexesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ModelIndexes>(
-      converter: (store) {
-        return store.state.indexes.mainIndexesState.indexes;
+    return StoreConnector<StateApp, StateMainIndexes>(
+      onInit: (store){
+
       },
-      builder: (context, indexes) {
+      converter: (store) {
+        return store.state.indexes.mainIndexes;
+      },
+      builder: (context, mainIndexes) {
         return Container(
         alignment: Alignment.topCenter,
         width: double.infinity,
@@ -53,15 +30,15 @@ class MainIndexesWidgetState extends State<MainIndexesWidget> {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: IndexQuoteWidget(index: indexes?.get(0)),
+                child: IndexQuoteWidget(index: mainIndexes?.get(0)),
               ),
               Expanded(
                 flex: 1,
-                child: IndexQuoteWidget(index: indexes?.get(1)),
+                child: IndexQuoteWidget(index: mainIndexes?.get(1)),
               ),
               Expanded(
                 flex: 1,
-                child: IndexQuoteWidget(index: indexes?.get(2)),
+                child: IndexQuoteWidget(index: mainIndexes?.get(2)),
               )
             ],
           ),
@@ -74,11 +51,11 @@ class MainIndexesWidgetState extends State<MainIndexesWidget> {
 
 
 class IndexQuoteWidget extends StatelessWidget {
-  final ModelIndex index;
+  final StateMainIndex index;
   IndexQuoteWidget({Key key, this.index}): super(key:key);
 
   Color quoteColor() {
-    return AimTheme.colors.price(index!=null ? index.zde : null);
+    return AimTheme.colors.price(index?.quote?.zde);
   }
 
   @override
@@ -95,7 +72,7 @@ class IndexQuoteWidget extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Text(
-                  index!=null ? index.strZqmc : '--',
+                  this.index?.name??'--',
                   style: AimTheme.text.stockName,
                 )
               ),
@@ -104,7 +81,7 @@ class IndexQuoteWidget extends StatelessWidget {
               flex: 1,
               child: Container(
                 child: Text(
-                  index!=null ? index.strDqj : '--',
+                  this.index?.quote?.strDqj??'--',
                   style: AimTheme.text.stockQuote.copyWith(color: this.quoteColor()),
                 )
               ),
@@ -119,7 +96,7 @@ class IndexQuoteWidget extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                            index!=null ? index.strZde : '--',
+                            this.index?.quote?.strZde??'--',
                             style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
                           )
                         ),
@@ -129,7 +106,7 @@ class IndexQuoteWidget extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                            index!=null ? index.strZdf : '--',
+                            this.index?.quote?.strZdf??'--',
                             style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
                           )
                         ),

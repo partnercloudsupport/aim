@@ -5,38 +5,41 @@ import '../actions/index.dart';
 
 
 // reducer for loading main index action
-final mainIndexReducer = combineReducers<MainIndexesState>([
-  TypedReducer<MainIndexesState, ActionLoadMainIndexes>(_loadMainIndexes),
-  TypedReducer<MainIndexesState, ActionLoadMainIndexesSucceed>(_loadMainIndexesSucceed),
-  TypedReducer<MainIndexesState, ActionLoadMainIndexesFailed>(_loadMainIndexesFailed),
+final mainIndexReducer = combineReducers<StateMainIndexes>([
+  TypedReducer<StateMainIndexes, ActionLoadMainIndexes>(_loadMainIndexes),
+  TypedReducer<StateMainIndexes, ActionLoadMainIndexesSucceed>(_loadMainIndexesSucceed),
+  TypedReducer<StateMainIndexes, ActionLoadMainIndexesFailed>(_loadMainIndexesFailed),
 
-  TypedReducer<MainIndexesState, ActionUpdateMainIndexesQuote>(_updateMainIndexesQuote),
-  TypedReducer<MainIndexesState, ActionUpdateMainIndexesQuoteSucceed>(_updateMainIndexesQuoteSucceed),
-  TypedReducer<MainIndexesState, ActionUpdateMainIndexesQuoteFailed>(_updateMainIndexesQuoteFailed),
+  TypedReducer<StateMainIndexes, ActionUpdateMainIndexesQuote>(_updateMainIndexesQuote),
+  TypedReducer<StateMainIndexes, ActionUpdateMainIndexesQuoteSucceed>(_updateMainIndexesQuoteSucceed),
+  TypedReducer<StateMainIndexes, ActionUpdateMainIndexesQuoteFailed>(_updateMainIndexesQuoteFailed),
 ]);
 
 
-MainIndexesState _loadMainIndexes(MainIndexesState state, ActionLoadMainIndexes action) {
-  return MainIndexesState(status: Status.loading);
+StateMainIndexes _loadMainIndexes(StateMainIndexes state, ActionLoadMainIndexes action) {
+  return state.copyWith(state: State.loading());
 }
 
-MainIndexesState _loadMainIndexesSucceed(MainIndexesState state, ActionLoadMainIndexesSucceed action) {
-  return MainIndexesState(status: Status.loaded, indexes: action.indexes);
+StateMainIndexes _loadMainIndexesSucceed(StateMainIndexes state, ActionLoadMainIndexesSucceed action) {
+  var indexes = action.indexes.items?.map((item){
+    return StateMainIndex(index: item);
+  })?.toList();
+
+  return state.copyWith(state: State.loaded(), indexes: indexes);
 }
 
-MainIndexesState _loadMainIndexesFailed(MainIndexesState state, ActionLoadMainIndexesFailed action) {
-  return MainIndexesState(status: Status.failed, msg: action.msg);
+StateMainIndexes _loadMainIndexesFailed(StateMainIndexes state, ActionLoadMainIndexesFailed action) {
+  return state.copyWith(state: State.failed(action.msg));
 }
 
-MainIndexesState _updateMainIndexesQuote(MainIndexesState state, ActionUpdateMainIndexesQuote action) {
+StateMainIndexes _updateMainIndexesQuote(StateMainIndexes state, ActionUpdateMainIndexesQuote action) {
   return state;
 }
 
-MainIndexesState _updateMainIndexesQuoteSucceed(MainIndexesState state, ActionUpdateMainIndexesQuoteSucceed action) {
-  state.update(action.indexes);
-  return state;
+StateMainIndexes _updateMainIndexesQuoteSucceed(StateMainIndexes state, ActionUpdateMainIndexesQuoteSucceed action) {
+  return state.updateWith(quotes: action.quotes?.items);
 }
 
-MainIndexesState _updateMainIndexesQuoteFailed(MainIndexesState state, ActionUpdateMainIndexesQuoteFailed action) {
-  return state;
+StateMainIndexes _updateMainIndexesQuoteFailed(StateMainIndexes state, ActionUpdateMainIndexesQuoteFailed action) {
+  return state.copyWith(state: State.failed(action.msg));
 }

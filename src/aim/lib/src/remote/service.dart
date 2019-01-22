@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 
 import '../model/protocol.dart';
-import '../model/index.dart';
 import '../model/news.dart';
+import '../model/index.dart';
+import '../model/stock.dart';
 
 import 'config.dart';
 
@@ -61,6 +62,14 @@ class RemoteService {
     return ModelNewsCategories.fromJson(data);
   }
 
+  // 获取资讯列表
+  static Future<ModelNewsItems> fetchNewsItems(String category, int page) async {
+    String path = '/news/list';
+    var params = {'category':category, 'page':page};
+    var data = await AlmService.get(path, data:params);
+    return ModelNewsItems.fromJson(data);
+  }
+
   // 获取主要指数列表
   static Future<ModelIndexes> fetchMainIndexes() async {
     String path = '/index/main';
@@ -68,11 +77,19 @@ class RemoteService {
     return ModelIndexes.fromJson(data);
   }
 
-  // 获取指定指数行情列表
-  static Future<ModelIndexes> fetchIndexQuotes(List<String> indexCodes) async {
+  // 获取股票行情
+  static Future<ModelStocks> fetchStockQuotes(List<String> stockCodes) async {
+    String path = '/stock/quote';
+    var params = {'zqdm': stockCodes.join(',')};
+    var data = await AlmService.get(path, data: params);
+    return ModelStocks.fromJson(data);
+  }
+
+  // 获取指数行情
+  static Future<ModelIndexQuotes> fetchIndexQuotes(List<String> indexCodes) async {
     String path = '/index/quote';
     var params = {'zqdm': indexCodes.join(',')};
     var data = await AlmService.get(path, data: params);
-    return ModelIndexes.fromJson(data);
+    return ModelIndexQuotes.fromJson(data);
   }
 }

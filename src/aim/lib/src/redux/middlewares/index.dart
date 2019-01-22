@@ -1,15 +1,13 @@
 import 'package:redux/redux.dart';
 
-import '../state.dart';
-
-import '../actions/index.dart';
 import '../../model/index.dart';
-
 import '../../remote/service.dart';
 
-export '../actions/index.dart';
+import '../state.dart';
+import '../actions/index.dart';
 
-void fetchMainIndexes(Store<AppState> store, action, NextDispatcher dispatcher) async {
+
+void fetchMainIndexes(Store<StateApp> store, action, NextDispatcher dispatcher) async {
   try{
     ModelIndexes indexes = await RemoteService.fetchMainIndexes();
     store.dispatch(ActionLoadMainIndexesSucceed(indexes: indexes));
@@ -18,11 +16,12 @@ void fetchMainIndexes(Store<AppState> store, action, NextDispatcher dispatcher) 
   }
 }
 
-void updateMainIndexesQuote(Store<AppState> store, action, NextDispatcher dispatcher) async {
+
+void updateMainIndexesQuote(Store<StateApp> store, action, NextDispatcher dispatcher) async {
   try {
-    var indexCodes = store.state.indexes.mainIndexesState.indexCodes();
-    ModelIndexes quotes = await RemoteService.fetchIndexQuotes(indexCodes);
-    store.dispatch(ActionUpdateMainIndexesQuoteSucceed(indexes: quotes));
+    var indexCodes = store.state.indexes.mainIndexes.codes;
+    ModelIndexQuotes quotes = await RemoteService.fetchIndexQuotes(indexCodes);
+    store.dispatch(ActionUpdateMainIndexesQuoteSucceed(quotes: quotes));
   }catch(e) {
     store.dispatch(ActionUpdateMainIndexesQuoteFailed(msg: e.toString()));
   }

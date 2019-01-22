@@ -7,6 +7,48 @@ part 'index.g.dart';
 class ModelIndex {
   String zqdm; // 证券代码
   String zqmc; // 证券名称
+
+  ModelIndex(this.zqdm, this.zqmc);
+
+  String get strZqdm => zqdm??'--';
+  String get strZqmc => zqmc??'--';
+
+  factory ModelIndex.fromJson(Map<String, dynamic> json) => _$ModelIndexFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexToJson(this);
+}
+
+@JsonSerializable()
+class ModelIndexes {
+  int total;
+  List<ModelIndex> items;
+
+  ModelIndexes(this.total, this.items);
+
+  ModelIndex get(int pos) {
+    if (items==null || items.length<pos+1){
+      return null;
+    }
+    return items[pos];
+  }
+
+  List<String> indexCodes() {
+    if(items != null) {
+      return items.map((item) {
+        return item.zqdm;
+      }).toList();
+    }
+
+    return null;
+  }
+
+  factory ModelIndexes.fromJson(Map<String, dynamic> json) => _$ModelIndexesFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexesToJson(this);
+}
+
+@JsonSerializable()
+class ModelIndexQuote {
+  String zqdm; // 证券代码
+  String source; // 行情来源
   double jkj; // 今开价
   double zsj; // 昨收价
   double dqj; // 当前价
@@ -18,7 +60,7 @@ class ModelIndex {
   double cje; // 成交额，单位：元
   String time; // 数据时间
 
-  ModelIndex(this.zqdm, this.zqmc, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
+  ModelIndexQuote(this.zqdm, this.source, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
 
   double get zde {
     if(dqj == null || zsj == null){
@@ -35,7 +77,7 @@ class ModelIndex {
   }
 
   String get strZqdm => zqdm??'--';
-  String get strZqmc => zqmc??'--';
+  String get strSource => source??'--';
 
   String get strJkj => jkj!=null ? jkj.toStringAsFixed(2) : '--';
   String get strZsj => zsj!=null ? zsj.toStringAsFixed(2) : '--';
@@ -74,65 +116,19 @@ class ModelIndex {
     }
   }
 
-  void update(ModelIndex quote) {
-    this.jkj = quote.jkj;
-    this.zsj = quote.zsj;
-    this.dqj = quote.dqj;
-    this.zgj = quote.zgj;
-    this.zdj = quote.zdj;
-    this.dtj = quote.dtj;
-    this.ztj = quote.ztj;
-    this.cjl = quote.cjl;
-    this.cje = quote.cje;
-    this.time = quote.time;
-  }
 
-  factory ModelIndex.fromJson(Map<String, dynamic> json) => _$ModelIndexFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexToJson(this);
+  factory ModelIndexQuote.fromJson(Map<String, dynamic> json) => _$ModelIndexQuoteFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexQuoteToJson(this);
 }
+
 
 @JsonSerializable()
-class ModelIndexes {
+class ModelIndexQuotes {
   int total;
-  List<ModelIndex> items;
+  List<ModelIndexQuote> items;
 
-  ModelIndexes(this.total, this.items);
+  ModelIndexQuotes(this.total, this.items);
 
-  ModelIndex get(int pos) {
-    if (items==null || items.length<pos+1){
-      return null;
-    }
-    return items[pos];
-  }
-
-  List<String> indexCodes() {
-    if(items != null) {
-      return items.map((item) {
-        return item.zqdm;
-      }).toList();
-    }
-
-    return null;
-  }
-
-  void update(ModelIndexes quotes) {
-    if(quotes == null || quotes.items == null || this.items == null) {
-      return;
-    }
-
-    for (var oldItem in items) {
-      for (var newItem in quotes.items) {
-        if(oldItem.zqdm == newItem.zqdm) {
-          oldItem.update(newItem);
-          break;
-        }
-      }
-    }
-  }
-
-  factory ModelIndexes.fromJson(Map<String, dynamic> json) => _$ModelIndexesFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexesToJson(this);
-
-  static ModelIndexes parse(json) => ModelIndexes.fromJson(json);
+  factory ModelIndexQuotes.fromJson(Map<String, dynamic> json) => _$ModelIndexQuotesFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexQuotesToJson(this);
 }
-

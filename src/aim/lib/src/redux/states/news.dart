@@ -3,21 +3,46 @@ import '../../model/news.dart';
 
 export 'base.dart';
 
-class NewsState  {
-  // news categories
-  NewsCategoriesState categoriesState;
+// 资讯
+class StateNews{
+  StateNewsCategories categories;
 
-  NewsState({this.categoriesState});
-  NewsState.init() {
-    categoriesState = NewsCategoriesState.init();
+  StateNews({this.categories});
+  factory StateNews.init() => StateNews(
+    categories: StateNewsCategories.init()
+  );
+}
+
+// 资讯-类别
+class StateNewsCategories {
+  State state;
+  List<StateNewsCategory> categories;
+
+  StateNewsCategories({this.state, this.categories});
+
+  factory StateNewsCategories.init() => StateNewsCategories(
+    state: State.init(),
+    categories: []
+  );
+
+  StateNewsCategories copyWith({State state, List<StateNewsCategory> categories}) {
+    return StateNewsCategories(state: state??this.state, categories: categories??this.categories);
   }
 }
 
+// 资讯-类别-列表
+class StateNewsCategory {
+  ModelNewsCategory category;
+  StateNewsItems stateItems;
 
-class NewsCategoriesState extends BaseState{
-  ModelNewsCategories categories;
-
-  NewsCategoriesState({Status status, String msg, this.categories}): super(status: status, msg: msg);
-  NewsCategoriesState.init();
+  StateNewsCategory({this.category, this.stateItems});
 }
 
+// 资讯-类别-列表-条目
+class StateNewsItems {
+  int total;
+  int page;
+  List<ModelNewsItem> items;
+
+  StateNewsItems({this.total, this.page, this.items});
+}

@@ -1,4 +1,4 @@
-import '../../models.dart';
+import '../../model/index.dart';
 
 
 // action for loading main indexes
@@ -14,12 +14,13 @@ class ActionLoadMainIndexesFailed {
   ActionLoadMainIndexesFailed({this.msg});
 }
 
+
 // action for update main indexes's quote
 class ActionUpdateMainIndexesQuote {}
 
 class ActionUpdateMainIndexesQuoteSucceed {
-  ModelIndexes indexes;
-  ActionUpdateMainIndexesQuoteSucceed({this.indexes});
+  ModelIndexQuotes quotes;
+  ActionUpdateMainIndexesQuoteSucceed({this.quotes});
 }
 
 class ActionUpdateMainIndexesQuoteFailed {

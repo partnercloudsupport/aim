@@ -5,23 +5,23 @@ import '../actions/news.dart';
 
 
 // reducer for loading news categories action
-final newsCategoriesReducer = combineReducers<NewsCategoriesState>([
-  TypedReducer<NewsCategoriesState, ActionLoadNewsCategories>(_loadNewsCategories),
-  TypedReducer<NewsCategoriesState, ActionLoadNewsCategoriesSucceed>(_loadNewsCategoriesSucceed),
-  TypedReducer<NewsCategoriesState, ActionLoadNewsCategoriesFailed>(_loadNewsCategoriesFailed),
+final newsCategoriesReducer = combineReducers<StateNewsCategories>([
+  TypedReducer<StateNewsCategories, ActionLoadNewsCategories>(_loadNewsCategories),
+  TypedReducer<StateNewsCategories, ActionLoadNewsCategoriesSucceed>(_loadNewsCategoriesSucceed),
+  TypedReducer<StateNewsCategories, ActionLoadNewsCategoriesFailed>(_loadNewsCategoriesFailed),
 ]);
 
 
-NewsCategoriesState _loadNewsCategories(NewsCategoriesState state, ActionLoadNewsCategories action) {
-  return NewsCategoriesState(status: Status.loading);
+StateNewsCategories _loadNewsCategories(StateNewsCategories state, ActionLoadNewsCategories action) {
+  return state.copyWith(state: State.loading());
 }
 
-NewsCategoriesState _loadNewsCategoriesSucceed(NewsCategoriesState state, ActionLoadNewsCategoriesSucceed action) {
-  return NewsCategoriesState(status: Status.loaded, categories: action.categories);
+StateNewsCategories _loadNewsCategoriesSucceed(StateNewsCategories state, ActionLoadNewsCategoriesSucceed action) {
+  return state.copyWith(state: State.loaded(), categories: action?.categories?.items.map((category){return StateNewsCategory(category: category);}).toList());
 }
 
-NewsCategoriesState _loadNewsCategoriesFailed(NewsCategoriesState state, ActionLoadNewsCategoriesFailed action) {
-  return NewsCategoriesState(status: Status.failed, msg: action.msg);
+StateNewsCategories _loadNewsCategoriesFailed(StateNewsCategories state, ActionLoadNewsCategoriesFailed action) {
+  return state.copyWith(state: State.failed(action.msg));
 }
 
 

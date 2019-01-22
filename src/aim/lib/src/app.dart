@@ -12,7 +12,7 @@ import 'view/theme.dart';
 
 
 class AimApp extends StatelessWidget{
-  final Store<AppState> store = Store<AppState>(appReducer, initialState: AppState.init(), middleware: appMiddleware);
+  final Store<StateApp> store = Store<StateApp>(appReducer, initialState: StateApp.init(), middleware: appMiddleware);
 
   @override
   Widget build(BuildContext context) {

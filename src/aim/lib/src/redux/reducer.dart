@@ -3,13 +3,13 @@ import 'state.dart';
 import 'reducers/news.dart';
 import 'reducers/index.dart';
 
-AppState appReducer(AppState state, action) {
-  return AppState(
-    news: NewsState(
-      categoriesState: newsCategoriesReducer(state.news.categoriesState, action),
+StateApp appReducer(StateApp state, action) {
+  return StateApp(
+    news: StateNews(
+      categories: newsCategoriesReducer(state.news.categories, action),
     ),
-    indexes: IndexesState(
-      mainIndexesState:  mainIndexReducer(state.indexes.mainIndexesState, action),
+    indexes: StateIndexes(
+      mainIndexes:  mainIndexReducer(state.indexes.mainIndexes, action),
     ),
   );
 }

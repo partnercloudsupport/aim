@@ -22,4 +22,12 @@ void main() {
   items1.forEach((item){
     print(item.name);
   });
+
+  Item item = Item(age: 1, name: '1');
+  print(item?.name);
+
+  List<int> eles = [1, 2, 3];
+  print(eles.length>3?eles.elementAt(3):null);
+  var mapeles = Map.fromIterable(eles??[]);
+  print(mapeles);
 }

@@ -2,10 +2,36 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'stock.g.dart';
 
+
 @JsonSerializable()
 class ModelStock {
+  String zqdm;
+  String zqmc;
+
+  ModelStock(this.zqdm, this.zqmc);
+
+  factory ModelStock.fromJson(Map<String, dynamic> json) => _$ModelStockFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelStockToJson(this);
+}
+
+
+@JsonSerializable()
+class ModelStocks {
+  int total;
+  List<ModelStock> items;
+
+  ModelStocks(this.total, this.items);
+
+  factory ModelStocks.fromJson(Map<String, dynamic> json) => _$ModelStocksFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelStocksToJson(this);
+}
+
+
+
+@JsonSerializable()
+class ModelStockQuote {
   String zqdm; // 证券代码
-  String zqmc; // 证券名称
+  String source; // 行情来源
 
   double jkj; // 今开价
   double zsj; // 昨收价
@@ -43,8 +69,7 @@ class ModelStock {
 
   String time; // 数据时间
 
-  ModelStock(this.zqdm, this.zqmc, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
-  ModelStock.init();
+  ModelStockQuote(this.zqdm, this.source, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
 
   double get zde {
     if(dqj == null || zsj == null){
@@ -61,7 +86,7 @@ class ModelStock {
   }
 
   String get strZqdm => zqdm??'--';
-  String get strZqmc => zqmc??'--';
+  String get strSource => source??'--';
 
   String get strJkj => jkj!=null ? jkj.toStringAsFixed(2) : '--';
   String get strZsj => zsj!=null ? zsj.toStringAsFixed(2) : '--';
@@ -101,18 +126,18 @@ class ModelStock {
   String get strZde => zde!=null ? zde.toStringAsFixed(2) : '--';   // 涨跌额
   String get strZdf => zdf!=null ? '${(100*zdf).toStringAsFixed(2)}%' : '--';   // 涨跌幅
 
-  factory ModelStock.fromJson(Map<String, dynamic> json) => _$ModelStockFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelStockToJson(this);
+  factory ModelStockQuote.fromJson(Map<String, dynamic> json) => _$ModelStockQuoteFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelStockQuoteToJson(this);
 }
 
 
 @JsonSerializable()
-class ModelStocks {
+class ModelStockQuotes {
   int total;
-  List<ModelStock> items;
+  List<ModelStockQuote> items;
 
-  ModelStocks(this.total, this.items);
+  ModelStockQuotes(this.total, this.items);
 
-  factory ModelStocks.fromJson(Map<String, dynamic> json) => _$ModelStocksFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelStocksToJson(this);
+  factory ModelStockQuotes.fromJson(Map<String, dynamic> json) => _$ModelStockQuotesFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelStockQuotesToJson(this);
 }
