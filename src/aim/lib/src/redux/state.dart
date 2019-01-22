@@ -2,6 +2,7 @@ import 'states/user.dart';
 import 'states/news.dart';
 import 'states/index.dart';
 
+export 'states/base.dart';
 export 'states/user.dart';
 export 'states/news.dart';
 export 'states/index.dart';

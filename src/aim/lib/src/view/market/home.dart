@@ -12,14 +12,14 @@ import 'widget/stock.dart';
 class MarketHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<StateApp, StateMainIndexes>(
+    return StoreConnector<StateApp, State>(
       onInit: (store) {
         store.dispatch(ActionLoadMainIndexes);
       },
       converter: (store) {
         return store.state.indexes.mainIndexes;
       },
-      builder: (context, status) {
+      builder: (context, mainIndexes) {
         return Scaffold(
           appBar: AppBar(
             title: StockSearchButton(),
