@@ -16,20 +16,20 @@ class StateIndexes{
 
 
 class StateMainIndexes {
-  State state;
+  LState state;
   List<StateMainIndex> indexes;
 
   StateMainIndexes({this.state, this.indexes});
 
   factory StateMainIndexes.init() => StateMainIndexes(
-    state: State.init(),
+    state: LState.init(),
     indexes: []
   );
 
-  factory StateMainIndexes.loading() => StateMainIndexes(state: State.loading());
-  factory StateMainIndexes.failed(String msg) => StateMainIndexes(state: State.failed(msg));
+  factory StateMainIndexes.loading() => StateMainIndexes(state: LState.loading());
+  factory StateMainIndexes.failed(String msg) => StateMainIndexes(state: LState.failed(msg));
 
-  StateMainIndexes copyWith({State state, List<StateMainIndex> indexes}) {
+  StateMainIndexes copyWith({LState state, List<StateMainIndex> indexes}) {
     return StateMainIndexes(
       state: state??this.state,
       indexes: indexes??this.indexes

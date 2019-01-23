@@ -1,9 +1,8 @@
-import 'dart:core';
 import 'package:flutter/material.dart';
 
-import '../../models.dart';
-import 'news_list.dart';
+import '../../../model/news.dart';
 
+import 'list.dart';
 
 class NewsTabsWidget extends StatelessWidget {
   final List<ModelNewsCategory> categories;
@@ -13,21 +12,24 @@ class NewsTabsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: categories.length,
+        length: categories?.length??0,
         initialIndex: 0,
         child: Scaffold(
             appBar: AppBar(
               title: TabBar(
                   isScrollable: true,
-                  tabs: categories.map((category) {
+                  tabs: categories?.map((category) {
                     return Tab(child: Text(category.name, style: TextStyle(fontSize: 16.0),),);
-                  }).toList()
+                  })?.toList()
               ),
             ),
             body: TabBarView(
-                children: categories.map((category) {
-                  return NewsListWidget(category: category);
-                }).toList()
+                children: categories?.map((category) {
+                  return NewsListWidget(
+                    key: PageStorageKey(category.code),
+                    category: category
+                  );
+                })?.toList()
             )
         )
     );

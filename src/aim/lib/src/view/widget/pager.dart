@@ -1,101 +1,87 @@
 import 'package:flutter/material.dart';
-import 'list.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../remotes.dart' show Rpc;
+// no more data
+class NoMoreDataException implements Exception {}
 
-// load status for loader
-enum LoadStatus {loading, loaded, failed}
-// widget builder with item data
-typedef Widget ItemBuilder(BuildContext context, item);
+typedef OnPullDown = Future<void> Function();
+typedef OnPushUp = Future<void> Function();
 
+/// pull/push page loader
+class PagerWidget extends StatefulWidget {
+  final bool enablePull;
+  final OnPullDown onPullDown;
+  final bool enablePush;
+  final OnPushUp onPushUp;
+  final ScrollView child;
 
-class PagingLoadController extends StatefulWidget {
-  final Rpc rpc; //rpc service
-  Map params = {}; //rpc request parameters
-
-  final ItemBuilder itemBuilder; //item widget builder
-
-  PagingLoadController({Key key, @required this.rpc, this.params, @required this.itemBuilder}): super(key: key);
+  PagerWidget({Key key, this.enablePull, this.onPullDown, this.enablePush, this.onPushUp, @required this.child}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _PagingLoadControllerState();
+    return _PagerWidgetState();
   }
 }
 
-
-class _PagingLoadControllerState extends State<PagingLoadController> with AutomaticKeepAliveClientMixin{
-  // pplist controller
-  final PPListController _controller = PPListController();
-  // page list items
-  List<dynamic> _items = [];
-  // current page
-  int _page = 0;
-
-  void _loadFirstPage() {
-    _page = 1;
-    var params = Map.of(widget.params);
-    params['page'] = _page;
-    widget.rpc.request(data: params).then((model){
-      if(model.items.length > 0) {
-        setState(() {
-          _items.addAll(model.items);
-        });
-      }
-      _controller.notifyRefreshCompleted();
-    }).catchError((error){
-      _controller.notifyRefreshFailed();
-    });
-  }
-
-  void _loadNextPage() {
-    _page += 1;
-    var params = Map.of(widget.params);
-    params['page'] = _page;
-    widget.rpc.request(data: params).then((model){
-      if(model.items.length > 0){
-        setState(() {
-          _items.addAll(model.items);
-        });
-
-        if(_page < model.total){
-          _controller.notifyHasMoreData();
-        } else{
-          _controller.notifyLoadMoreCompleted();
-        }
-      } else {
-        _controller.notifyLoadMoreCompleted();
-      }
-    }).catchError((error){
-      _controller.notifyLoadMoreFailed();
-    });
-  }
-
-  @override
-  bool get wantKeepAlive => true;
+class _PagerWidgetState extends State<PagerWidget> {
+  final RefreshController _controller = RefreshController();
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 100)).then((value){
-      _controller.load();
-    });
+    _refresh(false);
+  }
+
+  void _refresh(bool up) async {
+    try {
+      if (up) {
+        if (widget.onPullDown != null) await widget.onPullDown();
+        _controller.sendBack(up, RefreshStatus.completed);
+      } else {
+        if (widget.onPushUp != null) await widget.onPushUp();
+        _controller.sendBack(up, RefreshStatus.idle);
+      }
+    } on NoMoreDataException catch (e) {
+      _controller.sendBack(up, RefreshStatus.completed);
+    } on Exception catch (e) {
+      _controller.sendBack(up, RefreshStatus.failed);
+    }
+  }
+
+  Widget _buildHeader(BuildContext context, int mode) {
+    return ClassicIndicator(
+      mode: mode,
+      noDataText: '没有数据',
+      releaseText: '松开刷新数据',
+      refreshingText: '数据刷新中...',
+      completeText: '刷新完成',
+      failedText: '刷新数据失败',
+      idleText: '下拉刷新',
+    );
+  }
+
+  Widget _buildFooter(BuildContext context, int mode) {
+    return ClassicIndicator(
+      mode: mode,
+      noDataText: '没有数据',
+      releaseText: '松开加载数据',
+      refreshingText: '数据加载中...',
+      completeText: '已经是最后一页了',
+      failedText: '加载数据失败',
+      idleText: '上拉加载',
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return PPListWidget(
+    return SmartRefresher(
       controller: _controller,
-      onRefresh: _loadFirstPage,
-      onLoadMore: _loadNextPage,
-      child: ListView.builder(
-        itemCount: _items.length,
-        itemBuilder: (context, index){
-          return widget.itemBuilder(context, _items[index]);
-        },
-      ),
+      enablePullUp: widget.enablePull ?? true,
+      enablePullDown: widget.enablePush ?? true,
+      onRefresh: _refresh,
+      headerBuilder: _buildHeader,
+      footerBuilder: _buildFooter,
+      child: widget.child,
     );
   }
 }
-
-

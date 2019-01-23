@@ -1,131 +1,111 @@
 import 'package:flutter/material.dart';
 
+// loader status
+enum LoaderStatus { loading, loaded, failed }
 
-// function for load action
-typedef AsyncLoadAction = Future<dynamic> Function() ;
-// function for build widget after load succeed
-typedef AsyncLoadBuilder = Widget Function(BuildContext context, dynamic data);
-// load status
-enum AsyncLoadStatus {loading, loaded, failed}
+// loader state
+class LoaderState<ViewModel> {
+  LoaderStatus status;
+  String msg;
+  ViewModel data;
 
-/// async loader for widget
-class AsyncLoader extends StatefulWidget {
-  final AsyncLoadAction loader;
-  final AsyncLoadBuilder builder;
+  LoaderState({@required this.status, this.msg, this.data});
 
-  AsyncLoader({
-    Key key,
-    @required this.loader,
-    @required this.builder
-  }):super(key:key);
+  factory LoaderState.loading() => LoaderState(status: LoaderStatus.loading);
+  factory LoaderState.loaded(dynamic data) => LoaderState(status: LoaderStatus.loaded, data: data);
+  factory LoaderState.failed(String msg) => LoaderState(status: LoaderStatus.failed, msg: msg);
+}
+
+// loader action
+typedef LoaderAction<ViewModel> = Future Function();
+// loader builder
+typedef LoaderBuilder<ViewModel> = Widget Function(BuildContext context, ViewModel data);
+
+// loader widget
+class LoaderWidget<ViewModel> extends StatefulWidget {
+  // loader action
+  final LoaderAction<ViewModel> action;
+  // child builder
+  final LoaderBuilder<ViewModel> builder;
+
+  LoaderWidget({Key key, @required this.action, @required this.builder}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return AsyncLoaderState();
+    return _LoaderWidgetState<ViewModel>();
   }
 }
 
-
-class AsyncLoaderState extends State<AsyncLoader> {
-  // current load status
-  AsyncLoadStatus _status;
-  // data loaded
-  dynamic _data;
-  // error message for failure
-  String _error;
+// loader widget
+class _LoaderWidgetState<ViewModel> extends State<LoaderWidget<ViewModel>> {
+  // load state
+  LoaderState<ViewModel> state;
 
   @override
   void initState() {
     super.initState();
+    this.load();
   }
 
-  @override
-  void deactivate() {
-    super.deactivate();
-  }
-
-  void load() async{
+  // load action
+  void load() async {
     try {
       // update state to loading
       setState(() {
-        _status = AsyncLoadStatus.loading;
+        state = LoaderState.loading();
       });
 
       // load action
-      _data = await widget.loader();
+      var data = await widget.action();
 
       // update state to loaded
       setState(() {
-        _status = AsyncLoadStatus.loaded;
+        state = LoaderState.loaded(data);
       });
-    }catch(e) {
+    } catch (e) {
       // load failed
       setState(() {
-        _status = AsyncLoadStatus.failed;
-        _error = e.toString();
+        state = LoaderState.failed(e.toString());
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    switch(_status){
-      case AsyncLoadStatus.loading:
-        return _LoadingIndicatorWidget();
-      case AsyncLoadStatus.loaded:
-        return widget.builder(context, _data);
-      case AsyncLoadStatus.failed:
-        return _FailureIndicatorWidget(error: _error, reloader: this.load,);
-    }
-  }
-}
-
-
-class _LoadingIndicatorWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: 1.0,
-      duration: Duration(milliseconds: 500),
-      child: Container(
-        alignment: Alignment.center,
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
-}
-
-class _FailureIndicatorWidget extends StatelessWidget {
-  final String error;
-  final AsyncLoadAction reloader;
-
-  _FailureIndicatorWidget({Key key, this.error, this.reloader}):super(key: key);
-
-  void reload() async {
-    if (this.reloader != null){
-      await this.reloader();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: 1.0,
-      duration: Duration(milliseconds: 800),
-      child: FlatButton(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Text(this.error??'未知错误'),
-              Text('加载失败，点击屏幕重试'),
-            ],
+    Widget child;
+    switch(this.state.status){
+      case LoaderStatus.loading:
+        child = AnimatedOpacity(
+          opacity: 1.0,
+          duration: Duration(milliseconds: 500),
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
-        ),
-        onPressed: (){
-          this.reload();
-        },
-      ),
-    );
+        );
+        break;
+      case LoaderStatus.failed:
+        child = AnimatedOpacity(
+          opacity: 1.0,
+          duration: Duration(milliseconds: 800),
+          child: FlatButton(
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  Text(this.state?.msg ?? '未知错误'),
+                  Text('加载失败，点击屏幕重试'),
+                ],
+              ),
+            ),
+            onPressed: () {
+              widget.action ?? widget.action();
+            },
+          ),
+        );
+        break;
+      case LoaderStatus.loaded:
+        child = widget.builder(context, state.data);
+        break;
+    }
+    return child;
   }
 }
-

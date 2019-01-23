@@ -13,15 +13,15 @@ final newsCategoriesReducer = combineReducers<StateNewsCategories>([
 
 
 StateNewsCategories _loadNewsCategories(StateNewsCategories state, ActionLoadNewsCategories action) {
-  return state.copyWith(state: State.loading());
+  return state.copyWith(state: LState.loading());
 }
 
 StateNewsCategories _loadNewsCategoriesSucceed(StateNewsCategories state, ActionLoadNewsCategoriesSucceed action) {
-  return state.copyWith(state: State.loaded(), categories: action?.categories?.items.map((category){return StateNewsCategory(category: category);}).toList());
+  return state.copyWith(state: LState.loaded(), categories: action?.categories?.items.map((category){return StateNewsCategory(category: category);}).toList());
 }
 
 StateNewsCategories _loadNewsCategoriesFailed(StateNewsCategories state, ActionLoadNewsCategoriesFailed action) {
-  return state.copyWith(state: State.failed(action.msg));
+  return state.copyWith(state: LState.failed(action.msg));
 }
 
 

@@ -39,7 +39,6 @@ class ListViewExampleState extends State<ListViewExample> {
 }
 
 class ItemList extends StatefulWidget {
-  PageStorageKey _key = PageStorageKey<String>('tab0');
   @override
   State<StatefulWidget> createState() {
     return ItemListState();
@@ -48,32 +47,42 @@ class ItemList extends StatefulWidget {
 
 
 class ItemListState extends State<ItemList> {
-  ScrollController _controller = ScrollController();
+  //ScrollController _controller = ScrollController();
+  PageStorageKey _key;
 
   @override
   void initState() {
     super.initState();
+    _key = PageStorageKey<String>('tab0');
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    //_controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      key: widget._key,
-      controller: _controller,
+      key:this._key,
+     // controller: _controller,
       itemCount: 100,
-      itemExtent: 50,
+
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: Text('$index'),
-          title: Text('$index'),
-          subtitle: Text('$index'),
-          trailing: Text('$index'),
+        return Column(
+          children: <Widget>[
+            ListTile(
+              onTap: (){
+                Scaffold.of(context).showSnackBar(SnackBar(content: Text('$index')));
+              },
+              leading: Text('$index'),
+              title: Text('$index'),
+              subtitle: Text('$index'),
+              trailing: Text('$index'),
+            ),
+            Divider(height: 0,)
+          ],
         );
       },
     );

@@ -15,17 +15,17 @@ class StateNews{
 
 // 资讯-类别
 class StateNewsCategories {
-  State state;
+  LState state;
   List<StateNewsCategory> categories;
 
   StateNewsCategories({this.state, this.categories});
 
   factory StateNewsCategories.init() => StateNewsCategories(
-    state: State.init(),
+    state: LState.init(),
     categories: []
   );
 
-  StateNewsCategories copyWith({State state, List<StateNewsCategory> categories}) {
+  StateNewsCategories copyWith({LState state, List<StateNewsCategory> categories}) {
     return StateNewsCategories(state: state??this.state, categories: categories??this.categories);
   }
 }

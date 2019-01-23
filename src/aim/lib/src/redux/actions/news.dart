@@ -13,3 +13,5 @@ class ActionLoadNewsCategoriesFailed {
   final String msg;
   ActionLoadNewsCategoriesFailed({this.msg});
 }
+
+

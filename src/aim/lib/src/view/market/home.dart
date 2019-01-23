@@ -3,48 +3,40 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../redux/state.dart';
 import '../../redux/action.dart';
+import '../../redux/widget.dart';
 
 import 'search.dart';
 import 'widget/index.dart';
 import 'widget/stock.dart';
 
-
 class MarketHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<StateApp, State>(
+    return StoreConnector<StateApp, LState>(
       onInit: (store) {
-        store.dispatch(ActionLoadMainIndexes);
+        if (!store.state.indexes.mainIndexes.state.isLoaded) {
+          store.dispatch(ActionLoadMainIndexes());
+        }
       },
       converter: (store) {
-        return store.state.indexes.mainIndexes;
+        return store.state.indexes.mainIndexes.state;
       },
-      builder: (context, mainIndexes) {
+      builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             title: StockSearchButton(),
           ),
-          body: Column(
-            children: <Widget>[
-              MainIndexesWidget(),
-              OptionalStockWidget()
-            ],
+          body: StateLoader(
+            state: state,
+            builder: (context) {
+              return Column(
+                children: <Widget>[MainIndexesWidget(), OptionalStockWidget()],
+              );
+            },
+            actionRetry: ActionLoadMainIndexes(),
           ),
         );
       },
-    );
-  }
-}
-
-
-class MarketHomeWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        MainIndexesWidget(),
-        OptionalStockWidget()
-      ],
     );
   }
 }

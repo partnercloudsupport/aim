@@ -35,6 +35,7 @@ class AlmService {
   static Dio _dio = Dio(Options(baseUrl: BaseUrl.ALM));
 
   static Future get(String path, {dynamic data}) async {
+    print(path);
     var response = await _dio.get(path, data: data);
     var presult = Protocol.fromJson(response.data);
     if (presult.status != 0){

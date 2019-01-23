@@ -17,7 +17,7 @@ final mainIndexReducer = combineReducers<StateMainIndexes>([
 
 
 StateMainIndexes _loadMainIndexes(StateMainIndexes state, ActionLoadMainIndexes action) {
-  return state.copyWith(state: State.loading());
+  return state.copyWith(state: LState.loading());
 }
 
 StateMainIndexes _loadMainIndexesSucceed(StateMainIndexes state, ActionLoadMainIndexesSucceed action) {
@@ -25,11 +25,11 @@ StateMainIndexes _loadMainIndexesSucceed(StateMainIndexes state, ActionLoadMainI
     return StateMainIndex(index: item);
   })?.toList();
 
-  return state.copyWith(state: State.loaded(), indexes: indexes);
+  return state.copyWith(state: LState.loaded(), indexes: indexes);
 }
 
 StateMainIndexes _loadMainIndexesFailed(StateMainIndexes state, ActionLoadMainIndexesFailed action) {
-  return state.copyWith(state: State.failed(action.msg));
+  return state.copyWith(state: LState.failed(action.msg));
 }
 
 StateMainIndexes _updateMainIndexesQuote(StateMainIndexes state, ActionUpdateMainIndexesQuote action) {
@@ -41,5 +41,5 @@ StateMainIndexes _updateMainIndexesQuoteSucceed(StateMainIndexes state, ActionUp
 }
 
 StateMainIndexes _updateMainIndexesQuoteFailed(StateMainIndexes state, ActionUpdateMainIndexesQuoteFailed action) {
-  return state.copyWith(state: State.failed(action.msg));
+  return state.copyWith(state: LState.failed(action.msg));
 }

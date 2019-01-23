@@ -1,26 +1,37 @@
 // loading status
-enum Status {
+enum LStatus {
   toload,
   loading,
   loaded,
   failed,
 }
 
-// base state
-class State {
-  Status status;
+// loading state
+class LState {
+  LStatus status;
   String msg;
 
-  State({this.status, this.msg});
+  LState({this.status, this.msg});
 
-  factory State.init() => State(status: Status.toload);
-  factory State.loading() => State(status: Status.loading);
-  factory State.loaded() => State(status: Status.loaded);
-  factory State.failed(String msg) => State(status: Status.failed, msg: msg);
+  factory LState.init() => LState(status: LStatus.toload);
+  factory LState.loading() => LState(status: LStatus.loading);
+  factory LState.loaded() => LState(status: LStatus.loaded);
+  factory LState.failed(String msg) => LState(status: LStatus.failed, msg: msg);
 
-  bool get isLoading => status==Status.loading;
-  bool get isLoaded => status==Status.loaded;
-  bool get isFailed => status==Status.failed;
+  bool get isLoading => status==LStatus.loading;
+  bool get isLoaded => status==LStatus.loaded;
+  bool get isFailed => status==LStatus.failed;
 }
 
 
+// pull/push refresh status
+enum PPStatus {
+  refreshing,
+  loading,
+
+}
+
+// pull/push refresh state
+class PPState {
+
+}

@@ -16,24 +16,24 @@ class StateUser {
 
 
 class StateUserLogin{
-  State state;
+  LState state;
 
   int uid;
   String sid;
 
   StateUserLogin({this.state, this.uid, this.sid});
   factory StateUserLogin.init() => StateUserLogin(
-    state: State.init()
+    state: LState.init()
   );
 }
 
 class StateUserStocks {
-  State state;
+  LState state;
   List<StateUserStock> stocks;
 
   StateUserStocks({this.state, this.stocks});
   factory StateUserStocks.init() => StateUserStocks(
-    state: State.init(),
+    state: LState.init(),
     stocks: []
   );
 }
