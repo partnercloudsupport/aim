@@ -30,7 +30,10 @@ class MarketHomePage extends StatelessWidget {
             state: state,
             builder: (context) {
               return Column(
-                children: <Widget>[MainIndexesWidget(), OptionalStockWidget()],
+                children: <Widget>[
+                  MainIndexesWidget(),
+                  OptionalStockWidget()
+                ],
               );
             },
             actionRetry: ActionLoadMainIndexes(),
@@ -40,3 +43,4 @@ class MarketHomePage extends StatelessWidget {
     );
   }
 }
+

@@ -10,6 +10,7 @@ import '../actions/index.dart';
 void fetchMainIndexes(Store<StateApp> store, action, NextDispatcher dispatcher) async {
   try{
     ModelIndexes indexes = await RemoteService.fetchMainIndexes();
+    ModelIndexQuotes quotes = await RemoteService.fetchIndexQuotes(indexes.indexCodes());
     store.dispatch(ActionLoadMainIndexesSucceed(indexes: indexes));
   } catch(e) {
     store.dispatch(ActionLoadMainIndexesFailed(msg: e.toString()));

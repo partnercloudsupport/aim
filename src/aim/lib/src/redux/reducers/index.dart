@@ -21,11 +21,7 @@ StateMainIndexes _loadMainIndexes(StateMainIndexes state, ActionLoadMainIndexes 
 }
 
 StateMainIndexes _loadMainIndexesSucceed(StateMainIndexes state, ActionLoadMainIndexesSucceed action) {
-  var indexes = action.indexes.items?.map((item){
-    return StateMainIndex(index: item);
-  })?.toList();
-
-  return state.copyWith(state: LState.loaded(), indexes: indexes);
+  return state.copyWith(state: LState.loaded(), indexes: action.indexes?.items, quotes: action.quotes?.items);
 }
 
 StateMainIndexes _loadMainIndexesFailed(StateMainIndexes state, ActionLoadMainIndexesFailed action) {
@@ -41,5 +37,5 @@ StateMainIndexes _updateMainIndexesQuoteSucceed(StateMainIndexes state, ActionUp
 }
 
 StateMainIndexes _updateMainIndexesQuoteFailed(StateMainIndexes state, ActionUpdateMainIndexesQuoteFailed action) {
-  return state.copyWith(state: LState.failed(action.msg));
+  return state;
 }

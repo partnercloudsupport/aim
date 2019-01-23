@@ -17,51 +17,38 @@ class StateIndexes{
 
 class StateMainIndexes {
   LState state;
-  List<StateMainIndex> indexes;
+  List<ModelIndex> indexes;
+  List<ModelIndexQuote> quotes;
 
-  StateMainIndexes({this.state, this.indexes});
+  StateMainIndexes({this.state, this.indexes, this.quotes});
 
   factory StateMainIndexes.init() => StateMainIndexes(
     state: LState.init(),
-    indexes: []
+    indexes: [],
+    quotes: [],
   );
 
   factory StateMainIndexes.loading() => StateMainIndexes(state: LState.loading());
   factory StateMainIndexes.failed(String msg) => StateMainIndexes(state: LState.failed(msg));
 
-  StateMainIndexes copyWith({LState state, List<StateMainIndex> indexes}) {
+  StateMainIndexes copyWith({LState state, List<ModelIndex> indexes, List<ModelIndexQuote> quotes}) {
     return StateMainIndexes(
       state: state??this.state,
-      indexes: indexes??this.indexes
+      indexes: indexes??this.indexes,
+      quotes: quotes??this.quotes
     );
   }
 
   StateMainIndexes updateWith({List<ModelIndexQuote> quotes}) {
-    Map<String, ModelIndexQuote> indexQuotes = Map.fromIterable(quotes??[], key: (item){return item.zqdm;});
-
-    List<StateMainIndex> newIndexes = [];
-    for (var item in this.indexes) {
-      newIndexes.add(StateMainIndex(index: item.index, quote: indexQuotes.containsKey(item.code) ? indexQuotes[item.code] : item.quote));
-    }
-
-    return StateMainIndexes(state: this.state,  indexes: newIndexes);
+    return StateMainIndexes(
+      state: this.state,
+      indexes: this.indexes,
+      quotes: quotes??this.quotes
+    );
   }
 
-  List<String> get codes => this.indexes?.map((item){ return item?.code;})?.toList();
+  List<String> get codes => this.indexes?.map((item){ return item?.zqdm;})?.toList();
 
-  StateMainIndex get(int i) => this.indexes.length>i ? this.indexes[i] : null;
-}
-
-class StateMainIndex {
-  ModelIndex index;
-  ModelIndexQuote quote;
-
-  StateMainIndex({this.index, this.quote});
-
-  String get code => this.index?.zqdm;
-  String get name => this.index?.zqmc;
-
-  void update(ModelIndexQuote quote) {
-    this.quote = quote;
-  }
+  ModelIndex getIndex(int i) => this.indexes?.length>i ? this.indexes[i] : null;
+  ModelIndexQuote getQuote(String zqdm) => quotes?.firstWhere((quote){return quote.zqdm == zqdm;}, orElse: (){return null;});
 }

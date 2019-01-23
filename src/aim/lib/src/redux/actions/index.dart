@@ -6,7 +6,8 @@ class ActionLoadMainIndexes {}
 
 class ActionLoadMainIndexesSucceed {
   ModelIndexes indexes;
-  ActionLoadMainIndexesSucceed({this.indexes});
+  ModelIndexQuotes quotes;
+  ActionLoadMainIndexesSucceed({this.indexes, this.quotes});
 }
 
 class ActionLoadMainIndexesFailed {
