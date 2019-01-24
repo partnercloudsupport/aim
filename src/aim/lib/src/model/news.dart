@@ -40,6 +40,7 @@ class ModelNewsItem {
   String code;
   String title;
   String brief;
+  String url;
   List<String> images;
   String source;
   int disabled;

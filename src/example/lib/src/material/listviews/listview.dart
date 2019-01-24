@@ -47,13 +47,17 @@ class ItemList extends StatefulWidget {
 
 
 class ItemListState extends State<ItemList> {
-  //ScrollController _controller = ScrollController();
+  ScrollController _controller = ScrollController();
   PageStorageKey _key;
+
+  void onScroll() {
+  }
 
   @override
   void initState() {
     super.initState();
     _key = PageStorageKey<String>('tab0');
+    _controller.addListener(this.onScroll);
   }
 
   @override
@@ -66,10 +70,11 @@ class ItemListState extends State<ItemList> {
   Widget build(BuildContext context) {
     return ListView.builder(
       key:this._key,
-     // controller: _controller,
+      controller: _controller,
       itemCount: 100,
 
       itemBuilder: (context, index) {
+        print(index);
         return Column(
           children: <Widget>[
             ListTile(

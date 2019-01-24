@@ -7,27 +7,9 @@ part of 'stock.dart';
 // **************************************************************************
 
 ModelStock _$ModelStockFromJson(Map<String, dynamic> json) {
-  return ModelStock(json['zqdm'] as String, json['zqmc'] as String);
-}
-
-Map<String, dynamic> _$ModelStockToJson(ModelStock instance) =>
-    <String, dynamic>{'zqdm': instance.zqdm, 'zqmc': instance.zqmc};
-
-ModelStocks _$ModelStocksFromJson(Map<String, dynamic> json) {
-  return ModelStocks(
-      json['total'] as int,
-      (json['items'] as List)
-          ?.map((e) =>
-              e == null ? null : ModelStock.fromJson(e as Map<String, dynamic>))
-          ?.toList());
-}
-
-Map<String, dynamic> _$ModelStocksToJson(ModelStocks instance) =>
-    <String, dynamic>{'total': instance.total, 'items': instance.items};
-
-ModelStockQuote _$ModelStockQuoteFromJson(Map<String, dynamic> json) {
-  return ModelStockQuote(
+  return ModelStock(
       json['zqdm'] as String,
+      json['zqmc'] as String,
       json['source'] as String,
       (json['jkj'] as num)?.toDouble(),
       (json['zsj'] as num)?.toDouble(),
@@ -61,9 +43,10 @@ ModelStockQuote _$ModelStockQuoteFromJson(Map<String, dynamic> json) {
     ..mrj5 = (json['mrj5'] as num)?.toDouble();
 }
 
-Map<String, dynamic> _$ModelStockQuoteToJson(ModelStockQuote instance) =>
+Map<String, dynamic> _$ModelStockToJson(ModelStock instance) =>
     <String, dynamic>{
       'zqdm': instance.zqdm,
+      'zqmc': instance.zqmc,
       'source': instance.source,
       'jkj': instance.jkj,
       'zsj': instance.zsj,
@@ -97,15 +80,14 @@ Map<String, dynamic> _$ModelStockQuoteToJson(ModelStockQuote instance) =>
       'time': instance.time
     };
 
-ModelStockQuotes _$ModelStockQuotesFromJson(Map<String, dynamic> json) {
-  return ModelStockQuotes(
+ModelStocks _$ModelStocksFromJson(Map<String, dynamic> json) {
+  return ModelStocks(
       json['total'] as int,
       (json['items'] as List)
-          ?.map((e) => e == null
-              ? null
-              : ModelStockQuote.fromJson(e as Map<String, dynamic>))
+          ?.map((e) =>
+              e == null ? null : ModelStock.fromJson(e as Map<String, dynamic>))
           ?.toList());
 }
 
-Map<String, dynamic> _$ModelStockQuotesToJson(ModelStockQuotes instance) =>
+Map<String, dynamic> _$ModelStocksToJson(ModelStocks instance) =>
     <String, dynamic>{'total': instance.total, 'items': instance.items};

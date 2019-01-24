@@ -2,52 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'index.g.dart';
 
-
 @JsonSerializable()
 class ModelIndex {
   String zqdm; // 证券代码
   String zqmc; // 证券名称
-
-  ModelIndex(this.zqdm, this.zqmc);
-
-  String get strZqdm => zqdm??'--';
-  String get strZqmc => zqmc??'--';
-
-  factory ModelIndex.fromJson(Map<String, dynamic> json) => _$ModelIndexFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexToJson(this);
-}
-
-@JsonSerializable()
-class ModelIndexes {
-  int total;
-  List<ModelIndex> items;
-
-  ModelIndexes(this.total, this.items);
-
-  ModelIndex get(int pos) {
-    if (items==null || items.length<pos+1){
-      return null;
-    }
-    return items[pos];
-  }
-
-  List<String> indexCodes() {
-    if(items != null) {
-      return items.map((item) {
-        return item.zqdm;
-      }).toList();
-    }
-
-    return null;
-  }
-
-  factory ModelIndexes.fromJson(Map<String, dynamic> json) => _$ModelIndexesFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexesToJson(this);
-}
-
-@JsonSerializable()
-class ModelIndexQuote {
-  String zqdm; // 证券代码
   String source; // 行情来源
   double jkj; // 今开价
   double zsj; // 昨收价
@@ -60,7 +18,24 @@ class ModelIndexQuote {
   double cje; // 成交额，单位：元
   String time; // 数据时间
 
-  ModelIndexQuote(this.zqdm, this.source, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
+  ModelIndex(this.zqdm, this.zqmc, this.source, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
+  ModelIndex updateWith(ModelIndex other) {
+    return ModelIndex(
+      other.zqdm??this.zqdm,
+      other.zqmc??this.zqmc,
+        other.source??this.source,
+        other.jkj??this.jkj,
+        other.zsj??this.zsj,
+        other.dqj??this.dqj,
+        other.zgj??this.zgj,
+        other.zdj??this.zdj,
+        other.ztj??this.ztj,
+        other.dtj??this.dtj,
+        other.cjl??this.cjl,
+        other.cje??this.cje,
+        other.time??this.time
+    );
+  }
 
   double get zde {
     if(dqj == null || zsj == null){
@@ -77,6 +52,7 @@ class ModelIndexQuote {
   }
 
   String get strZqdm => zqdm??'--';
+  String get strZqmc => zqmc??'--';
   String get strSource => source??'--';
 
   String get strJkj => jkj!=null ? jkj.toStringAsFixed(2) : '--';
@@ -117,18 +93,47 @@ class ModelIndexQuote {
   }
 
 
-  factory ModelIndexQuote.fromJson(Map<String, dynamic> json) => _$ModelIndexQuoteFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexQuoteToJson(this);
+  factory ModelIndex.fromJson(Map<String, dynamic> json) => _$ModelIndexFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexToJson(this);
 }
-
 
 @JsonSerializable()
-class ModelIndexQuotes {
+class ModelIndexes {
   int total;
-  List<ModelIndexQuote> items;
+  List<ModelIndex> items;
 
-  ModelIndexQuotes(this.total, this.items);
+  ModelIndexes(this.total, this.items);
 
-  factory ModelIndexQuotes.fromJson(Map<String, dynamic> json) => _$ModelIndexQuotesFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelIndexQuotesToJson(this);
+  ModelIndexes updateWith(List<ModelIndex> others) {
+    var mothers = Map.fromIterable(others, key: (item){return item.zqdm;});
+    var items = this.items?.map((item){
+      if(mothers.containsKey(item.zqdm))
+        return item.updateWith(mothers[item.zqdm]);
+      else
+        return item;
+    })?.toList();
+
+    return ModelIndexes(this.total,  items??this.items);
+  }
+
+  ModelIndex get(int pos) {
+    if (items==null || items.length<pos+1){
+      return null;
+    }
+    return items[pos];
+  }
+
+  List<String> codes() {
+    if(items != null) {
+      return items.map((item) {
+        return item.zqdm;
+      }).toList();
+    }
+
+    return null;
+  }
+
+  factory ModelIndexes.fromJson(Map<String, dynamic> json) => _$ModelIndexesFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelIndexesToJson(this);
 }
+

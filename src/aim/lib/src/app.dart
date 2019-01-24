@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'redux/state.dart';
-import 'redux/reducer.dart';
-import 'redux/middleware.dart';
+import 'state/app.dart';
+import 'reducer/app.dart';
+import 'middleware/app.dart';
 
-import 'view/home.dart';
-import 'view/theme.dart';
+import 'package:aim/src/screen/home.dart';
+import 'package:aim/src/theme.dart';
 
 
 

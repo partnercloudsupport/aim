@@ -87,10 +87,10 @@ class RemoteService {
   }
 
   // 获取指数行情
-  static Future<ModelIndexQuotes> fetchIndexQuotes(List<String> indexCodes) async {
+  static Future<ModelIndexes> fetchIndexQuotes(List<String> indexCodes) async {
     String path = '/index/quote';
     var params = {'zqdm': indexCodes.join(',')};
     var data = await AlmService.get(path, data: params);
-    return ModelIndexQuotes.fromJson(data);
+    return ModelIndexes.fromJson(data);
   }
 }

@@ -55,7 +55,8 @@ ModelNewsItem _$ModelNewsItemFromJson(Map<String, dynamic> json) {
       json['disabled'] as int,
       json['ptime'] as int,
       json['ctime'] as int,
-      json['mtime'] as int);
+      json['mtime'] as int)
+    ..url = json['url'] as String;
 }
 
 Map<String, dynamic> _$ModelNewsItemToJson(ModelNewsItem instance) =>
@@ -64,6 +65,7 @@ Map<String, dynamic> _$ModelNewsItemToJson(ModelNewsItem instance) =>
       'code': instance.code,
       'title': instance.title,
       'brief': instance.brief,
+      'url': instance.url,
       'images': instance.images,
       'source': instance.source,
       'disabled': instance.disabled,

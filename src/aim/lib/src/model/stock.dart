@@ -2,35 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'stock.g.dart';
 
-
 @JsonSerializable()
 class ModelStock {
-  String zqdm;
-  String zqmc;
-
-  ModelStock(this.zqdm, this.zqmc);
-
-  factory ModelStock.fromJson(Map<String, dynamic> json) => _$ModelStockFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelStockToJson(this);
-}
-
-
-@JsonSerializable()
-class ModelStocks {
-  int total;
-  List<ModelStock> items;
-
-  ModelStocks(this.total, this.items);
-
-  factory ModelStocks.fromJson(Map<String, dynamic> json) => _$ModelStocksFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelStocksToJson(this);
-}
-
-
-
-@JsonSerializable()
-class ModelStockQuote {
   String zqdm; // 证券代码
+  String zqmc;
   String source; // 行情来源
 
   double jkj; // 今开价
@@ -69,7 +44,7 @@ class ModelStockQuote {
 
   String time; // 数据时间
 
-  ModelStockQuote(this.zqdm, this.source, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
+  ModelStock(this.zqdm, this.zqmc, this.source, this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj, this.cjl, this.cje, this.time);
 
   double get zde {
     if(dqj == null || zsj == null){
@@ -86,6 +61,7 @@ class ModelStockQuote {
   }
 
   String get strZqdm => zqdm??'--';
+  String get strZqmc => zqmc??'--';
   String get strSource => source??'--';
 
   String get strJkj => jkj!=null ? jkj.toStringAsFixed(2) : '--';
@@ -126,18 +102,18 @@ class ModelStockQuote {
   String get strZde => zde!=null ? zde.toStringAsFixed(2) : '--';   // 涨跌额
   String get strZdf => zdf!=null ? '${(100*zdf).toStringAsFixed(2)}%' : '--';   // 涨跌幅
 
-  factory ModelStockQuote.fromJson(Map<String, dynamic> json) => _$ModelStockQuoteFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelStockQuoteToJson(this);
+  factory ModelStock.fromJson(Map<String, dynamic> json) => _$ModelStockFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelStockToJson(this);
 }
 
 
 @JsonSerializable()
-class ModelStockQuotes {
+class ModelStocks {
   int total;
-  List<ModelStockQuote> items;
+  List<ModelStock> items;
 
-  ModelStockQuotes(this.total, this.items);
+  ModelStocks(this.total, this.items);
 
-  factory ModelStockQuotes.fromJson(Map<String, dynamic> json) => _$ModelStockQuotesFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelStockQuotesToJson(this);
+  factory ModelStocks.fromJson(Map<String, dynamic> json) => _$ModelStocksFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelStocksToJson(this);
 }
