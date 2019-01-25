@@ -27,7 +27,11 @@ class MarketHomePage extends StatelessWidget {
       builder: (context, mainIndexes) {
         return Scaffold(
           appBar: AppBar(
-            title: StockSearchButton(),
+            centerTitle: true,
+            title: Text('行情'),
+            actions: <Widget>[
+              Icon(Icons.search, size: 28,),
+            ],
           ),
           body: StateLoader(
             state: mainIndexes.state,

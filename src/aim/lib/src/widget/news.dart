@@ -2,116 +2,27 @@ import 'package:flutter/material.dart';
 
 import '../util/time.dart';
 import '../model/news.dart';
-import '../remote/all.dart';
-
 import '../theme.dart';
 
-import 'pager.dart';
-import 'web.dart';
 
+// news list item
+class NewsListItemWidget extends StatelessWidget {
+  final ModelNewsItem item;
+  final Function() onTap;
 
-class NewsTabsWidget extends StatelessWidget {
-  final List<ModelNewsCategory> categories;
-
-  NewsTabsWidget({Key key, @required this.categories}):super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: categories?.length??0,
-        initialIndex: 0,
-        child: Scaffold(
-            appBar: AppBar(
-              title: TabBar(
-                  isScrollable: true,
-                  tabs: categories?.map((category) {
-                    return Tab(child: Text(category.name, style: TextStyle(fontSize: 16.0),),);
-                  })?.toList()
-              ),
-            ),
-            body: TabBarView(
-                children: categories?.map((category) {
-                  return NewsListWidget(
-                      key: PageStorageKey(category.code),
-                      category: category
-                  );
-                })?.toList()
-            )
-        )
-    );
-  }
-}
-
-// news category items list widget
-class NewsListWidget extends StatefulWidget {
-  final ModelNewsCategory category;
-  NewsListWidget({Key key, @required this.category}):super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _NewsListWidgetState();
-  }
-}
-
-class _NewsListWidgetState extends State<NewsListWidget> with AutomaticKeepAliveClientMixin{
-  int page = 0;
-  List<ModelNewsItem> items = [];
-
-  Future<void> _onLoadFirstPage() async {
-    this.page = 1;
-    var result = await RemoteService.fetchNewsItems(widget.category.code, this.page);
-    if(this.mounted){
-      setState(() {
-        this.items = result?.items??[];
-      });
-    }
-  }
-
-  Future<void> _onLoadNextPage() async {
-    this.page += 1;
-    var result = await RemoteService.fetchNewsItems(widget.category.code, this.page);
-
-    if(this.mounted){
-      setState(() {
-        this.items.addAll(result?.items??[]);
-      });
-    }
-
-    var total = result?.total??0;
-    if (this.page > total) {
-      this.page = total;
-      throw NoMoreDataException();
-    }
-  }
-
-  @override
-  bool get wantKeepAlive => true;
+  NewsListItemWidget({Key key, @required this.item, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return PagerWidget(
-      enablePull: true,
-      onPullDown: _onLoadFirstPage,
-      enablePush: true,
-      onPushUp: _onLoadNextPage,
-      child: ListView.builder(
-        key: PageStorageKey<String>(widget.category.code),
-        itemCount: this.items.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: <Widget>[
-              FlatButton(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: NewsItemMixedWidget(item: this.items[index]),
-                onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context){return WebPage(title: this.items[index].title, url: this.items[index].url);}));
-                },
-              ),
-              Divider(height: 8.0)
-            ],
-          );
-        },
-      ),
+    return Column(
+      children: <Widget>[
+        FlatButton(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: NewsItemMixedWidget(item: this.item),
+          onPressed: this.onTap??(){},
+        ),
+        Divider(height: 8.0)
+      ],
     );
   }
 }

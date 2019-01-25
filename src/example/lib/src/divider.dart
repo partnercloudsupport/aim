@@ -11,6 +11,8 @@ class DividerExampleWidget extends StatelessWidget {
         width: double.infinity,
         height: 20.0,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
               child: Text(
@@ -18,7 +20,7 @@ class DividerExampleWidget extends StatelessWidget {
               ),
             ),
             VerticalDivider(
-              width: 3.0,
+              width: 1.0,
               color: Colors.red,
             ),
             Container(

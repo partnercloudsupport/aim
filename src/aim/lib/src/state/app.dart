@@ -3,6 +3,7 @@ import 'news.dart';
 import 'index.dart';
 
 
+// app state
 class StateApp {
   StateUser user;
   StateNews news;
@@ -17,3 +18,5 @@ class StateApp {
       indexes: StateIndexes.init()
   );
 }
+
+// selectors for extract data from apps state

@@ -13,6 +13,7 @@ import 'listviews/examples.dart';
 import 'persistence/examples.dart';
 import 'networks/examples.dart';
 import 'dialogs/examples.dart';
+import 'indicator/examples.dart';
 
 
 class MaterialExamples extends StatelessWidget {
@@ -30,6 +31,7 @@ class MaterialExamples extends StatelessWidget {
     Example('Persistence', PersistenceExamples()),
     Example('Networks', NetworkExamples()),
     Example('Dialogs', DialogExamples()),
+    Example('Indicators', IndicatorExamples()),
   ];
 
   @override

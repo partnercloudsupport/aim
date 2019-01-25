@@ -12,21 +12,29 @@ class AimService {
   static Dio _dio = Dio(Options(baseUrl: BaseUrl.AIM));
 
   static Future get(String path, {dynamic data}) async {
-    var response = await _dio.get(path, data: data);
-    var presult = Protocol.fromJson(response.data);
-    if (presult.status != 0){
-      throw presult.msg;
+    try{
+      var response = await _dio.get(path, data: data);
+      var presult = Protocol.fromJson(response.data);
+      if (presult.status != 0){
+        throw presult.msg;
+      }
+      return presult.data;
+    } on DioError catch (e){
+      throw '网络错误';
     }
-    return presult.data;
   }
 
   static Future post(String path, {dynamic data}) async {
-    var response = await _dio.post(path, data: data);
-    var presult = Protocol.fromJson(response.data);
-    if (presult.status != 0){
-      throw presult.msg;
+    try{
+      var response = await _dio.post(path, data: data);
+      var presult = Protocol.fromJson(response.data);
+      if (presult.status != 0){
+        throw presult.msg;
+      }
+      return presult.data;
+    } on DioError catch (e){
+      throw '网络错误';
     }
-    return presult.data;
   }
 }
 
@@ -35,22 +43,29 @@ class AlmService {
   static Dio _dio = Dio(Options(baseUrl: BaseUrl.ALM));
 
   static Future get(String path, {dynamic data}) async {
-    print(path);
-    var response = await _dio.get(path, data: data);
-    var presult = Protocol.fromJson(response.data);
-    if (presult.status != 0){
-      throw presult.msg;
+    try{
+      var response = await _dio.get(path, data: data);
+      var presult = Protocol.fromJson(response.data);
+      if (presult.status != 0){
+        throw presult.msg;
+      }
+      return presult.data;
+    } on DioError catch (e){
+      throw '网络错误';
     }
-    return presult.data;
   }
 
   static Future post(String path, {dynamic data}) async {
-    var response = await _dio.post(path, data: data);
-    var presult = Protocol.fromJson(response.data);
-    if (presult.status != 0){
-      throw presult.msg;
+    try{
+      var response = await _dio.post(path, data: data);
+      var presult = Protocol.fromJson(response.data);
+      if (presult.status != 0){
+        throw presult.msg;
+      }
+      return presult.data;
+    } on DioError catch (e){
+      throw '网络错误';
     }
-    return presult.data;
   }
 }
 

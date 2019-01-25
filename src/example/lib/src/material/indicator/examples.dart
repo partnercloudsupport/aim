@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import '../../common.dart';
 
-import 'vertical.dart';
-import 'horizontal.dart';
-import 'listtile.dart';
-import 'mixture_items.dart';
-import 'listview.dart';
-import 'custom_scrollview.dart';
+import 'loading_indicator.dart';
+import 'failure_indicator.dart';
 
-class ListViewExamples extends StatelessWidget {
-  List<Example> _examples = [
-    Example('vertical', VerticalListViewExample()),
-    Example('horizontal', HorizontalListViewExamples()),
-    Example('list tile', ListTileExample()),
-    Example('mixture items', MixtureItemsExample()),
-    Example('list view', ListViewExample()),
-    Example('custom scroll view', CustomScrollViewExample()),
+class IndicatorExamples extends StatelessWidget {
+  final List<Example> _examples = [
+    Example('loading', LoadingIndicatorExample()),
+    Example('failure', FailureIndicatorExample()),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ListView Examples'),
+        title: Text('Indicator Examples'),
       ),
       body: ListView.builder(
         itemCount: _examples.length,
