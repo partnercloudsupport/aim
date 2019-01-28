@@ -1,16 +1,15 @@
 import 'package:redux/redux.dart';
 
 import '../state/app.dart';
+import '../remote/all.dart';
 import '../model/index.dart';
 import '../action/index.dart';
-import '../remote/service.dart';
-
 
 
 void fetchMainIndexes(Store<StateApp> store, action, NextDispatcher dispatcher) async {
   try{
-    ModelIndexes indexes = await RemoteService.fetchMainIndexes();
-    ModelIndexes quotes = await RemoteService.fetchIndexQuotes(indexes.codes());
+    ModelIndexes indexes = await Remote.smds.fetchMainIndexes();
+    ModelIndexes quotes = await Remote.smds.fetchIndexQuotes(indexes.codes());
     store.dispatch(ActionLoadMainIndexesSucceed(indexes: indexes?.updateWith(quotes?.items)?.items));
   } catch(e) {
     store.dispatch(ActionLoadMainIndexesFailed(msg: e.toString()));
@@ -21,7 +20,7 @@ void fetchMainIndexes(Store<StateApp> store, action, NextDispatcher dispatcher) 
 void updateMainIndexesQuote(Store<StateApp> store, action, NextDispatcher dispatcher) async {
   try {
     var indexCodes = store.state.indexes.mainIndexes.codes;
-    ModelIndexes quotes = await RemoteService.fetchIndexQuotes(indexCodes);
+    ModelIndexes quotes = await Remote.smds.fetchIndexQuotes(indexCodes);
     store.dispatch(ActionUpdateMainIndexesQuoteSucceed(indexes: quotes.items));
   }catch(e) {
     store.dispatch(ActionUpdateMainIndexesQuoteFailed(msg: e.toString()));

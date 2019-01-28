@@ -7,11 +7,13 @@ part of 'protocol.dart';
 // **************************************************************************
 
 Protocol _$ProtocolFromJson(Map<String, dynamic> json) {
-  return Protocol(json['status'] as int, json['msg'] as String, json['data']);
+  return Protocol(json['status'] as int, json['msg'] as String,
+      json['sid'] as String, json['data']);
 }
 
 Map<String, dynamic> _$ProtocolToJson(Protocol instance) => <String, dynamic>{
       'status': instance.status,
       'msg': instance.msg,
+      'sid': instance.sid,
       'data': instance.data
     };

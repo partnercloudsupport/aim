@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/news.dart';
-import '../remote/service.dart';
+import '../remote/all.dart';
 
 import '../widget/news.dart';
 import '../widget/loader.dart';
@@ -13,7 +13,7 @@ class NewsHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WidgetLoader<ModelNewsCategories, List<ModelNewsCategory>>(
       load: () async {
-        return await RemoteService.fetchNewsCategories();
+        return await Remote.news.fetchNewsCategories();
       },
       converter: (result){
         return result?.items;
@@ -36,7 +36,7 @@ class NewsHomePage extends StatelessWidget {
                   children: categories?.map((category) {
                     return ListLoader<ModelNewsItem>(
                       load: (page) async{
-                        var result = await RemoteService.fetchNewsItems(category.code, page);
+                        var result = await Remote.news.fetchNewsItems(category.code, page);
                         return result?.items;
                       },
                       builder: (context, item){

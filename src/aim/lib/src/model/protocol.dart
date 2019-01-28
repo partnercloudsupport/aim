@@ -7,10 +7,11 @@ part 'protocol.g.dart';
 class Protocol {
   int status;
   String msg;
+  String sid;
   dynamic data;
 
 
-  Protocol(this.status, this.msg, this.data);
+  Protocol(this.status, this.msg, this.sid, this.data);
 
   factory Protocol.fromJson(Map<String, dynamic> json) => _$ProtocolFromJson(json);
   Map<String, dynamic> toJson() => _$ProtocolToJson(this);

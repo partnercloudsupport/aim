@@ -1,0 +1,11 @@
+{
+  "image": {
+    "launch": "http://localhost:9004/image/launch.png"
+  },
+  "service": {
+    "conf": "http://localhost:9004",
+    "user": "http://localhost:9002",
+    "news": "http://localhost:9004",
+    "smds": "http://localhost:9004"
+  }
+}
