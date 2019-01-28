@@ -1,52 +1,53 @@
 import 'package:flutter/material.dart';
 
 
-class StockSearchButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton.icon(
-      color: Theme.of(context).primaryColorLight,
-      shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Theme.of(context).primaryColorLight,
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(10))
-      ),
-      icon: Icon(
-        Icons.search,
-        color: Theme.of(context).primaryIconTheme.color,
-      ),
-      label: Container(
-        height: 30.0,
-        width: 250.0,
-        alignment: Alignment.center,
-        child: Text(
-          '搜索股票，股票代码或者名称',
-          style: Theme.of(context).primaryTextTheme.button,
-        ),
-      ),
-      onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context){
-          return StockSearchPage();
-        }));
-      },
-    );
-  }
-}
-
-
 class StockSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: FlatButton(
-          child: Text('取消'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+      appBar: AppBar(
+        leading: BackButton(),
+        centerTitle: true,
+        title: Theme(
+          data: Theme.of(context).copyWith(inputDecorationTheme: InputDecorationTheme(
+            fillColor: Colors.red
+          )),
+          child: TextField(
+            autofocus: true,
+            keyboardType: TextInputType.number,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 18.0
+            ),
+            decoration: InputDecoration(
+                fillColor: Colors.white,
+                contentPadding: EdgeInsets.symmetric(vertical: 4.0),
+                hintText: '输入股票代码、名称、拼音',
+                border: OutlineInputBorder()
+            ),
+          ),
         ),
       ),
+      body: Center(
+        child: Container(
+          alignment: Alignment.center,
+          width: 150,
+          height: 80,
+          child: TextField(
+            //autofocus: true,
+            focusNode: FocusNode(),
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 18.0
+            ),
+            decoration: InputDecoration(
+              fillColor: Colors.red,
+              contentPadding: EdgeInsets.all(4.0),
+              border: OutlineInputBorder()
+            ),
+          ),
+        ),
+      )
     );
   }
 }

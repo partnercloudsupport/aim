@@ -13,13 +13,7 @@ class WebPage extends StatelessWidget {
       url: this.url??'',
       appBar: AppBar(
         title: Text(this.title??''),
-        leading: FlatButton(
-          onPressed: ()=>Navigator.pop(context),
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-        ),
+        leading: BackButton(),
       ),
       withZoom: true,
       withLocalStorage: true,

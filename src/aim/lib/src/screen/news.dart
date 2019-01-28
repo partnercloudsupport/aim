@@ -5,7 +5,7 @@ import '../remote/service.dart';
 
 import '../widget/news.dart';
 import '../widget/loader.dart';
-import '../widget/indicator.dart';
+import '../widget/basics.dart';
 import '../widget/web.dart';
 
 class NewsHomePage extends StatelessWidget {

@@ -8,7 +8,7 @@ import '../widget/index.dart';
 import '../widget/stock.dart';
 
 import '../widget.dart';
-import 'search.dart';
+import '../routes.dart';
 
 class MarketHomePage extends StatelessWidget {
   MarketHomePage({Key key}): super(key: key);
@@ -30,7 +30,12 @@ class MarketHomePage extends StatelessWidget {
             centerTitle: true,
             title: Text('行情'),
             actions: <Widget>[
-              Icon(Icons.search, size: 28,),
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  Navigator.pushNamed(context, AimRoutes.searchStock);
+                },
+              )
             ],
           ),
           body: StateLoader(

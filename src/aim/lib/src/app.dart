@@ -6,8 +6,8 @@ import 'state/app.dart';
 import 'reducer/app.dart';
 import 'middleware/app.dart';
 
-import 'package:aim/src/screen/home.dart';
-import 'package:aim/src/theme.dart';
+import 'theme.dart';
+import 'routes.dart';
 
 
 
@@ -21,8 +21,8 @@ class AimApp extends StatelessWidget{
       child: new MaterialApp(
         debugShowMaterialGrid: false,
         showSemanticsDebugger: false,
-        home: HomePage(),
         theme: AimTheme.theme,
+        routes: AimRoutes.routes,
       ),
     );
   }
