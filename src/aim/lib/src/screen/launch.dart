@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,7 +15,7 @@ class LaunchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<StateApp, StateLaunch> (
+      body: StoreConnector<AppState, StateLaunch> (
         onInit: (store) {
           store.dispatch(ActionLaunch());
         },
@@ -23,29 +24,28 @@ class LaunchPage extends StatelessWidget {
         },
         builder: (context, launch) {
           if(!launch.state.isLoading){
-            Future.microtask((){
+            Future.delayed(Duration(seconds: 3), (){
               Navigator.of(context).pushReplacementNamed(AimRoutes.home);
             });
           }
-          
+
           return CachedNetworkImage(
             imageUrl: Config.app.image.launch,
             height: double.infinity,
             fit: BoxFit.fitHeight,
-            errorWidget: Image.asset(
-              Assets.imageLaunch,
-              height: double.infinity,
-              fit: BoxFit.fitHeight,
-            ),
-            placeholder: Image.asset(
-              Assets.imageLaunch,
-              height: double.infinity,
-              fit: BoxFit.fitHeight,
-            ),
+//            errorWidget: Image.asset(
+//              Assets.imageLaunch,
+//              height: double.infinity,
+//              fit: BoxFit.fitHeight,
+//            ),
+//            placeholder: Image.asset(
+//              Assets.imageLaunch,
+//              height: double.infinity,
+//              fit: BoxFit.fitHeight,
+//            ),
           );
         },
       ),
     );
   }
 }
-

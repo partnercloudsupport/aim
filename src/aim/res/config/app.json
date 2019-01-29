@@ -1,6 +1,8 @@
 {
-  "image": {
-    "launch": "http://localhost:9004/image/launch.png"
+  "launch": {
+    "duration": 2,
+    "imageUrl": "http://localhost:9004/files/image/launch.png",
+    "assetKey": "/res/image/launch.png"
   },
   "service": {
     "conf": "http://localhost:9004",

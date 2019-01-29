@@ -5,20 +5,20 @@ import '../action/launch.dart';
 
 
 // reducer for loading main index action
-final launchReducer = combineReducers<StateLaunch>([
-  TypedReducer<StateLaunch, ActionLaunch>(_launch),
-  TypedReducer<StateLaunch, ActionLaunchSucceed>(_launchSucceed),
-  TypedReducer<StateLaunch, ActionLaunchFailed>(_launchFailed),
+final launchReducer = combineReducers<LaunchState>([
+  TypedReducer<LaunchState, ActionLaunch>(_launch),
+  TypedReducer<LaunchState, ActionLaunchSucceed>(_launchSucceed),
+  TypedReducer<LaunchState, ActionLaunchFailed>(_launchFailed),
 ]);
 
-StateLaunch _launch(StateLaunch state, ActionLaunch action) {
-  return state.copyWith(state: LState.loading());
+LaunchState _launch(LaunchState state, ActionLaunch action) {
+  return state.copyWith(status: ActionStatus.doing);
 }
 
-StateLaunch _launchSucceed(StateLaunch state, ActionLaunchSucceed action) {
-  return state.copyWith(state: LState.loaded());
+LaunchState _launchSucceed(LaunchState state, ActionLaunchSucceed action) {
+  return state.copyWith(status: ActionStatus.done);
 }
 
-StateLaunch _launchFailed(StateLaunch state, ActionLaunchFailed action) {
-  return state.copyWith(state: LState.failed(action.msg));
+LaunchState _launchFailed(LaunchState state, ActionLaunchFailed action) {
+  return state.copyWith(status: ActionStatus.failed, error: action.error);
 }

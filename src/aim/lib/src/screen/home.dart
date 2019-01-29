@@ -23,8 +23,8 @@ class _HomePageState extends State<HomePage> {
       body: IndexedStack(
         index: this.index??0,
         children: <Widget>[
-          NewsHomePage(),
-          MarketHomePage(),
+          NewsPage(),
+          MarketPage(),
           TradePage(),
           MinePage(),
         ],

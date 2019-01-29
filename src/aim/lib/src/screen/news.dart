@@ -8,7 +8,8 @@ import '../widget/loader.dart';
 import '../widget/basics.dart';
 import '../widget/web.dart';
 
-class NewsHomePage extends StatelessWidget {
+
+class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WidgetLoader<ModelNewsCategories, List<ModelNewsCategory>>(
@@ -23,32 +24,33 @@ class NewsHomePage extends StatelessWidget {
           length: categories?.length??0,
           initialIndex: 0,
           child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: TabBar(
-                    isScrollable: true,
-                    tabs: categories?.map((category) {
-                      return Tab(child: Text(category.name, style: TextStyle(fontSize: 16.0),),);
-                    })?.toList()
-                ),
+            appBar: AppBar(
+              centerTitle: true,
+              title: TabBar(
+                isScrollable: true,
+                tabs: categories?.map((category) {
+                  return Tab(child: Text(category.name, style: TextStyle(fontSize: 16.0),),);
+                })?.toList()
               ),
-              body: TabBarView(
-                  children: categories?.map((category) {
-                    return ListLoader<ModelNewsItem>(
-                      load: (page) async{
-                        var result = await Remote.news.fetchNewsItems(category.code, page);
-                        return result?.items;
-                      },
-                      builder: (context, item){
-                        return NewsListItemWidget(
-                          item: item,
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context){return WebPage(title: item?.title, url: item?.url);}));
-                          },
-                        );
+            ),
+            body: TabBarView(
+              children: categories?.map((category) {
+                return ListLoader<ModelNewsItem>(
+                  keepAlive: true,
+                  load: (page) async{
+                    var result = await Remote.news.fetchNewsItems(category.code, page);
+                    return result?.items;
+                  },
+                  builder: (context, item){
+                    return NewsListItemWidget(
+                      item: item,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context){return WebPage(title: item?.title, url: item?.url);}));
                       },
                     );
-                  })?.toList()
+                  },
+                );
+              })?.toList()
               )
           )
         );

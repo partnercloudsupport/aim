@@ -35,51 +35,56 @@ class ServiceConfig {
 }
 
 @JsonSerializable()
-class ImageConfig {
-  // app launch image url
-  String launch;
+class LaunchConfig {
+  // launch image display duration in seconds
+  int duration;
+  // remote launch image url
+  String imageUrl;
+  // local launch image asset key
+  String assetKey;
 
-  ImageConfig(this.launch);
-
-  factory ImageConfig.fromJson(Map<String, dynamic> json) => _$ImageConfigFromJson(json);
-  Map<String, dynamic> toJson() => _$ImageConfigToJson(this);
+  LaunchConfig(this.duration, this.imageUrl, this.assetKey);
 
   /// init service config
-  factory ImageConfig.initWith({String launch}) {
-    return ImageConfig(launch);
+  factory LaunchConfig.initWith({int duration, String imageUrl, String assetKey}) {
+    return LaunchConfig(duration, imageUrl, assetKey);
   }
 
   /// copy with another service configure object
-  ImageConfig copyWith(ImageConfig cfg) {
-    return ImageConfig.initWith(
-        launch: cfg?.launch??this.launch
+  LaunchConfig copyWith(LaunchConfig cfg) {
+    return LaunchConfig.initWith(
+      duration: cfg?.duration??this.duration,
+      imageUrl: cfg?.imageUrl??this.imageUrl,
+      assetKey: cfg?.assetKey??this.assetKey
     );
   }
-}
 
+  factory LaunchConfig.fromJson(Map<String, dynamic> json) => _$LaunchConfigFromJson(json);
+  Map<String, dynamic> toJson() => _$LaunchConfigToJson(this);
+}
 
 @JsonSerializable()
 class AppConfig {
-  // image config
-  final ImageConfig image;
+  // launch configure
+  final LaunchConfig launch;
   // service base url config
   final ServiceConfig service;
 
-  AppConfig(this.image, this.service);
-
-  factory AppConfig.fromJson(Map<String, dynamic> json) => _$AppConfigFromJson(json);
-  Map<String, dynamic> toJson() => _$AppConfigToJson(this);
+  AppConfig(this.launch, this.service);
 
   /// init app config
-  factory AppConfig.initWith({ImageConfig image, ServiceConfig service}) {
-    return AppConfig(image, service);
+  factory AppConfig.initWith({LaunchConfig launch, ServiceConfig service}) {
+    return AppConfig(launch, service);
   }
 
   /// update configure with another configure object
   AppConfig copyWith(AppConfig cfg) {
     return AppConfig.initWith(
-      image: this.image?.copyWith(cfg.image)??cfg.image,
-      service: this.service?.copyWith(cfg.service)??cfg.service
+      launch: this.launch?.copyWith(cfg?.launch)??cfg.launch,
+      service: this.service?.copyWith(cfg?.service)??cfg.service
     );
   }
+
+  factory AppConfig.fromJson(Map<String, dynamic> json) => _$AppConfigFromJson(json);
+  Map<String, dynamic> toJson() => _$AppConfigToJson(this);
 }

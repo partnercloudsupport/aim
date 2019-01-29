@@ -37,12 +37,12 @@ class Config {
 
   static Future<AppConfig> loadFromAssets() async {
     String strConfig = await rootBundle.loadString(Assets.appConfig);
-    return AppConfig.fromJson(jsonDecode(strConfig));
+    return AppConfig.fromJson(jsonDecode(strConfig??'{}'));
   }
 
   static Future<AppConfig> loadFromStorage() async {
     String strConfig = Local.sp.getConfig();
-    return AppConfig.fromJson(jsonDecode(strConfig));
+    return AppConfig.fromJson(jsonDecode(strConfig??'{}'));
   }
 
   static Future<AppConfig> loadFromRemote() async {
@@ -53,8 +53,10 @@ class Config {
 
 // default app config
 AppConfig _defaultAppConfig = AppConfig.initWith(
-  image: ImageConfig.initWith(
-    launch: 'http://localhost:9004/image/launch.png'
+  launch: LaunchConfig.initWith(
+    duration: 2,
+    imageUrl: 'http://localhost:9004/files/image/launch.png',
+    assetKey: '/res/image/launch.png'
   ),
   service: ServiceConfig.initWith(
     conf: 'http://localhost:9004',

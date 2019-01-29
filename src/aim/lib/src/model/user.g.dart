@@ -6,9 +6,9 @@ part of 'user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ModelSession _$ModelSessionFromJson(Map<String, dynamic> json) {
-  return ModelSession(json['sid'] as String);
+ModelUser _$ModelUserFromJson(Map<String, dynamic> json) {
+  return ModelUser(json['sid'] as String, json['uid'] as String);
 }
 
-Map<String, dynamic> _$ModelSessionToJson(ModelSession instance) =>
-    <String, dynamic>{'sid': instance.sid};
+Map<String, dynamic> _$ModelUserToJson(ModelUser instance) =>
+    <String, dynamic>{'sid': instance.sid, 'uid': instance.uid};

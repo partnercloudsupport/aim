@@ -4,6 +4,6 @@ class ActionLaunch {}
 class ActionLaunchSucceed {}
 
 class ActionLaunchFailed {
-  final String msg;
-  ActionLaunchFailed({this.msg});
+  final String error;
+  ActionLaunchFailed({this.error});
 }

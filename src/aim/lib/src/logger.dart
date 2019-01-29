@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 /// log levels
 enum Level {DEBUG, INFO, WARN, ERROR, FATAL}
 

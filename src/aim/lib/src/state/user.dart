@@ -1,47 +1,18 @@
 import 'base.dart';
 export 'base.dart';
 
-import '../model/stock.dart';
 
-
-
-class StateUser {
-  StateUserLogin login;
-  StateUserStocks stocks;
-
-  StateUser({this.login, this.stocks});
-  factory StateUser.init() => StateUser(
-    login: StateUserLogin.init(),
-    stocks: StateUserStocks.init()
-  );
-}
-
-
-class StateUserLogin{
-  LState state;
-
-  int uid;
+class UserState extends StateBase {
+  // session id
   String sid;
+  // user id
+  int uid;
 
-  StateUserLogin({this.state, this.uid, this.sid});
-  factory StateUserLogin.init() => StateUserLogin(
-    state: LState.init()
-  );
-}
+  UserState({ActionStatus status, this.sid, this.uid, String error}): super(status: status, error: error);
 
-class StateUserStocks {
-  LState state;
-  List<StateUserStock> stocks;
-
-  StateUserStocks({this.state, this.stocks});
-  factory StateUserStocks.init() => StateUserStocks(
-    state: LState.init(),
-    stocks: []
-  );
-}
-
-class StateUserStock {
-  ModelStock stock;
-
-  StateUserStock({this.stock});
+  factory UserState.init() {
+    return UserState(
+      status: ActionStatus.todo
+    );
+  }
 }

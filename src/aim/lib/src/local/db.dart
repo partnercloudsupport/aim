@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/services.dart';
 
 import '../assets.dart';
+import '../model/stock.dart';
 
 // database name
 const String DBName = 'aim.db';
@@ -10,6 +11,25 @@ const String DBName = 'aim.db';
 class StorageDB {
   // sqflite database objecgt
   Database _db;
+
+  Future<void> init() async {
+    // database file path
+    String path = await getDatabasesPath() + "/" + DBName;
+    // open database
+    this._db = await openDatabase(
+        path,
+        version: 1,
+        onOpen: this._open,
+        onCreate: this._create,
+        onUpgrade: this._upgrade,
+        onDowngrade: this._downgrade,
+        onConfigure: this._configure,
+    );
+  }
+
+  List<ModelStock> getUserStocks() {
+    return [];
+  }
 
   void _open(Database db) async {
 
@@ -30,21 +50,5 @@ class StorageDB {
 
   void _downgrade(Database db, int oldVersion, int newVersion) async {
 
-  }
-
-
-  Future<void> init() async {
-    // database file path
-    String path = await getDatabasesPath() + "/" + DBName;
-    // open database
-    this._db = await openDatabase(
-        path,
-        version: 1,
-        onOpen: this._open,
-        onCreate: this._create,
-        onUpgrade: this._upgrade,
-        onDowngrade: this._downgrade,
-        onConfigure: this._configure,
-    );
   }
 }

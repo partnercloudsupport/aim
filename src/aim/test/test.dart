@@ -5,7 +5,18 @@ class Item {
   Item({this.age, this.name});
 }
 
+enum Tabs{a, b, c}
+
 void main() {
+  var y = {};
+  print(y['xx']);
+  return;
+
+
+  Tabs x = Tabs.c;
+  print(x.index);
+  print(Tabs.values[1]);
+  return;
   List<Item> items = [Item(age: 1, name: '1'), Item(age: 2, name: '2')];
 
   List<Item> items1 = List<Item>();

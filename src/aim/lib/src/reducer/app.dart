@@ -1,18 +1,13 @@
-import 'index.dart';
-import 'news.dart';
+import 'market.dart';
 import 'launch.dart';
 
 import '../state/all.dart';
+import '../state/app.dart';
 
 
-StateApp appReducer(StateApp state, action) {
-  return StateApp(
+AppState appReducer(AppState state, action) {
+  return AppState(
     launch: launchReducer(state.launch, action),
-    news: StateNews(
-      categories: newsCategoriesReducer(state.news.categories, action),
-    ),
-    indexes: StateIndexes(
-      mainIndexes:  mainIndexReducer(state.indexes.mainIndexes, action),
-    ),
+    market: marketReducer(state.market, action),
   );
 }

@@ -10,6 +10,7 @@ class WebPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
+      key: Key('__web_page__'),
       url: this.url??'',
       appBar: AppBar(
         title: Text(this.title??''),

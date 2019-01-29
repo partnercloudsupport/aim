@@ -17,7 +17,7 @@ void main() {
 }
 
 class AimApp extends StatelessWidget{
-  final Store<StateApp> store = Store<StateApp>(appReducer, initialState: StateApp.init(), middleware: appMiddleware);
+  final Store<AppState> store = Store<AppState>(appReducer, initialState: AppState.init(), middleware: appMiddleware);
 
   @override
   Widget build(BuildContext context) {

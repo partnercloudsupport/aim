@@ -258,11 +258,13 @@ class ListLoader<Item> extends StatefulWidget {
   final ListLoadingBuilder loading;
   // list load failed builder
   final ListFailedBuilder failed;
+  // want keep alive
+  final bool keepAlive;
 
   // refresh controller for smart refresher
   final RefreshController controller = RefreshController();
 
-  ListLoader({Key key, @required this.load, @required this.builder, this.loading, this.failed}) : super(key: key);
+  ListLoader({Key key, @required this.load, @required this.builder, this.loading, this.failed, this.keepAlive}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -270,7 +272,7 @@ class ListLoader<Item> extends StatefulWidget {
   }
 }
 
-class _ListLoaderState<Item> extends State<ListLoader<Item>> {
+class _ListLoaderState<Item> extends State<ListLoader<Item>> with AutomaticKeepAliveClientMixin{
   // list loader state
   LoaderState _state;
 
@@ -389,6 +391,9 @@ class _ListLoaderState<Item> extends State<ListLoader<Item>> {
     super.initState();
     this._loadList();
   }
+
+  @override
+  bool get wantKeepAlive => this.widget.keepAlive??false;
 
   @override
   Widget build(BuildContext context) {

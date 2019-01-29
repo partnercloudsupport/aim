@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import '../logger.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _MinePageState extends State<MinePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    Log.info('build mine page');
     return Scaffold(
       appBar: AppBar(
         title: Text('我的'),

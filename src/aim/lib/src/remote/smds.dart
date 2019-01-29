@@ -6,25 +6,25 @@ class SmdsService extends RemoteService {
   SmdsService({String baseUrl}) : super(baseUrl: baseUrl);
 
   // 获取主要指数列表
-  Future<ModelIndexes> fetchMainIndexes() async {
+  Future<List<ModelIndex>> getMainIndexes() async {
     String path = '/index/main';
     var data = await this.get(path);
-    return ModelIndexes.fromJson(data);
+    return ModelIndexes.fromJson(data??'{}')?.items;
   }
 
   // 获取股票行情
-  Future<ModelStocks> fetchStockQuotes(List<String> stockCodes) async {
+  Future<List<ModelStock>> getStockQuotes(List<String> stockCodes) async {
     String path = '/stock/quote';
     var params = {'zqdm': stockCodes.join(',')};
     var data = await this.get(path, data: params);
-    return ModelStocks.fromJson(data);
+    return ModelStocks.fromJson(data??'{}')?.items;
   }
 
   // 获取指数行情
-  Future<ModelIndexes> fetchIndexQuotes(List<String> indexCodes) async {
+  Future<List<ModelIndex>> getIndexQuotes(List<String> indexCodes) async {
     String path = '/index/quote';
     var params = {'zqdm': indexCodes.join(',')};
     var data = await this.get(path, data: params);
-    return ModelIndexes.fromJson(data);
+    return ModelIndexes.fromJson(data??'{}')?.items;
   }
 }

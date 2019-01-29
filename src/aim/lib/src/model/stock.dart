@@ -5,7 +5,7 @@ part 'stock.g.dart';
 @JsonSerializable()
 class ModelStock {
   String zqdm; // 证券代码
-  String zqmc;
+  String zqmc; // 证券名称
   String source; // 行情来源
 
   double jkj; // 今开价

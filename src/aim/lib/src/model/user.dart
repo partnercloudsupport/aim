@@ -3,10 +3,14 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
-class ModelSession {
+class ModelUser {
+  // session id
   final String sid;
-  ModelSession(this.sid);
+  // user id
+  final String uid;
 
-  factory ModelSession.fromJson(Map<String, dynamic> json) => _$ModelSessionFromJson(json);
-  Map<String, dynamic> toJson() => _$ModelSessionToJson(this);
+  ModelUser(this.sid, this.uid);
+
+  factory ModelUser.fromJson(Map<String, dynamic> json) => _$ModelUserFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelUserToJson(this);
 }
