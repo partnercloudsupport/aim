@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../logger.dart';
+import '../model/user.dart';
 
 class StorageSharedPreferences {
   SharedPreferences preferences;
@@ -20,13 +21,23 @@ class StorageSharedPreferences {
   }
 
   /// get user information
-  String getUser() {
-    return this.preferences.getString(_Keys.user);
+  ModelUser getUser() {
+    try{
+      String strUser = this.preferences.getString(_Keys.user);
+      return ModelUser.fromJson(jsonDecode(strUser??'{}'));
+    } catch(e) {
+      return ModelUser.fromJson({});
+    }
   }
 
   /// set user information
-  Future<bool> setUser(String value) async {
-    return await this.preferences.setString(_Keys.user, value);
+  Future<bool> setUser(ModelUser user) async {
+    try{
+      String strUser = jsonEncode(user.toJson());
+      return await this.preferences.setString(_Keys.user, strUser);
+    }catch(e){
+      return false;
+    }
   }
 }
 

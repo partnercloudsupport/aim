@@ -1,72 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import '../state/app.dart';
+import '../state/news.dart';
 import '../model/news.dart';
+import '../action/news.dart';
 import '../remote/all.dart';
 
+import '../widget/web.dart';
 import '../widget/news.dart';
 import '../widget/loader.dart';
-import '../widget/basics.dart';
-import '../widget/web.dart';
+
+import 'container/builder.dart';
 
 
 class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WidgetLoader<ModelNewsCategories, List<ModelNewsCategory>>(
-      load: () async {
-        return await Remote.news.fetchNewsCategories();
-      },
-      converter: (result){
-        return result?.items;
-      },
-      builder: (context, categories){
-        return DefaultTabController(
-          length: categories?.length??0,
-          initialIndex: 0,
-          child: Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: TabBar(
-                isScrollable: true,
-                tabs: categories?.map((category) {
-                  return Tab(child: Text(category.name, style: TextStyle(fontSize: 16.0),),);
-                })?.toList()
-              ),
-            ),
-            body: TabBarView(
-              children: categories?.map((category) {
-                return ListLoader<ModelNewsItem>(
-                  keepAlive: true,
-                  load: (page) async{
-                    var result = await Remote.news.fetchNewsItems(category.code, page);
-                    return result?.items;
-                  },
-                  builder: (context, item){
-                    return NewsListItemWidget(
-                      item: item,
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context){return WebPage(title: item?.title, url: item?.url);}));
-                      },
-                    );
-                  },
-                );
-              })?.toList()
-              )
-          )
-        );
-      },
-      failed: (context, msg, retry) {
-        return Scaffold(
-          appBar: AppBar(),
-          body: FailureIndicator(msg: msg, retry: retry),
-        );
-      },
-      loading: (context) {
-        return Scaffold(
-          appBar: AppBar(),
-          body: LoadingIndicator(),
-        );
-      },
+    return Scaffold(
+      body: StoreConnector<AppState, NewsState> (
+        onInit: (store){
+          if(Selector.activeTab(store.state) == AppTab.news && Selector.news(store.state).isTodo){
+            store.dispatch(ActionLoadNewsData());
+          }
+        },
+        ignoreChange: (state) {
+          return Selector.activeTab(state) != AppTab.news;
+        },
+        onDidChange: (newsState){
+          var store = StoreProvider.of<AppState>(context);
+          if (Selector.activeTab(store.state)==AppTab.news && newsState.isTodo){
+            store.dispatch(ActionLoadNewsData());
+          }
+        },
+        converter: (store){
+          return Selector.news(store.state);
+        },
+        builder: (context, newsState){
+          return StateBuilder(
+            state: newsState,
+            action: () {
+              StoreProvider.of<AppState>(context).dispatch(ActionLoadNewsData());
+            },
+            builder: (context, newsState){
+              return DefaultTabController(
+                  length: newsState?.categories?.length??0,
+                  initialIndex: 0,
+                  child: Scaffold(
+                      appBar: AppBar(
+                        centerTitle: true,
+                        title: TabBar(
+                            isScrollable: true,
+                            tabs: newsState?.categories?.map<Widget>((category) {return Tab(child: Text(category.name, style: TextStyle(fontSize: 16.0),),);})?.toList()
+                        ),
+                      ),
+                      body: TabBarView(
+                          children: newsState?.categories?.map<Widget>((category) {
+                            return ListLoader<ModelNewsItem>(
+                              keepAlive: true,
+                              load: (page) async{
+                                return await Remote.news.getNewsItems(category.code, page);
+                              },
+                              builder: (context, item){
+                                return NewsListItemWidget(
+                                  item: item,
+                                  onTap: () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){return WebPage(title: item?.title, url: item?.url);}));
+                                  },
+                                );
+                              },
+                            );
+                          })?.toList()
+                      )
+                  )
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

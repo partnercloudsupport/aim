@@ -1,3 +1,4 @@
+import 'dart:convert';
 class Item {
   int age;
   String name;
@@ -8,10 +9,17 @@ class Item {
 enum Tabs{a, b, c}
 
 void main() {
+  var xxx = jsonDecode(null??'{}');
+  print(xxx);
+  return;
+
+  List<int> xx = [];
+  var yy = xx.map((i){return i+1;}).toList();
+  print(yy);
+  return;
   var y = {};
   print(y['xx']);
   return;
-
 
   Tabs x = Tabs.c;
   print(x.index);

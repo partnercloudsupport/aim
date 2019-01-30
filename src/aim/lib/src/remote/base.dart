@@ -1,18 +1,19 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
-import '../app.dart';
 import '../model/protocol.dart';
 
-class RemoteService {
-  String _sid;
+abstract class RemoteService {
   final Dio _dio;
+  final Map _publicParams = {};
+
   RemoteService({String baseUrl}) : _dio=Dio(Options(baseUrl: baseUrl));
 
-  Future get(String path, {dynamic data}) async {
+  Future get(String path, {dynamic data, Options options}) async {
     try{
-      var response = await this._dio.get(path, data: _addPublicParams(data, this._sid));
+      var response = await this._dio.get(path, data: _addPublicParams(data), options: options);
       var presult = Protocol.fromJson(response.data);
-      this._sid = presult.sid??this._sid;
       if (presult.status != 0){
         throw presult.msg;
       }
@@ -22,11 +23,15 @@ class RemoteService {
     }
   }
 
-  Future post(String path, {dynamic data}) async {
+  Future post(String path, {dynamic data, Options options}) async {
     try{
-      var response = await this._dio.post(path, data: _addPublicParams(data, this._sid));
+      if (data is Map){
+        ContentType contentType = ContentType.parse('application/x-www-form-urlencoded');
+        options = options?.merge(contentType: contentType)??Options(contentType: contentType);
+      }
+
+      var response = await this._dio.post(path, data: _addPublicParams(data), options: options);
       var presult = Protocol.fromJson(response.data);
-      this._sid = presult.sid??this._sid;
       if (presult.status != 0){
         throw presult.msg;
       }
@@ -36,10 +41,26 @@ class RemoteService {
     }
   }
 
-  static Map<String, dynamic> _addPublicParams(dynamic data, String sid) {
-    if (data is Map<String, dynamic>) {
+  void setPublicParams(String key, String value) {
+    _publicParams[key] = value;
+  }
+
+  void delPublicParams(String key) {
+    _publicParams.remove(key);
+  }
+
+  void usePersistCookie() {
+    try{
+      this._dio.cookieJar = PersistCookieJar();
+    }catch(e){
+      this._dio.cookieJar = CookieJar();
+    }
+  }
+
+  Map _addPublicParams(dynamic data) {
+    if (data is Map) {
       var params = Map.of(data);
-      params.addAll({'_app': App.code, '_platform': App.platform, '_version': App.version, '_sid':sid??''});
+      params.addAll(this._publicParams);
       return params;
     } else {
       return data;

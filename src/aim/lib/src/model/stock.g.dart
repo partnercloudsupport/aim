@@ -18,29 +18,29 @@ ModelStock _$ModelStockFromJson(Map<String, dynamic> json) {
       (json['zdj'] as num)?.toDouble(),
       (json['ztj'] as num)?.toDouble(),
       (json['dtj'] as num)?.toDouble(),
+      json['mcl5'] as int,
+      (json['mcj5'] as num)?.toDouble(),
+      json['mcl4'] as int,
+      (json['mcj4'] as num)?.toDouble(),
+      json['mcl3'] as int,
+      (json['mcj3'] as num)?.toDouble(),
+      json['mcl2'] as int,
+      (json['mcj2'] as num)?.toDouble(),
+      json['mcl1'] as int,
+      (json['mcj1'] as num)?.toDouble(),
+      json['mrl1'] as int,
+      (json['mrj1'] as num)?.toDouble(),
+      json['mrl2'] as int,
+      (json['mrj2'] as num)?.toDouble(),
+      json['mrl3'] as int,
+      (json['mrj3'] as num)?.toDouble(),
+      json['mrl4'] as int,
+      (json['mrj4'] as num)?.toDouble(),
+      json['mrl5'] as int,
+      (json['mrj5'] as num)?.toDouble(),
       json['cjl'] as int,
       (json['cje'] as num)?.toDouble(),
-      json['time'] as String)
-    ..mcl5 = json['mcl5'] as int
-    ..mcj5 = (json['mcj5'] as num)?.toDouble()
-    ..mcl4 = json['mcl4'] as int
-    ..mcj4 = (json['mcj4'] as num)?.toDouble()
-    ..mcl3 = json['mcl3'] as int
-    ..mcj3 = (json['mcj3'] as num)?.toDouble()
-    ..mcl2 = json['mcl2'] as int
-    ..mcj2 = (json['mcj2'] as num)?.toDouble()
-    ..mcl1 = json['mcl1'] as int
-    ..mcj1 = (json['mcj1'] as num)?.toDouble()
-    ..mrl1 = json['mrl1'] as int
-    ..mrj1 = (json['mrj1'] as num)?.toDouble()
-    ..mrl2 = json['mrl2'] as int
-    ..mrj2 = (json['mrj2'] as num)?.toDouble()
-    ..mrl3 = json['mrl3'] as int
-    ..mrj3 = (json['mrj3'] as num)?.toDouble()
-    ..mrl4 = json['mrl4'] as int
-    ..mrj4 = (json['mrj4'] as num)?.toDouble()
-    ..mrl5 = json['mrl5'] as int
-    ..mrj5 = (json['mrj5'] as num)?.toDouble();
+      json['time'] as String);
 }
 
 Map<String, dynamic> _$ModelStockToJson(ModelStock instance) =>

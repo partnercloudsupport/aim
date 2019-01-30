@@ -48,6 +48,10 @@ class Config {
   static Future<AppConfig> loadFromRemote() async {
      return await ConfService(baseUrl: app.service.conf).getAppConfig();
   }
+
+  static get launchDuration => app.launch.duration;
+  static get launchImageUrl => app.launch.imageUrl;
+  static get launchAssetKey => app.launch.assetKey;
 }
 
 
@@ -56,7 +60,7 @@ AppConfig _defaultAppConfig = AppConfig.initWith(
   launch: LaunchConfig.initWith(
     duration: 2,
     imageUrl: 'http://localhost:9004/files/image/launch.png',
-    assetKey: '/res/image/launch.png'
+    assetKey: 'res/image/launch.png'
   ),
   service: ServiceConfig.initWith(
     conf: 'http://localhost:9004',

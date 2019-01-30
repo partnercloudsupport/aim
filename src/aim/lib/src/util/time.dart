@@ -1,5 +1,4 @@
 
-
 class TimeFormat {
   static String format(int unixTimestampInSeconds) {
     var dt = DateTime.fromMillisecondsSinceEpoch(unixTimestampInSeconds*1000);
@@ -15,5 +14,12 @@ class TimeFormat {
     } else {
       return '刚刚';
     }
+  }
+}
+
+class TimeUtil {
+  /// get current timestamp in seconds
+  static int getTimestamp() {
+    return DateTime.now().millisecondsSinceEpoch ~/ 1000;
   }
 }

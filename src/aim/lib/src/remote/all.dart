@@ -20,10 +20,10 @@ class Remote {
   /// init remote service with app configure
   static Future<void> init(AppConfig cfg) async {
     try{
-      conf = ConfService(baseUrl: cfg.service.conf);
-      news = NewsService(baseUrl: cfg.service.news);
-      smds = SmdsService(baseUrl: cfg.service.smds);
-      user = UserService(baseUrl: cfg.service.user);
+      conf = ConfService(baseUrl: cfg.service.conf)..usePersistCookie();
+      news = NewsService(baseUrl: cfg.service.news)..usePersistCookie();
+      smds = SmdsService(baseUrl: cfg.service.smds)..usePersistCookie();
+      user = UserService(baseUrl: cfg.service.user)..usePersistCookie();
     }catch(e){
       Log.fatal(e);
     }
