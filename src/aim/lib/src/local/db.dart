@@ -1,9 +1,10 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/services.dart';
 
+import '../logger.dart';
 import '../assets.dart';
 import '../util/time.dart';
-import '../model/stock.dart';
+import '../model/user.dart';
 
 // storage database
 class StorageDB {
@@ -16,39 +17,96 @@ class StorageDB {
   }
 
   /// get user optional stocks
-  Future<List<ModelStock>> getUserStocks() async {
+  Future<List<ModelUserStock>> getUserStocks() async {
     try{
-      String sql = 'select id, code, name, ctime from tb_user_stock';
+      String sql = 'select `id`, `code`, `name`, `order`, `deleted`, `ctime`, `dtime` from `tb_user_stock` order by `order` desc';
       var results = await this._manager.db.rawQuery(sql);
-      return results?.map<ModelStock>((item){return ModelStock.initWith(zqdm: item['code'], zqmc: item['name']);})?.toList()??[];
+      return results?.map<ModelUserStock>((item){return ModelUserStock.initWith(zqdm: item['code'], zqmc: item['name'], order: item['order'], deleted: item['deleted'], ctime: item['ctime'], dtime: item['dtime']);})?.toList();
     } catch (e){
-     return [];
+     return null;
     }
   }
+
   /// get user stock by stock code
-  Future<ModelStock> getUserStock(String code) async {
-    String sql = 'select id, code, name, ctime from tb_user_stock where code=?';
-    var results = await this._manager.db.rawQuery(sql, [code]);
-    return results?.map<ModelStock>((item){return ModelStock.initWith(zqdm: item['code'], zqmc: item['name']);})?.toList()?.first;
+  Future<ModelUserStock> getUserStock(String code) async {
+    try{
+      String sql = 'select `id`, `code`, `name`, `order`, `deleted`, `ctime`, `dtime` from `tb_user_stock` where `code`=?';
+      var results = await this._manager.db.rawQuery(sql, [code]);
+      return results?.map<ModelUserStock>((item){return ModelUserStock.initWith(zqdm: item['code'], zqmc: item['name'], order: item['order'], deleted: item['deleted'], ctime: item['ctime'], dtime: item['dtime']);})?.toList()?.first;
+    } catch(e) {
+      return null;
+    }
   }
+
+  /// get current user stocks max order value
+  Future<int> getUserStockMaxOrderValue() async {
+    try{
+      String sql = 'select max(`order`) as `order` from `tb_user_stock`';
+      var results = await this._manager.db.rawQuery(sql);
+      return results.map<int>((item){return item['order'];})?.toList()?.first ?? 1;
+    }catch(e){
+      return 1;
+    }
+  }
+
   /// add user optional stock
   Future<void> addUserStock(String code, String name) async {
-    ModelStock stock = await this.getUserStock(code);
-    if(stock != null)
-      return;
+    try{
+      ModelUserStock stock = await this.getUserStock(code);
+      if(stock != null){
+        String sql = 'update `tb_user_stock` set `deleted`=? where `code`=?';
+        await this._manager.db.rawUpdate(sql, [false, code]);
+        return;
+      }
 
-    String sql = 'insert into tb_user_stock(code, name, ctime) values(?, ?, ?)';
-    await this._manager.db.rawInsert(sql, [code, name, TimeUtil.getTimestamp()]);
+      int order = await this.getUserStockMaxOrderValue();
+      String sql = 'insert into `tb_user_stock` (`code`, `name`, `order`, `deleted`, `ctime`) values(?, ?, ?, ?, ?)';
+      await this._manager.db.rawInsert(sql, [code, name, order, false, TimeUtil.getTimestamp()]);
+    }catch(e){}
   }
+
+  /// reorder user stock
+  Future<void> moveUserStock(String sourceCode, String targetCode) async {
+    try{
+      ModelUserStock source = await this.getUserStock(sourceCode);
+      ModelUserStock target = await this.getUserStock(targetCode);
+
+      if(target.order > source.order){
+        // move source up
+        String sql = 'update `tb_user_stock` set `order`=`order`-1 where `order`<=?';
+        await this._manager.db.rawUpdate(sql, [target.order]);
+
+        sql = 'update `tb_user_stock` set `order`=? where `code`=?';
+        await this._manager.db.rawUpdate(sql, [target.order, source.zqdm]);
+      } else {
+        // move source down
+        String sql = 'update `tb_user_stock` set `order`=`order`+1 where `order`>=? and `order`<?';
+        await this._manager.db.rawUpdate(sql, [target.order, source.order]);
+
+        sql = 'update `tb_user_stock` set `order`=? where `code`=?';
+        await this._manager.db.rawUpdate(sql, [target.order, source.zqdm]);
+      }
+    }catch(e){}
+  }
+
   /// update user stock
   Future<int> updateUserStock(String code, String name) async {
-    String sql = 'update tb_user_stock set name=? where code=?';
-    return await this._manager.db.rawUpdate(sql, [name, code]);
+    try{
+      String sql = 'update `tb_user_stock` set `name`=? where `code`=?';
+      return await this._manager.db.rawUpdate(sql, [name, code]);
+    }catch(e){
+      return 0;
+    }
   }
+
   /// delete user optional stock
-  Future<int> delUserStock(String code) async {
-    String sql = 'delete from tb_user_stock where code=?';
-    return await this._manager.db.rawDelete(sql, [code]);
+  Future<int> removeUserStock(String code) async {
+    try{
+      String sql = 'update `tb_user_stock` set `deleted`=? where `code`=?';
+      return await this._manager.db.rawUpdate(sql, [true, code]);
+    }catch(e) {
+      return 0;
+    }
   }
 }
 
@@ -56,6 +114,9 @@ class StorageDB {
 class _SqfliteDBManager {
   // database name
   static final String _DBName = 'aim.db';
+  // database version
+  static final int _DBVersion = 1;
+
   // sqflite database object
   Database _db;
 
@@ -68,33 +129,17 @@ class _SqfliteDBManager {
     // open database
     this._db = await openDatabase(
       path,
-      version: 1,
-      onOpen: this._open,
+      version: _DBVersion,
       onCreate: this._create,
-      onUpgrade: this._upgrade,
-      onDowngrade: this._downgrade,
-      onConfigure: this._configure,
     );
   }
 
-  Future<void> _open(Database db) async {
-
-  }
-
-  Future<void> _configure(Database db) async {
-
-  }
-
   Future<void> _create(Database db, int version) async {
-    String sql = await rootBundle.loadString(Assets.sqlCreate);
-    db.execute(sql);
-  }
-
-  Future<void> _upgrade(Database db, int oldVersion, int newVersion) async {
-
-  }
-
-  Future<void> _downgrade(Database db, int oldVersion, int newVersion) async {
-
+    try{
+      String sql = await rootBundle.loadString(Assets.sqlCreate);
+      db.execute(sql);
+    } catch(e) {
+      Log.error(e);
+    }
   }
 }

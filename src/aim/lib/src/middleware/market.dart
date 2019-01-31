@@ -18,7 +18,8 @@ Future<void> loadMarketData(Store<AppState> store, action, NextDispatcher dispat
     if(Selector.isUserLogin(store.state)){
       stocks = await Remote.user.getUserStocks();
     } else {
-      stocks = await Local.db.getUserStocks();
+      var userStocks = await Local.db.getUserStocks();
+      stocks = userStocks?.map((item){return ModelStock.initWith(zqdm: item.zqdm, zqmc: item.zqmc);})?.toList();
     }
 
     // load market data succeed

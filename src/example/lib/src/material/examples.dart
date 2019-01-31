@@ -14,7 +14,7 @@ import 'persistence/examples.dart';
 import 'networks/examples.dart';
 import 'dialogs/examples.dart';
 import 'indicator/examples.dart';
-
+import 'slivers/examples.dart';
 
 class MaterialExamples extends StatelessWidget {
   List<Example> _examples = [
@@ -32,6 +32,7 @@ class MaterialExamples extends StatelessWidget {
     Example('Networks', NetworkExamples()),
     Example('Dialogs', DialogExamples()),
     Example('Indicators', IndicatorExamples()),
+    Example('Slivers', SliverExamples()),
   ];
 
   @override

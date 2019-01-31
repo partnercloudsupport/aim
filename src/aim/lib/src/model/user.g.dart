@@ -12,3 +12,36 @@ ModelUser _$ModelUserFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ModelUserToJson(ModelUser instance) =>
     <String, dynamic>{'sid': instance.sid, 'uid': instance.uid};
+
+ModelUserStock _$ModelUserStockFromJson(Map<String, dynamic> json) {
+  return ModelUserStock(
+      json['zqdm'] as String,
+      json['zqmc'] as String,
+      json['order'] as int,
+      json['deleted'] as bool,
+      json['ctime'] as int,
+      json['dtime'] as int);
+}
+
+Map<String, dynamic> _$ModelUserStockToJson(ModelUserStock instance) =>
+    <String, dynamic>{
+      'zqdm': instance.zqdm,
+      'zqmc': instance.zqmc,
+      'order': instance.order,
+      'deleted': instance.deleted,
+      'ctime': instance.ctime,
+      'dtime': instance.dtime
+    };
+
+ModelUserStocks _$ModelUserStocksFromJson(Map<String, dynamic> json) {
+  return ModelUserStocks(
+      json['total'] as int,
+      (json['items'] as List)
+          ?.map((e) => e == null
+              ? null
+              : ModelUserStock.fromJson(e as Map<String, dynamic>))
+          ?.toList());
+}
+
+Map<String, dynamic> _$ModelUserStocksToJson(ModelUserStocks instance) =>
+    <String, dynamic>{'total': instance.total, 'items': instance.items};
