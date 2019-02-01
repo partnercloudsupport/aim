@@ -18,6 +18,9 @@ class AimFontWeight {
 
 // 字体颜色
 class AimColors {
+  // background colors
+  final background = Colors.white;
+
   // price color
   Color price(value) {
     if (value == null) {
@@ -101,14 +104,14 @@ class AimTextStyle {
   final listTitle = TextStyle(
     color: Colors.grey,
     fontSize: AimFontSize.normal,
-    fontWeight: AimFontWeight.bold,
+    fontWeight: AimFontWeight.regular,
   );
 
   // 股票名称
   final stockName = TextStyle(
     color: Colors.black,
     fontSize: AimFontSize.normal,
-    fontWeight: AimFontWeight.bold,
+    fontWeight: AimFontWeight.regular,
   );
 
   // 股票代码

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../model/index.dart';
-import '../theme.dart';
+import '../../theme.dart';
+import '../../model/index.dart';
+
 
 
 class IndexesWidget extends StatelessWidget {
@@ -14,7 +15,7 @@ class IndexesWidget extends StatelessWidget {
       color: Colors.white,
       height: 80.0,
       alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[

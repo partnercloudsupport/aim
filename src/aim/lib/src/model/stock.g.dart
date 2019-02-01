@@ -10,6 +10,9 @@ ModelStock _$ModelStockFromJson(Map<String, dynamic> json) {
   return ModelStock(
       json['zqdm'] as String,
       json['zqmc'] as String,
+      json['status'] as String,
+      json['limit'] as String,
+      json['url'] as String,
       json['source'] as String,
       (json['jkj'] as num)?.toDouble(),
       (json['zsj'] as num)?.toDouble(),
@@ -47,6 +50,9 @@ Map<String, dynamic> _$ModelStockToJson(ModelStock instance) =>
     <String, dynamic>{
       'zqdm': instance.zqdm,
       'zqmc': instance.zqmc,
+      'status': instance.status,
+      'limit': instance.limit,
+      'url': instance.url,
       'source': instance.source,
       'jkj': instance.jkj,
       'zsj': instance.zsj,

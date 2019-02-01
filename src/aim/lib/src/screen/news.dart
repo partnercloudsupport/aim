@@ -8,9 +8,9 @@ import '../action/news.dart';
 import '../remote/all.dart';
 
 import '../widget/web.dart';
-import '../widget/news.dart';
 import '../widget/loader.dart';
 
+import 'widget/news.dart';
 import 'container/builder.dart';
 
 
@@ -57,7 +57,7 @@ class NewsPage extends StatelessWidget {
                       body: TabBarView(
                           children: newsState?.categories?.map<Widget>((category) {
                             return ListLoader<ModelNewsItem>(
-                              keepAlive: true,
+                              keepAlive: false,
                               load: (page) async{
                                 return await Remote.news.getNewsItems(category.code, page);
                               },

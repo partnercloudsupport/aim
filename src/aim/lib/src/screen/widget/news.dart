@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../util/time.dart';
-import '../model/news.dart';
-import '../theme.dart';
+import '../../theme.dart';
+import '../../util/time.dart';
+import '../../model/news.dart';
 
 
 // news list item

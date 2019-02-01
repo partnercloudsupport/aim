@@ -1,5 +1,6 @@
 import 'user.dart';
 import 'news.dart';
+import 'stock.dart';
 import 'launch.dart';
 import 'market.dart';
 import 'upgrade.dart';
@@ -24,7 +25,10 @@ class AppState {
   // upgrade information
   UpgradeState upgrade;
 
-  AppState({this.tab, this.user, this.launch, this.news, this.market, this.upgrade});
+  // stock detail page
+  StockDetailState stock;
+
+  AppState({this.tab, this.user, this.launch, this.news, this.market, this.upgrade, this.stock});
 
   factory AppState.init() {
     return AppState(
@@ -34,6 +38,7 @@ class AppState {
       news: NewsState.init(),
       market: MarketState.init(),
       upgrade: UpgradeState.init(),
+      stock: StockDetailState.init(),
     );
   }
 }
@@ -51,4 +56,6 @@ class Selector{
   static NewsState news(AppState state) => state.news;
 
   static MarketState market(AppState state) => state.market;
+
+  static StockDetailState stock(AppState state) => state.stock;
 }

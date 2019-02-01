@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import 'stock.dart';
+
 import '../routes.dart';
 import '../state/app.dart';
 import '../state/market.dart';
 import '../action/market.dart';
-import '../widget/index.dart';
-import '../widget/stock.dart';
+
+import 'widget/index.dart';
+import 'widget/stock.dart';
 import 'container/builder.dart';
 
 class MarketPage extends StatelessWidget {
@@ -20,7 +23,7 @@ class MarketPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: (){
-              Navigator.pushNamed(context, AimRoutes.searchStock);
+              AimNav.push(context, AimRoutes.searchStock);
             },
           )
         ],
@@ -53,7 +56,18 @@ class MarketPage extends StatelessWidget {
               return Column(
                 children: <Widget>[
                   IndexesWidget(indexes: marketState.indexes),
-                  StocksWidget(stocks: marketState.stocks)
+                  UserStockListTitleWidget(),
+                  Expanded(
+                    child: UserStockListWidget(
+                      stocks: marketState.stocks,
+                      onAdd: () {
+                        AimNav.push(context, AimRoutes.searchStock);
+                      },
+                      onTab: (stock){
+                        AimNav.push(context, StockPage(stock: stock));
+                      },
+                    ),
+                  )
                 ],
               );
             },

@@ -21,6 +21,91 @@ class StockItemWidget extends StatelessWidget {
 }
 
 
+class UserStocksTitleWidget extends StatelessWidget {
+
+  Widget _buildTitle(String title) {
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 30.0,
+      alignment: Alignment.topCenter,
+      margin: EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                '股票名称',
+                style: TextStyle(
+                    color: Colors.grey[400],
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                '最新价',
+                style: TextStyle(
+                    color: Colors.grey[400],
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                '涨跌幅',
+                style: TextStyle(
+                    color: Colors.grey[400],
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                '今开价',
+                style: TextStyle(
+                    color: Colors.grey[400],
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                '昨收价',
+                style: TextStyle(
+                    color: Colors.grey[400],
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 
 class StockListItemWidget extends StatelessWidget {
   @override

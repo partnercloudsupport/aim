@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 
 import 'user.dart';
 import 'news.dart';
+import 'stock.dart';
 import 'market.dart';
 import 'launch.dart';
 
@@ -15,6 +16,8 @@ final List<Middleware<AppState>> appMiddleware = [
   TypedMiddleware<AppState, ActionSessionLogin>(sessionLogin),
 
   TypedMiddleware<AppState, ActionLoadNewsData>(loadNewsData),
+
+  TypedMiddleware<AppState, ActionGetStockDetail>(getStockDetail),
 
   TypedMiddleware<AppState, ActionLoadMarketData>(loadMarketData),
   TypedMiddleware<AppState, ActionUpdateMarketIndexesQuote>(updateMarketIndexesQuote),

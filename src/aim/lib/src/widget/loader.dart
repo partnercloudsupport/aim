@@ -281,7 +281,9 @@ class _ListLoaderState<Item> extends State<ListLoader<Item>> with AutomaticKeepA
   // list items loaded
   List<Item> _items;
 
-  void _loadList() async {
+  Future<void> _loadList() async {
+    if(!this.mounted)
+      return;
     try{
       // set page to first page
       this._page = 1;
@@ -311,6 +313,8 @@ class _ListLoaderState<Item> extends State<ListLoader<Item>> with AutomaticKeepA
   }
 
   Future<void> _loadFirstPage() async {
+    if(!this.mounted)
+      return;
     // set page to first page
     this._page = 1;
     // load page data
@@ -328,6 +332,8 @@ class _ListLoaderState<Item> extends State<ListLoader<Item>> with AutomaticKeepA
   }
 
   Future<void> _loadNextPage() async {
+    if(!this.mounted)
+      return;
     // add page
     this._page = this._page==null ? 1 : this._page+1;
     // load page data
@@ -389,7 +395,9 @@ class _ListLoaderState<Item> extends State<ListLoader<Item>> with AutomaticKeepA
   @override
   void initState() {
     super.initState();
-    this._loadList();
+    Future.microtask((){
+      this._loadList();
+    });
   }
 
   @override

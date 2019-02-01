@@ -130,14 +130,34 @@ class _SqfliteDBManager {
     this._db = await openDatabase(
       path,
       version: _DBVersion,
+      onOpen: this._open,
       onCreate: this._create,
     );
   }
 
+  Future<void> _open(Database db) async {
+    try{
+      String strSqls = await rootBundle.loadString(Assets.sqlCreate);
+      List<String> sqls = strSqls.split(';');
+      for(String sql in sqls){
+        sql = sql.trim();
+        if(sql.isNotEmpty)
+          await db.execute(sql);
+      }
+    } catch(e) {
+      Log.error(e);
+    }
+  }
+
   Future<void> _create(Database db, int version) async {
     try{
-      String sql = await rootBundle.loadString(Assets.sqlCreate);
-      db.execute(sql);
+      String strSqls = await rootBundle.loadString(Assets.sqlCreate);
+      List<String> sqls = strSqls.split(';');
+      for(String sql in sqls){
+        sql = sql.trim();
+        if(sql.isNotEmpty)
+          await db.execute(sql);
+      }
     } catch(e) {
       Log.error(e);
     }
