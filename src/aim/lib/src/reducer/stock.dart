@@ -5,20 +5,20 @@ import '../action/stock.dart';
 
 
 final stockDetailReducer = combineReducers<StockDetailState>([
-  TypedReducer<StockDetailState, ActionGetStockDetail>(_userLogin),
-  TypedReducer<StockDetailState, ActionGetStockDetailSucceed>(_userLoginSucceed),
-  TypedReducer<StockDetailState, ActionGetStockDetailFailed>(_userLoginFailed),
+  TypedReducer<StockDetailState, ActionGetStockDetail>(_getStockDetail),
+  TypedReducer<StockDetailState, ActionGetStockDetailSucceed>(_getStockDetailSucceed),
+  TypedReducer<StockDetailState, ActionGetStockDetailFailed>(_getStockDetailFailed),
 ]);
 
 
-StockDetailState _userLogin(StockDetailState state, ActionGetStockDetail action) {
+StockDetailState _getStockDetail(StockDetailState state, ActionGetStockDetail action) {
   return state.copyWith(status: ActionStatus.doing);
 }
 
-StockDetailState _userLoginSucceed(StockDetailState state, ActionGetStockDetailSucceed action) {
+StockDetailState _getStockDetailSucceed(StockDetailState state, ActionGetStockDetailSucceed action) {
   return state.copyWith(status: ActionStatus.done, detail: action.detail);
 }
 
-StockDetailState _userLoginFailed(StockDetailState state, ActionGetStockDetailFailed action) {
+StockDetailState _getStockDetailFailed(StockDetailState state, ActionGetStockDetailFailed action) {
   return state.copyWith(status: ActionStatus.failed, error: action.error);
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'widget/search.dart';
 
+import 'stock.dart';
+import '../routes.dart';
+import '../model/stock.dart';
 
 class StockSearchPage extends StatelessWidget {
   @override
@@ -8,45 +12,14 @@ class StockSearchPage extends StatelessWidget {
       appBar: AppBar(
         leading: BackButton(),
         centerTitle: true,
-        title: Theme(
-          data: Theme.of(context).copyWith(inputDecorationTheme: InputDecorationTheme(
-            fillColor: Colors.red
-          )),
-          child: TextField(
-            autofocus: true,
-            keyboardType: TextInputType.number,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 18.0
-            ),
-            decoration: InputDecoration(
-                fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(vertical: 4.0),
-                hintText: '输入股票代码、名称、拼音',
-                border: OutlineInputBorder()
-            ),
-          ),
-        ),
+        title: SearchInputWidget(onChanged: (text){},),
       ),
-      body: Center(
-        child: Container(
-          alignment: Alignment.center,
-          width: 150,
-          height: 80,
-          child: TextField(
-            //autofocus: true,
-            focusNode: FocusNode(),
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 18.0
-            ),
-            decoration: InputDecoration(
-              fillColor: Colors.red,
-              contentPadding: EdgeInsets.all(4.0),
-              border: OutlineInputBorder()
-            ),
-          ),
-        ),
+      body: SearchHomeWidget(
+        history: List.filled(10, ModelStock.initWith(zqdm: '000001', zqmc: '中国平安')),
+        hottest: List.filled(10, ModelStock.initWith(zqdm: '000001', zqmc: '中国平安')),
+        onTap: (stock){
+          AimNav.push(context, StockPage(stock: stock));
+        },
       )
     );
   }

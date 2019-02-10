@@ -9,6 +9,10 @@ class Item {
 enum Tabs{a, b, c}
 
 void main() {
+  var lst = List<String>.filled(5, 'x').take(3).toList();
+  print(lst);
+  return;
+
   var xxx = jsonDecode(null??'{}');
   print(xxx);
   return;

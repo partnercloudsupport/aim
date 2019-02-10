@@ -14,6 +14,17 @@ class StockDetailWidget extends StatelessWidget{
   Widget _buildWebPage(String url){
     return WebviewScaffold(
       url: url??'',
+      primary: true,
+      withZoom: true,
+      withLocalStorage: true,
+      withJavascript: true,
+      allowFileURLs: true,
+      appCacheEnabled: true,
+      enableAppScheme: true,
+      hidden: false,
+      initialChild: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
@@ -21,9 +32,9 @@ class StockDetailWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return StoreConnector<AppState, StockDetailState>(
       onInit: (store){
-        if(Selector.stock(store.state).isTodo){
+        //if(Selector.stock(store.state).isTodo){
           store.dispatch(ActionGetStockDetail(zqdm: this.zqdm));
-        }
+        //}
       },
       converter: (store){
         return Selector.stock(store.state);

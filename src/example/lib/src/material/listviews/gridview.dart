@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import '../../scaffold_page.dart';
 
 
@@ -10,14 +10,17 @@ class GridViewExample extends StatelessWidget {
       child: GridView.count(
         primary: true,
         padding: EdgeInsets.all(10.0),
-        crossAxisCount: 2,
-        children:  <Widget>[
-          Center(child: Text('hello1',)),
-          Text('hello1', textAlign: TextAlign.right,),
-          Text('hello1'),
-          Text('hello1'),
-          Text('hello1'),
-        ],
+        crossAxisCount: 4,
+        children:  List<Widget>.filled(9, Container(
+            color: Colors.blue,
+            alignment: Alignment.center,
+            height: 40,
+            margin: EdgeInsets.all(5),
+            child: Text('hello'),
+          )
+        ),
+        semanticChildCount: 8,
+        childAspectRatio: 1.5,
       ),
     );
   }
