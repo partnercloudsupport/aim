@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
+import 'builder.dart';
+
 import '../../state/app.dart';
 import '../../state/stock.dart';
 import '../../action/stock.dart';
-import 'builder.dart';
+import '../../widget/webview.dart';
 
 class StockDetailWidget extends StatelessWidget{
   final String zqdm;
@@ -14,17 +16,27 @@ class StockDetailWidget extends StatelessWidget{
   Widget _buildWebPage(String url){
     return WebviewScaffold(
       url: url??'',
-      primary: true,
-      withZoom: true,
-      withLocalStorage: true,
-      withJavascript: true,
       allowFileURLs: true,
       appCacheEnabled: true,
+      clearCache: false,
+      clearCookies: false,
       enableAppScheme: true,
-      hidden: false,
+      withZoom: true,
+      withJavascript: true,
+      withLocalStorage: true,
       initialChild: Center(
         child: CircularProgressIndicator(),
       ),
+    );
+  }
+
+  Widget _buildWebView(String url) {
+    return Container(
+      width: double.infinity,
+      height: 400,
+      alignment: Alignment.center,
+      //margin: EdgeInsets.only(top: 10.0),
+      child: WebView(url: url),
     );
   }
 
@@ -32,9 +44,7 @@ class StockDetailWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return StoreConnector<AppState, StockDetailState>(
       onInit: (store){
-        //if(Selector.stock(store.state).isTodo){
-          store.dispatch(ActionGetStockDetail(zqdm: this.zqdm));
-        //}
+        store.dispatch(ActionGetStockDetail(zqdm: this.zqdm));
       },
       converter: (store){
         return Selector.stock(store.state);
@@ -46,7 +56,30 @@ class StockDetailWidget extends StatelessWidget{
             StoreProvider.of<AppState>(context).dispatch(ActionGetStockDetail(zqdm: this.zqdm));
           },
           builder: (context, stockDetailState){
-            return _buildWebPage(stockDetailState.detailUrl);
+            //return this._buildWebView(stockDetailState.detailUrl);//_buildWebPage(stockDetailState.detailUrl);
+            return Column(
+              children: <Widget>[
+                Expanded(
+                  child: WebView(url: stockDetailState.detailUrl, scriptSrc: stockDetailState.tidyJS),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: FlatButton(
+                        child: Text('买入'),
+                        onPressed: (){},
+                      ),
+                    ),
+                    Expanded(
+                      child: FlatButton(
+                        child: Text('+自选'),
+                        onPressed: (){},
+                      ),
+                    )
+                  ],
+                )
+              ],
+            );
           },
         );
       },

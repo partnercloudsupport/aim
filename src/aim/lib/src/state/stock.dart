@@ -5,7 +5,6 @@ import '../model/stock.dart';
 
 class StockDetailState extends StateBase {
   ModelStock detail;
-
   StockDetailState({ActionStatus status, this.detail, String error}): super(status: status, error: error);
 
   factory StockDetailState.init(){
@@ -24,4 +23,5 @@ class StockDetailState extends StateBase {
 
   bool get isForbidden => this.detail?.isForbidden??true;
   String get detailUrl => this.detail?.url??'';
+  String get tidyJS => this.detail?.tidyjs;
 }

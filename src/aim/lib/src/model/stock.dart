@@ -9,6 +9,7 @@ class ModelStock {
   String status; // 证券状态, open-正常, close-停牌, delisted-退市
   String limit; // 交易限制, none-无限制, nobuy-禁买, nodelay-禁止延期
   String url; // 详情页url
+  String tidyjs; // 详情页清理js url
 
   String source; // 行情来源
 
@@ -48,7 +49,7 @@ class ModelStock {
   String time; // 数据时间
 
   ModelStock(
-      this.zqdm, this.zqmc, this.status, this.limit, this.url, this.source,
+      this.zqdm, this.zqmc, this.status, this.limit, this.url, this.tidyjs, this.source,
       this.jkj, this.zsj, this.dqj, this.zgj, this.zdj, this.ztj, this.dtj,
       this.mcl5, this.mcj5, this.mcl4, this.mcj4, this.mcl3, this.mcj3, this.mcl2, this.mcj2, this.mcl1, this.mcj1,
       this.mrl1, this.mrj1, this.mrl2, this.mrj2, this.mrl3, this.mrj3, this.mrl4, this.mrj4, this.mrl5, this.mrj5,
@@ -56,14 +57,14 @@ class ModelStock {
       this.time);
 
   factory ModelStock.initWith({
-      String zqdm, String zqmc, String status, String limit, String url, String source,
+      String zqdm, String zqmc, String status, String limit, String url, String tidyjs, String source,
       double jkj, double zsj, double dqj, double zgj, double zdj, double ztj, double dtj,
       int mcl5, double mcj5, int mcl4, double mcj4, int mcl3, double mcj3, int mcl2, double mcj2, int mcl1, double mcj1,
       int mrl1, double mrj1, int mrl2, double mrj2, int mrl3, double mrj3, int mrl4, double mrj4, int mrl5, double mrj5,
       int cjl, double cje,
       String time}) {
     return ModelStock(
-        zqdm, zqmc, status, limit, url, source,
+        zqdm, zqmc, status, limit, url, tidyjs, source,
         jkj, zsj, dqj, zgj, zdj, ztj, dtj,
         mcl5, mcj5, mcl4, mcj4, mcl3, mcj3, mcl2, mcj2, mcl1, mcj1,
         mrl1, mrj1, mrl2, mrj2, mrl3, mrj3, mrl4, mrj4, mrl5, mrj5,
