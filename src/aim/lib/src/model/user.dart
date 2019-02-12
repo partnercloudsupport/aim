@@ -11,6 +11,8 @@ class ModelUser {
 
   ModelUser(this.sid, this.uid);
 
+  bool get isLogin => uid != null;
+
   factory ModelUser.fromJson(Map<String, dynamic> json) => _$ModelUserFromJson(json);
   Map<String, dynamic> toJson() => _$ModelUserToJson(this);
 }

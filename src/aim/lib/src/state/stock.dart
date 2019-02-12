@@ -21,7 +21,6 @@ class StockDetailState extends StateBase {
     );
   }
 
-  bool get isForbidden => this.detail?.isForbidden??true;
   String get detailUrl => this.detail?.url??'';
   String get tidyJS => this.detail?.tidyjs;
 }

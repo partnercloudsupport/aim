@@ -61,7 +61,7 @@ class UserStockListItemWidget extends StatelessWidget {
   UserStockListItemWidget({Key key, @required this.stock, this.onTap}): super(key: key);
 
   Color _quoteColor() {
-    return AimTheme.colors.price(this.stock?.zde);
+    return AimTheme.colors.price(this.stock?.quote?.zde);
   }
 
   Widget _buildName() {
@@ -74,7 +74,7 @@ class UserStockListItemWidget extends StatelessWidget {
                 width: double.infinity,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  this.stock?.strZqmc??'--',
+                  this.stock?.zqmc??'--',
                   style: AimTheme.text.stockName,
                 ),
               )
@@ -85,7 +85,7 @@ class UserStockListItemWidget extends StatelessWidget {
                 width: double.infinity,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  this.stock?.strZqdm??'--',
+                  this.stock?.zqdm??'--',
                   style: AimTheme.text.stockCode,
                 )
             ),
@@ -110,10 +110,10 @@ class UserStockListItemWidget extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(child: this._buildName()),
-          Expanded(child: this._buildQuote(this.stock?.strDqj)),
-          Expanded(child: this._buildQuote(this.stock?.strZdf)),
-          Expanded(child: this._buildQuote(this.stock?.strJkj)),
-          Expanded(child: this._buildQuote(this.stock?.strZsj))
+          Expanded(child: this._buildQuote(this.stock?.quote?.strDqj)),
+          Expanded(child: this._buildQuote(this.stock?.quote?.strZdf)),
+          Expanded(child: this._buildQuote(this.stock?.quote?.strJkj)),
+          Expanded(child: this._buildQuote(this.stock?.quote?.strZsj))
         ],
       ),
       onPressed: (){

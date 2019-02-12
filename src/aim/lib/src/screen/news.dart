@@ -11,7 +11,7 @@ import '../widget/web.dart';
 import '../widget/loader.dart';
 
 import 'widget/news.dart';
-import 'container/builder.dart';
+import 'widget/builder.dart';
 
 
 class NewsPage extends StatelessWidget {

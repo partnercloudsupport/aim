@@ -10,7 +10,7 @@ import '../action/market.dart';
 
 import 'widget/index.dart';
 import 'widget/stock.dart';
-import 'container/builder.dart';
+import 'widget/builder.dart';
 
 class MarketPage extends StatelessWidget {
   @override
@@ -64,7 +64,7 @@ class MarketPage extends StatelessWidget {
                         AimNav.push(context, AimRoutes.searchStock);
                       },
                       onTab: (stock){
-                        AimNav.push(context, StockPage(stock: stock));
+                        AimNav.push(context, StockPage(zqdm: stock.zqdm));
                       },
                     ),
                   )

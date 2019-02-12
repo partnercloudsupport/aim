@@ -184,7 +184,7 @@ class StockItemWidget extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  this.stock?.strZqmc??'--',
+                  this.stock?.zqmc??'--',
                   style: AimTheme.text.stockName,
                 ),
               ),
@@ -192,7 +192,7 @@ class StockItemWidget extends StatelessWidget {
             Expanded(
               child: Center(
                   child: Text(
-                    this.stock?.strZqdm??'--',
+                    this.stock?.zqdm??'--',
                     style: AimTheme.text.stockCode,
                   )
               ),

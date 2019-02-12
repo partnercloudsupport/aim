@@ -7,7 +7,7 @@ import '../routes.dart';
 import '../state/app.dart';
 import '../state/launch.dart';
 import '../action/launch.dart';
-import 'container/builder.dart';
+import 'widget/builder.dart';
 
 class LaunchPage extends StatelessWidget {
   @override

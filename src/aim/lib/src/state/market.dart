@@ -13,16 +13,16 @@ class MarketState extends StateBase {
 
   factory MarketState.init() {
     return MarketState(
-      status: ActionStatus.todo
+        status: ActionStatus.todo
     );
   }
 
   MarketState copyWith({ActionStatus status, List<ModelIndex> indexes, List<ModelStock> stocks, String error}) {
     return MarketState(
-      status: status??this.status,
-      indexes: indexes??this.indexes,
-      stocks: stocks??this.stocks,
-      error: error??this.error
+        status: status??this.status,
+        indexes: indexes??this.indexes,
+        stocks: stocks??this.stocks,
+        error: error??this.error
     );
   }
 

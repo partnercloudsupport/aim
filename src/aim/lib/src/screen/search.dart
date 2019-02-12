@@ -15,10 +15,10 @@ class StockSearchPage extends StatelessWidget {
         title: SearchInputWidget(onChanged: (text){},),
       ),
       body: SearchHomeWidget(
-        history: List.filled(10, ModelStock.initWith(zqdm: '000001', zqmc: '中国平安')),
-        hottest: List.filled(10, ModelStock.initWith(zqdm: '000001', zqmc: '中国平安')),
+        history: List.filled(10, ModelStock.initWith(id: '000001', name: '中国平安')),
+        hottest: List.filled(10, ModelStock.initWith(id: '000001',name: '中国平安')),
         onTap: (stock){
-          AimNav.push(context, StockPage(stock: stock));
+          AimNav.push(context, StockPage(zqdm: stock.zqdm));
         },
       )
     );

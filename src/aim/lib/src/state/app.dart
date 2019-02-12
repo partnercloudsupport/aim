@@ -1,5 +1,6 @@
 import 'user.dart';
 import 'news.dart';
+import 'index.dart';
 import 'stock.dart';
 import 'launch.dart';
 import 'market.dart';
@@ -15,11 +16,13 @@ class AppState {
 
   // current user
   UserState user;
+
   // launch state
   LaunchState launch;
 
   // news page state
   NewsState news;
+
   // market page state
   MarketState market;
   // upgrade information
@@ -42,6 +45,66 @@ class AppState {
     );
   }
 }
+
+
+class App {
+  // app selected tab
+  AppTab tab;
+  // app launch state
+  AppLaunchState launchState;
+  // app upgrade state
+  AppUpgradeState upgradeState;
+}
+
+
+// app tab
+enum AppTab{news, market, trade, mine}
+
+// app launch state
+class AppLaunchState extends StateBase {
+  // delay duration in seconds
+  int duration;
+  // local asset key
+  String assetKey;
+  // remote image url
+  String imageUrl;
+
+  // launch finished
+  bool finished;
+
+  AppLaunchState({ActionStatus status, this.duration, this.assetKey, this.imageUrl, this.finished, String error}): super(status: status, error: error);
+
+  factory AppLaunchState.init() {
+    return AppLaunchState(
+        status: ActionStatus.todo,
+        finished: false
+    );
+  }
+
+  AppLaunchState copyWith({ActionStatus status, int duration, String assetKey, String imageUrl, bool finished, String error}) {
+    return AppLaunchState(
+        duration: duration??this.duration,
+        status: status??this.status,
+        assetKey: assetKey??this.assetKey,
+        imageUrl: imageUrl??this.imageUrl,
+        finished: finished??this.finished,
+        error: error??this.error
+    );
+  }
+}
+
+// app upgrade state
+class AppUpgradeState extends StateBase {
+  bool canceled;
+  AppUpgradeState({ActionStatus status, this.canceled, String error}): super(status: status, error: error);
+
+  factory AppUpgradeState.init() {
+    return AppUpgradeState(
+        status: ActionStatus.todo
+    );
+  }
+}
+
 
 /// selectors for extract data from apps state
 class Selector{
