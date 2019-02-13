@@ -9,6 +9,10 @@ class Item {
 enum Tabs{a, b, c}
 
 void main() {
+  var mp = {};
+  print(mp['a']);
+  return;
+
   var lst = List<String>.filled(5, 'x').take(3).toList();
   print(lst);
   return;

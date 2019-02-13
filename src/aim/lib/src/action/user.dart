@@ -1,7 +1,7 @@
+import '../model/user.dart';
 import '../model/stock.dart';
-import '../model/quote.dart';
 
-//// user login
+// user login
 class ActionUserLogin{
   final String user;
   final String pwd;
@@ -9,9 +9,8 @@ class ActionUserLogin{
 }
 
 class ActionUserLoginSucceed{
-  final String sid;
-  final String uid;
-  ActionUserLoginSucceed({this.sid, this.uid});
+  final ModelUser user;
+  ActionUserLoginSucceed({this.user});
 }
 
 class ActionUserLoginFailed {
@@ -20,17 +19,15 @@ class ActionUserLoginFailed {
 }
 
 
-//// session login
+// session login
 class ActionSessionLogin{
-  final String sid;
-  final String uid;
-  ActionSessionLogin({this.sid, this.uid});
+  final ModelUser user;
+  ActionSessionLogin({this.user});
 }
 
 class ActionSessionLoginSucceed{
-  final String sid;
-  final String uid;
-  ActionSessionLoginSucceed({this.sid, this.uid});
+  final ModelUser user;
+  ActionSessionLoginSucceed({this.user});
 }
 
 class ActionSessionLoginFailed {
@@ -39,29 +36,15 @@ class ActionSessionLoginFailed {
 }
 
 
-//// user self selected stocks
-class ActionLoadUserStocks{}
+// user self selected stocks
+class ActionGetUserStocks{}
 
-class ActionLoadUserStocksSucceed {
-  List<ModelStock> stocks;
-  ActionLoadUserStocksSucceed({this.stocks});
+class ActionGetUserStocksSucceed {
+  List<String> stocks;
+  ActionGetUserStocksSucceed({this.stocks});
 }
 
-class ActionLoadUserStocksFailed {
+class ActionGetUserStocksFailed {
   final String error;
-  ActionLoadUserStocksFailed({this.error});
-}
-
-
-//// update user self selected stocks's quote
-class ActionUpdateUserStocksQuote{}
-
-class ActionUpdateUserStocksQuoteSucceed {
-  List<ModelQuote> quotes;
-  ActionUpdateUserStocksQuoteSucceed({this.quotes});
-}
-
-class ActionUpdateUserStocksQuoteFailed {
-  final String error;
-  ActionUpdateUserStocksQuoteFailed({this.error});
+  ActionGetUserStocksFailed({this.error});
 }

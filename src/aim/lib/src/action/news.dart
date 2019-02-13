@@ -1,15 +1,17 @@
 import '../model/news.dart';
 
-class ActionLoadNewsData{}
 
-class ActionLoadNewsDataSucceed{
+// get news categories
+class ActionGetNewsCategories{}
+
+class ActionGetNewsCategoriesSucceed{
   final List<ModelNewsCategory> categories;
-  ActionLoadNewsDataSucceed(this.categories);
+  ActionGetNewsCategoriesSucceed(this.categories);
 }
 
-class ActionLoadNewsDataFailed {
+class ActionGetNewsCategoriesFailed {
   final String error;
-  ActionLoadNewsDataFailed(this.error);
+  ActionGetNewsCategoriesFailed(this.error);
 }
 
 

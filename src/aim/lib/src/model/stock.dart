@@ -58,3 +58,27 @@ class ModelStocks {
   Map<String, dynamic> toJson() => _$ModelStocksToJson(this);
 }
 
+
+@JsonSerializable()
+class ModelSearchStock {
+  String id; // 证券代码
+  String name; // 证券名称
+  String jianpin; // 名称简拼
+  String quanpin; // 名称全拼
+
+  ModelSearchStock(this.id, this.name, this.jianpin, this.quanpin);
+
+  factory ModelSearchStock.fromJson(Map<String, dynamic> json) => _$ModelSearchStockFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelSearchStockToJson(this);
+}
+
+@JsonSerializable()
+class ModelSearchStocks {
+  int total;
+  List<ModelStock> items;
+
+  ModelSearchStocks(this.total, this.items);
+
+  factory ModelSearchStocks.fromJson(Map<String, dynamic> json) => _$ModelSearchStocksFromJson(json);
+  Map<String, dynamic> toJson() => _$ModelSearchStocksToJson(this);
+}

@@ -4,50 +4,49 @@ import '../model/user.dart';
 import '../model/stock.dart';
 import '../model/quote.dart';
 
-class UserState extends StateBase {
+class User {
   // user login state
-  UserLoginState loginState;
+  UserLogin login;
   // user self-selected stocks
-  UserStocksState stocksState;
+  UserStocks stocks;
 
-  UserState({this.loginState, this.stocksState, ActionStatus status, String error}): super(status: status, error: error);
+  User({this.login, this.stocks});
 
-  factory UserState.init() {
-    return UserState(
+  factory User.init() {
+    return User(
+      login: UserLogin.init(),
+      stocks: UserStocks.init(),
+    );
+  }
+
+  User copyWith({UserLogin login, UserStocks stocks}){
+    return User(
+      login: login??this.login,
+      stocks: stocks??this.stocks,
+    );
+  }
+
+  bool get isLogin => login.isLogin;
+}
+
+//// user login state
+class UserLogin extends StateBase {
+  // user object
+  ModelUser user;
+
+  UserLogin({this.user, ActionStatus status, String tip}): super(status: status, tip: tip);
+
+  factory UserLogin.init() {
+    return UserLogin(
       status: ActionStatus.todo
     );
   }
 
-  UserState copyWith({UserLoginState loginState, UserStocksState stocksState, ActionStatus status, String error}){
-    return UserState(
+  UserLogin copyWith({ModelUser user, ActionStatus status, String tip}){
+    return UserLogin(
+      user: user??this.user,
       status: status??this.status,
-      loginState: loginState??this.loginState,
-      stocksState: stocksState??this.stocksState,
-      error: error??this.error
-    );
-  }
-
-  bool get isLogin => loginState.isLogin;
-}
-
-//// user login state
-class UserLoginState extends StateBase {
-  // user object
-  ModelUser user;
-
-  UserLoginState({ActionStatus status, this.user, String error}): super(status: status, error: error);
-
-  factory UserLoginState.init() {
-    return UserLoginState(
-        status: ActionStatus.todo
-    );
-  }
-
-  UserLoginState copyWith({ActionStatus status, ModelUser user, String error}){
-    return UserLoginState(
-        status: status??this.status,
-        user: user??this.user,
-        error: error??this.error
+      tip: tip??this.tip
     );
   }
 
@@ -55,32 +54,25 @@ class UserLoginState extends StateBase {
 }
 
 //// user self selected stocks
-class UserStocksState extends StateBase {
+class UserStocks extends StateBase {
   // user optional stocks
-  List<ModelStock> stocks;
+  List<String> stocks;
 
-  UserStocksState({ActionStatus status, this.stocks, String error}): super(status: status, error: error);
+  UserStocks({this.stocks, ActionStatus status, String tip}): super(status: status, tip: tip);
 
-  factory UserStocksState.init() {
-    return UserStocksState(
-        status: ActionStatus.todo
+  factory UserStocks.init() {
+    return UserStocks(
+      stocks: [],
+      status: ActionStatus.todo
     );
   }
 
-  UserStocksState copyWith({ActionStatus status, List<ModelStock> stocks, String error}) {
-    return UserStocksState(
-        status: status??this.status,
-        stocks: stocks??this.stocks,
-        error: error??this.error
+  UserStocks copyWith({List<String> stocks, ActionStatus status, String tip}) {
+    return UserStocks(
+      stocks: stocks??this.stocks,
+      status: status??this.status,
+      tip: tip??this.tip
     );
-  }
-
-  UserStocksState updateWith({List<ModelQuote> quotes}) {
-
-  }
-
-  List<String> stockCodes() {
-    return this.stocks?.map((item){return item.zqdm;})?.toList();
   }
 }
 

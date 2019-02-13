@@ -4,21 +4,22 @@ import '../state/news.dart';
 import '../action/news.dart';
 
 
-final newsReducer = combineReducers<NewsState>([
-  TypedReducer<NewsState, ActionLoadNewsData>(_loadNewsData),
-  TypedReducer<NewsState, ActionLoadNewsDataSucceed>(_loadNewsDataSucceed),
-  TypedReducer<NewsState, ActionLoadNewsDataFailed>(_loadNewsDataFailed),
+// get news categories
+final newsCategoriesReducer = combineReducers<NewsCategories>([
+  TypedReducer<NewsCategories, ActionGetNewsCategories>(_getNewsCategoriesData),
+  TypedReducer<NewsCategories, ActionGetNewsCategoriesSucceed>(_getNewsCategoriesDataSucceed),
+  TypedReducer<NewsCategories, ActionGetNewsCategoriesFailed>(_getNewsCategoriesDataFailed),
 ]);
 
-
-NewsState _loadNewsData(NewsState state, ActionLoadNewsData action) {
+NewsCategories _getNewsCategoriesData(NewsCategories state, ActionGetNewsCategories action) {
   return state.copyWith(status: ActionStatus.doing);
 }
 
-NewsState _loadNewsDataSucceed(NewsState state, ActionLoadNewsDataSucceed action) {
+NewsCategories _getNewsCategoriesDataSucceed(NewsCategories state, ActionGetNewsCategoriesSucceed action) {
   return state.copyWith(status: ActionStatus.done, categories: action.categories);
 }
 
-NewsState _loadNewsDataFailed(NewsState state, ActionLoadNewsDataFailed action) {
-  return state.copyWith(status: ActionStatus.failed, error: action.error);
+NewsCategories _getNewsCategoriesDataFailed(NewsCategories state, ActionGetNewsCategoriesFailed action) {
+  return state.copyWith(status: ActionStatus.failed, tip: action.error);
 }
+

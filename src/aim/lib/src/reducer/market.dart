@@ -3,8 +3,36 @@ import 'package:redux/redux.dart';
 import '../state/market.dart';
 import '../action/market.dart';
 
+// market indexes
+final marketIndexesReducer = combineReducers<Map<String, ModelIndex>>([
+  TypedReducer<Map<String, ModelIndex>, ActionGetMainIndexes>(_getMainIndexes),
+  TypedReducer<Map<String, ModelIndex>, ActionGetMainIndexesSucceed>(_getMainIndexesSucceed),
+  TypedReducer<Map<String, ModelIndex>, ActionGetMainIndexesFailed>(_getMainIndexesFailed),
+]);
 
-// reducer for loading main index action
+
+
+// market main indexes
+final marketMainIndexesReducer = combineReducers<MarketMainIndexes>([
+  TypedReducer<MarketMainIndexes, ActionGetMainIndexes>(_getMainIndexes),
+  TypedReducer<MarketMainIndexes, ActionGetMainIndexesSucceed>(_getMainIndexesSucceed),
+  TypedReducer<MarketMainIndexes, ActionGetMainIndexesFailed>(_getMainIndexesFailed),
+]);
+
+
+MarketMainIndexes _getMainIndexes(MarketMainIndexes state, ActionGetMainIndexes action) {
+  return state.copyWith(status: ActionStatus.doing);
+}
+
+MarketMainIndexes _getMainIndexesSucceed(MarketMainIndexes state, ActionGetMainIndexesSucceed action) {
+  return state.copyWith(indexes: action.indexes, status: ActionStatus.done);
+}
+
+MarketMainIndexes _getMainIndexesFailed(MarketMainIndexes state, ActionGetMainIndexesFailed action) {
+  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+}
+
+
 final marketReducer = combineReducers<MarketState>([
   TypedReducer<MarketState, ActionLoadMarketData>(_loadMarketData),
   TypedReducer<MarketState, ActionLoadMarketDataSucceed>(_loadMarketDataSucceed),
@@ -38,4 +66,25 @@ MarketState _updateMarketIndexesQuoteSucceed(MarketState state, ActionUpdateMark
 
 MarketState _updateMarketIndexesQuoteFailed(MarketState state, ActionUpdateMarketIndexesQuoteFailed action) {
   return state;
+}
+
+
+//
+final stockDetailReducer = combineReducers<StockDetailState>([
+  TypedReducer<StockDetailState, ActionGetStockDetail>(_getStockDetail),
+  TypedReducer<StockDetailState, ActionGetStockDetailSucceed>(_getStockDetailSucceed),
+  TypedReducer<StockDetailState, ActionGetStockDetailFailed>(_getStockDetailFailed),
+]);
+
+
+StockDetailState _getStockDetail(StockDetailState state, ActionGetStockDetail action) {
+  return state.copyWith(status: ActionStatus.doing);
+}
+
+StockDetailState _getStockDetailSucceed(StockDetailState state, ActionGetStockDetailSucceed action) {
+  return state.copyWith(status: ActionStatus.done, detail: action.detail);
+}
+
+StockDetailState _getStockDetailFailed(StockDetailState state, ActionGetStockDetailFailed action) {
+  return state.copyWith(status: ActionStatus.failed, error: action.error);
 }

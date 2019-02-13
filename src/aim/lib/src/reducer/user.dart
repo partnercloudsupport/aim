@@ -3,38 +3,58 @@ import 'package:redux/redux.dart';
 import '../state/user.dart';
 import '../action/user.dart';
 
+// user login
+final userLoginReducer = combineReducers<UserLogin>([
+  TypedReducer<UserLogin, ActionUserLogin>(_userLogin),
+  TypedReducer<UserLogin, ActionUserLoginSucceed>(_userLoginSucceed),
+  TypedReducer<UserLogin, ActionUserLoginFailed>(_userLoginFailed),
 
-final userReducer = combineReducers<UserState>([
-  TypedReducer<UserState, ActionUserLogin>(_userLogin),
-  TypedReducer<UserState, ActionUserLoginSucceed>(_userLoginSucceed),
-  TypedReducer<UserState, ActionUserLoginFailed>(_userLoginFailed),
+  TypedReducer<UserLogin, ActionSessionLogin>(_sessionLogin),
+  TypedReducer<UserLogin, ActionSessionLoginSucceed>(_sessionLoginSucceed),
+  TypedReducer<UserLogin, ActionSessionLoginFailed>(_sessionLoginFailed),
+]);
 
-  TypedReducer<UserState, ActionSessionLogin>(_sessionLogin),
-  TypedReducer<UserState, ActionSessionLoginSucceed>(_sessionLoginSucceed),
-  TypedReducer<UserState, ActionSessionLoginFailed>(_sessionLoginFailed),
+UserLogin _userLogin(UserLogin state, ActionUserLogin action) {
+  return state.copyWith(status: ActionStatus.doing);
+}
+
+UserLogin _userLoginSucceed(UserLogin state, ActionUserLoginSucceed action) {
+  return state.copyWith(user: action.user, status: ActionStatus.done);
+}
+
+UserLogin _userLoginFailed(UserLogin state, ActionUserLoginFailed action) {
+  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+}
+
+UserLogin _sessionLogin(UserLogin state, ActionSessionLogin action) {
+  return state.copyWith(status: ActionStatus.doing);
+}
+
+UserLogin _sessionLoginSucceed(UserLogin state, ActionSessionLoginSucceed action) {
+  return state.copyWith(user: action.user, status: ActionStatus.done);
+}
+
+UserLogin _sessionLoginFailed(UserLogin state, ActionSessionLoginFailed action) {
+  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+}
+
+
+// user stocks
+final userStocksReducer = combineReducers<UserStocks>([
+  TypedReducer<UserStocks, ActionGetUserStocks>(_getUserStocksData),
+  TypedReducer<UserStocks, ActionGetUserStocksSucceed>(_getUserStocksDataSucceed),
+  TypedReducer<UserStocks, ActionGetUserStocksFailed>(_getUserStocksDataFailed),
 ]);
 
 
-UserState _userLogin(UserState state, ActionUserLogin action) {
+UserStocks _getUserStocksData(UserStocks state, ActionGetUserStocks action) {
   return state.copyWith(status: ActionStatus.doing);
 }
 
-UserState _userLoginSucceed(UserState state, ActionUserLoginSucceed action) {
-  return state.copyWith(status: ActionStatus.done, sid: action.sid, uid: action.uid);
+UserStocks _getUserStocksDataSucceed(UserStocks state, ActionGetUserStocksSucceed action) {
+  return state.copyWith(status: ActionStatus.done, stocks: action.stocks);
 }
 
-UserState _userLoginFailed(UserState state, ActionUserLoginFailed action) {
-  return state.copyWith(status: ActionStatus.failed, error: action.error);
-}
-
-UserState _sessionLogin(UserState state, ActionSessionLogin action) {
-  return state.copyWith(status: ActionStatus.doing);
-}
-
-UserState _sessionLoginSucceed(UserState state, ActionSessionLoginSucceed action) {
-  return state.copyWith(status: ActionStatus.done, sid: action.sid, uid: action.uid);
-}
-
-UserState _sessionLoginFailed(UserState state, ActionSessionLoginFailed action) {
-  return state.copyWith(status: ActionStatus.failed, error: action.error);
+UserStocks _getUserStocksDataFailed(UserStocks state, ActionGetUserStocksFailed action) {
+  return state.copyWith(status: ActionStatus.failed, tip: action.error);
 }

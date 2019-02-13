@@ -30,11 +30,12 @@ enum ActionStatus {todo, doing, done, failed}
 /// state base class
 abstract class StateBase {
   ActionStatus status;
-  String error;
-  StateBase({this.status=ActionStatus.todo, this.error});
+  String tip;
+  StateBase({this.status=ActionStatus.todo, this.tip});
 
-  bool get isTodo => status==ActionStatus.todo;
-  bool get isDoing => status==ActionStatus.doing;
-  bool get isDone => status==ActionStatus.done;
-  bool get isFailed => status==ActionStatus.failed;
+  bool get isTodo => status == ActionStatus.todo;
+  bool get isDoing => status == ActionStatus.doing;
+  bool get isDone => status == ActionStatus.done;
+  bool get isFailed => status == ActionStatus.failed;
+  bool get isReady => status == ActionStatus.done;
 }

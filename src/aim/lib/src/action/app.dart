@@ -1,4 +1,13 @@
-/// action for launch app
+import '../state/app.dart';
+
+// action for change app tab
+class ActionChangeAppTab {
+  final AppTab tab;
+  ActionChangeAppTab(this.tab);
+}
+
+
+// action for launch app
 class ActionLaunch {}
 
 class ActionLaunchSucceed {
@@ -16,5 +25,5 @@ class ActionLaunchFailed {
   ActionLaunchFailed({this.error});
 }
 
-// launch finished
 class ActionLaunchFinished{}
+

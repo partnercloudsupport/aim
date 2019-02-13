@@ -3,22 +3,37 @@ export 'base.dart';
 
 import '../model/news.dart';
 
-class NewsState extends StateBase {
+// news data
+class News {
+  NewsCategories categories;
+
+  News({this.categories});
+
+  factory News.init() {
+    return News(
+      categories: NewsCategories.init()
+    );
+  }
+}
+
+// news categories data
+class NewsCategories extends StateBase {
   List<ModelNewsCategory> categories;
 
-  NewsState({ActionStatus status, this.categories, String error}): super(status: status, error: error);
+  NewsCategories({this.categories, ActionStatus status, String tip}): super(status: status, tip: tip);
 
-  factory NewsState.init() {
-    return NewsState(
+  factory NewsCategories.init() {
+    return NewsCategories(
+      categories: [],
       status: ActionStatus.todo
     );
   }
 
-  NewsState copyWith({ActionStatus status, List<ModelNewsCategory> categories, String error}) {
-    return NewsState(
-      status: status??this.status,
+  NewsCategories copyWith({List<ModelNewsCategory> categories, ActionStatus status, String tip}) {
+    return NewsCategories(
       categories: categories??this.categories,
-      error: error??this.error
+      status: status??this.status,
+      tip: tip??this.tip
     );
   }
 }

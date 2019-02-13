@@ -49,3 +49,28 @@ ModelStocks _$ModelStocksFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ModelStocksToJson(ModelStocks instance) =>
     <String, dynamic>{'total': instance.total, 'items': instance.items};
+
+ModelSearchStock _$ModelSearchStockFromJson(Map<String, dynamic> json) {
+  return ModelSearchStock(json['id'] as String, json['name'] as String,
+      json['jianpin'] as String, json['quanpin'] as String);
+}
+
+Map<String, dynamic> _$ModelSearchStockToJson(ModelSearchStock instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'jianpin': instance.jianpin,
+      'quanpin': instance.quanpin
+    };
+
+ModelSearchStocks _$ModelSearchStocksFromJson(Map<String, dynamic> json) {
+  return ModelSearchStocks(
+      json['total'] as int,
+      (json['items'] as List)
+          ?.map((e) =>
+              e == null ? null : ModelStock.fromJson(e as Map<String, dynamic>))
+          ?.toList());
+}
+
+Map<String, dynamic> _$ModelSearchStocksToJson(ModelSearchStocks instance) =>
+    <String, dynamic>{'total': instance.total, 'items': instance.items};

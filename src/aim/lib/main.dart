@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'src/state/app.dart';
-import 'src/reducer/app.dart';
-import 'src/middleware/app.dart';
+import 'src/state/all.dart';
+import 'src/reducer/all.dart';
+import 'src/middleware/all.dart';
 
 import 'src/theme.dart';
 import 'src/routes.dart';

@@ -7,37 +7,21 @@ part of 'index.dart';
 // **************************************************************************
 
 ModelIndex _$ModelIndexFromJson(Map<String, dynamic> json) {
-  return ModelIndex(
-      json['zqdm'] as String,
-      json['zqmc'] as String,
-      json['source'] as String,
-      (json['jkj'] as num)?.toDouble(),
-      (json['zsj'] as num)?.toDouble(),
-      (json['dqj'] as num)?.toDouble(),
-      (json['zgj'] as num)?.toDouble(),
-      (json['zdj'] as num)?.toDouble(),
-      (json['ztj'] as num)?.toDouble(),
-      (json['dtj'] as num)?.toDouble(),
-      json['cjl'] as int,
-      (json['cje'] as num)?.toDouble(),
-      json['time'] as String);
+  return ModelIndex(json['id'] as String, json['name'] as String)
+    ..url = json['url'] as String
+    ..tidyjs = json['tidyjs'] as String
+    ..quote = json['quote'] == null
+        ? null
+        : ModelQuote.fromJson(json['quote'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$ModelIndexToJson(ModelIndex instance) =>
     <String, dynamic>{
-      'zqdm': instance.zqdm,
-      'zqmc': instance.zqmc,
-      'source': instance.source,
-      'jkj': instance.jkj,
-      'zsj': instance.zsj,
-      'dqj': instance.dqj,
-      'zgj': instance.zgj,
-      'zdj': instance.zdj,
-      'ztj': instance.ztj,
-      'dtj': instance.dtj,
-      'cjl': instance.cjl,
-      'cje': instance.cje,
-      'time': instance.time
+      'id': instance.id,
+      'name': instance.name,
+      'url': instance.url,
+      'tidyjs': instance.tidyjs,
+      'quote': instance.quote
     };
 
 ModelIndexes _$ModelIndexesFromJson(Map<String, dynamic> json) {

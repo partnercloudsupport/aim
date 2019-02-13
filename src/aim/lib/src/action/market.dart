@@ -1,30 +1,101 @@
 import '../model/index.dart';
 import '../model/stock.dart';
+import '../model/quote.dart';
 
-/// action for loading market data
-class ActionLoadMarketData {}
 
-class ActionLoadMarketDataSucceed {
+/// action for get main index
+class ActionGetMainIndexes {}
+
+class ActionGetMainIndexesSucceed {
   List<ModelIndex> indexes;
-  List<ModelStock> stocks;
-  ActionLoadMarketDataSucceed({this.indexes, this.stocks});
+  ActionGetMainIndexesSucceed({this.indexes});
 }
 
-class ActionLoadMarketDataFailed {
+class ActionGetMainIndexesFailed {
   final String error;
-  ActionLoadMarketDataFailed({this.error});
+  ActionGetMainIndexesFailed({this.error});
 }
 
 
-/// action for updating market indexes data
-class ActionUpdateMarketIndexesQuote {}
-
-class ActionUpdateMarketIndexesQuoteSucceed {
-  List<ModelIndex> indexes;
-  ActionUpdateMarketIndexesQuoteSucceed({this.indexes});
+/// action for get indexes quote
+class ActionGetIndexesQuote {
+  List<String> indexes;
+  ActionGetIndexesQuote({this.indexes});
 }
 
-class ActionUpdateMarketIndexesQuoteFailed {
+class ActionGetIndexesQuoteSucceed {
+  List<ModelQuote> quotes;
+  ActionGetIndexesQuoteSucceed({this.quotes});
+}
+
+class ActionGetIndexesQuoteFailed {
   final String error;
-  ActionUpdateMarketIndexesQuoteFailed({this.error});
+  ActionGetIndexesQuoteFailed({this.error});
+}
+
+
+// action for search stock
+class ActionSearchStock {
+  final String words;
+  ActionSearchStock({this.words});
+}
+
+class ActionSearchStockSucceed{
+  final List<String> stocks;
+  ActionSearchStockSucceed({this.stocks});
+}
+
+class ActionSearchStockFailed {
+  final String error;
+  ActionSearchStockFailed({this.error});
+}
+
+
+// action for get stock detail data
+class ActionGetStockDetail {
+  final String id;
+  ActionGetStockDetail({this.id});
+}
+
+class ActionGetStockDetailSucceed{
+  final ModelStock stock;
+  ActionGetStockDetailSucceed({this.stock});
+}
+
+class ActionGetStockDetailFailed {
+  final String error;
+  ActionGetStockDetailFailed({this.error});
+}
+
+
+/// action for get stock quote
+class ActionGetStockQuote {
+  final String id;
+  ActionGetStockQuote({this.id});
+}
+
+class ActionGetStockQuoteSucceed {
+  final ModelQuote quote;
+  ActionGetStockQuoteSucceed({this.quote});
+}
+
+class ActionGetStockQuoteFailed {
+  final String error;
+  ActionGetStockQuoteFailed({this.error});
+}
+
+/// action for get stocks quote
+class ActionGetStocksQuote {
+  List<String> stocks;
+  ActionGetStocksQuote({this.stocks});
+}
+
+class ActionGetStocksQuoteSucceed {
+  List<ModelQuote> quotes;
+  ActionGetStocksQuoteSucceed({this.quotes});
+}
+
+class ActionGetStocksQuoteFailed {
+  final String error;
+  ActionGetStocksQuoteFailed({this.error});
 }

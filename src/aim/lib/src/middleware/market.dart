@@ -12,7 +12,6 @@ Future<void> loadMarketData(Store<AppState> store, action, NextDispatcher dispat
   try{
     // get main indexes
     List<ModelIndex> indexes = await Remote.smds.getMainIndexes();
-
     // get user stocks
     List<ModelStock> stocks;
     if(Selector.isUserLogin(store.state)){

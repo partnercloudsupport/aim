@@ -14,6 +14,12 @@ void loadStockQuote(Store<AppState> store, ActionLoadStockQuote action, NextDisp
     try {
       var result = await fetchQuote();
       store.dispatch(ActionLoadStockQuote(type:Action.done, result:result));
+      await store.onChange.any((state){
+        return state.quote != null;
+      });
+
+      print('finsihed');
+
     } catch (e) {
       store.dispatch(ActionLoadStockQuote(type:Action.done, result:e.toString()));
     }
