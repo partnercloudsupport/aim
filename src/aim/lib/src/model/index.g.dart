@@ -8,8 +8,6 @@ part of 'index.dart';
 
 ModelIndex _$ModelIndexFromJson(Map<String, dynamic> json) {
   return ModelIndex(json['id'] as String, json['name'] as String)
-    ..url = json['url'] as String
-    ..tidyjs = json['tidyjs'] as String
     ..quote = json['quote'] == null
         ? null
         : ModelQuote.fromJson(json['quote'] as Map<String, dynamic>);
@@ -19,8 +17,6 @@ Map<String, dynamic> _$ModelIndexToJson(ModelIndex instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'url': instance.url,
-      'tidyjs': instance.tidyjs,
       'quote': instance.quote
     };
 
@@ -35,3 +31,16 @@ ModelIndexes _$ModelIndexesFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ModelIndexesToJson(ModelIndexes instance) =>
     <String, dynamic>{'total': instance.total, 'items': instance.items};
+
+ModelIndexDetail _$ModelIndexDetailFromJson(Map<String, dynamic> json) {
+  return ModelIndexDetail(json['id'] as String, json['name'] as String,
+      json['url'] as String, json['tidyjs'] as String);
+}
+
+Map<String, dynamic> _$ModelIndexDetailToJson(ModelIndexDetail instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'url': instance.url,
+      'tidyjs': instance.tidyjs
+    };

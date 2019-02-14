@@ -1,5 +1,5 @@
 import 'base.dart';
-export 'base.dart';
+import '../status.dart';
 
 class App {
   // app selected tab
@@ -19,12 +19,11 @@ class App {
   }
 }
 
-
 // app tab
 enum AppTab{news, market, trade, mine}
 
 // app launch state
-class AppLaunch extends StateBase {
+class AppLaunch extends DataState {
   // delay duration in seconds
   int duration;
   // local asset key
@@ -35,16 +34,15 @@ class AppLaunch extends StateBase {
   // launch finished
   bool finished;
 
-  AppLaunch({this.duration, this.assetKey, this.imageUrl, this.finished, ActionStatus status, String tip}): super(status: status, tip: tip);
+  AppLaunch({this.duration, this.assetKey, this.imageUrl, this.finished, Status status, String tip}): super(status: status, tip: tip);
 
   factory AppLaunch.init() {
     return AppLaunch(
-        status: ActionStatus.todo,
         finished: false
     );
   }
 
-  AppLaunch copyWith({int duration, String assetKey, String imageUrl, bool finished, ActionStatus status, String tip}) {
+  AppLaunch copyWith({int duration, String assetKey, String imageUrl, bool finished, Status status, String tip}) {
     return AppLaunch(
         duration: duration??this.duration,
         status: status??this.status,
@@ -57,13 +55,13 @@ class AppLaunch extends StateBase {
 }
 
 // app upgrade state
-class AppUpgrade extends StateBase {
+class AppUpgrade extends DataState {
   bool canceled;
-  AppUpgrade({this.canceled, ActionStatus status, String tip}): super(status: status, tip: tip);
+  AppUpgrade({this.canceled, Status status, String tip}): super(status: status, tip: tip);
 
   factory AppUpgrade.init() {
     return AppUpgrade(
-        status: ActionStatus.todo
+      canceled: false
     );
   }
 }

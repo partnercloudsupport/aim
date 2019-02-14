@@ -1,7 +1,6 @@
 import 'base.dart';
-export 'base.dart';
-
-import '../model/news.dart';
+import '../status.dart';
+import '../../model/news.dart';
 
 // news data
 class News {
@@ -17,19 +16,18 @@ class News {
 }
 
 // news categories data
-class NewsCategories extends StateBase {
+class NewsCategories extends DataState {
   List<ModelNewsCategory> categories;
 
-  NewsCategories({this.categories, ActionStatus status, String tip}): super(status: status, tip: tip);
+  NewsCategories({this.categories, Status status, String tip}): super(status: status, tip: tip);
 
   factory NewsCategories.init() {
     return NewsCategories(
       categories: [],
-      status: ActionStatus.todo
     );
   }
 
-  NewsCategories copyWith({List<ModelNewsCategory> categories, ActionStatus status, String tip}) {
+  NewsCategories copyWith({List<ModelNewsCategory> categories, Status status, String tip}) {
     return NewsCategories(
       categories: categories??this.categories,
       status: status??this.status,

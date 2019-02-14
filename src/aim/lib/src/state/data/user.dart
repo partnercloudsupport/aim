@@ -1,8 +1,8 @@
 import 'base.dart';
-export 'base.dart';
-import '../model/user.dart';
-import '../model/stock.dart';
-import '../model/quote.dart';
+import '../status.dart';
+import '../../model/user.dart';
+import '../../model/stock.dart';
+import '../../model/quote.dart';
 
 class User {
   // user login state
@@ -30,19 +30,17 @@ class User {
 }
 
 //// user login state
-class UserLogin extends StateBase {
+class UserLogin extends DataState {
   // user object
   ModelUser user;
 
-  UserLogin({this.user, ActionStatus status, String tip}): super(status: status, tip: tip);
+  UserLogin({this.user, Status status, String tip}): super(status: status, tip: tip);
 
   factory UserLogin.init() {
-    return UserLogin(
-      status: ActionStatus.todo
-    );
+    return UserLogin();
   }
 
-  UserLogin copyWith({ModelUser user, ActionStatus status, String tip}){
+  UserLogin copyWith({ModelUser user, Status status, String tip}){
     return UserLogin(
       user: user??this.user,
       status: status??this.status,
@@ -54,20 +52,19 @@ class UserLogin extends StateBase {
 }
 
 //// user self selected stocks
-class UserStocks extends StateBase {
+class UserStocks extends DataState {
   // user optional stocks
   List<String> stocks;
 
-  UserStocks({this.stocks, ActionStatus status, String tip}): super(status: status, tip: tip);
+  UserStocks({this.stocks, Status status, String tip}): super(status: status, tip: tip);
 
   factory UserStocks.init() {
     return UserStocks(
       stocks: [],
-      status: ActionStatus.todo
     );
   }
 
-  UserStocks copyWith({List<String> stocks, ActionStatus status, String tip}) {
+  UserStocks copyWith({List<String> stocks, Status status, String tip}) {
     return UserStocks(
       stocks: stocks??this.stocks,
       status: status??this.status,

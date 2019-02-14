@@ -3,17 +3,30 @@ import '../model/stock.dart';
 import '../model/quote.dart';
 
 
-/// action for get main index
-class ActionGetMainIndexes {}
+// action for get market indexes
+class ActionGetIndexes {}
 
-class ActionGetMainIndexesSucceed {
+class ActionGetIndexesSucceed {
   List<ModelIndex> indexes;
-  ActionGetMainIndexesSucceed({this.indexes});
+  ActionGetIndexesSucceed({this.indexes});
 }
 
-class ActionGetMainIndexesFailed {
+class ActionGetIndexesFailed {
   final String error;
-  ActionGetMainIndexesFailed({this.error});
+  ActionGetIndexesFailed({this.error});
+}
+
+/// action for get market stocks
+class ActionGetStocks {}
+
+class ActionGetStocksSucceed {
+  List<ModelIndex> indexes;
+  ActionGetStocksSucceed({this.indexes});
+}
+
+class ActionGetStocksFailed {
+  final String error;
+  ActionGetStocksFailed({this.error});
 }
 
 
@@ -32,24 +45,6 @@ class ActionGetIndexesQuoteFailed {
   final String error;
   ActionGetIndexesQuoteFailed({this.error});
 }
-
-
-// action for search stock
-class ActionSearchStock {
-  final String words;
-  ActionSearchStock({this.words});
-}
-
-class ActionSearchStockSucceed{
-  final List<String> stocks;
-  ActionSearchStockSucceed({this.stocks});
-}
-
-class ActionSearchStockFailed {
-  final String error;
-  ActionSearchStockFailed({this.error});
-}
-
 
 // action for get stock detail data
 class ActionGetStockDetail {
