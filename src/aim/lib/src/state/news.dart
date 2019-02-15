@@ -1,4 +1,5 @@
 import 'base.dart';
+export 'base.dart';
 import '../model/news.dart';
 
 // news data

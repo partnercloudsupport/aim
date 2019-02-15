@@ -11,7 +11,7 @@ import '../state/market.dart';
 
 AppState appReducer(AppState state, action) {
   return AppState(
-    app: App(
+    app: AppData(
       tab: appTabReducer(state.app.tab, action),
       launch: appLaunchReducer(state.app.launch, action),
       upgrade: appUpgradeReducer(state.app.upgrade, action)

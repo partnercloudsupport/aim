@@ -12,14 +12,14 @@ final newsCategoriesReducer = combineReducers<NewsCategories>([
 ]);
 
 NewsCategories _getNewsCategoriesData(NewsCategories state, ActionGetNewsCategories action) {
-  return state.copyWith(status: ActionStatus.doing);
+  return state.copyWith(status: DataStatus.loading);
 }
 
 NewsCategories _getNewsCategoriesDataSucceed(NewsCategories state, ActionGetNewsCategoriesSucceed action) {
-  return state.copyWith(status: ActionStatus.done, categories: action.categories);
+  return state.copyWith(status: DataStatus.loaded, categories: action.categories);
 }
 
 NewsCategories _getNewsCategoriesDataFailed(NewsCategories state, ActionGetNewsCategoriesFailed action) {
-  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
 }
 

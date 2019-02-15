@@ -1,4 +1,5 @@
 import 'base.dart';
+export 'base.dart';
 
 class AppData {
   // app selected tab

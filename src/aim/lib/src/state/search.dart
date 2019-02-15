@@ -1,4 +1,5 @@
 import 'base.dart';
+export 'base.dart';
 
 // market search data
 class Search {

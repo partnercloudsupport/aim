@@ -15,8 +15,8 @@ Map<String, dynamic> _$ModelUserToJson(ModelUser instance) =>
 
 ModelUserStock _$ModelUserStockFromJson(Map<String, dynamic> json) {
   return ModelUserStock(
-      json['zqdm'] as String,
-      json['zqmc'] as String,
+      json['id'] as String,
+      json['name'] as String,
       json['order'] as int,
       json['deleted'] as bool,
       json['ctime'] as int,
@@ -25,8 +25,8 @@ ModelUserStock _$ModelUserStockFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ModelUserStockToJson(ModelUserStock instance) =>
     <String, dynamic>{
-      'zqdm': instance.zqdm,
-      'zqmc': instance.zqmc,
+      'id': instance.id,
+      'name': instance.name,
       'order': instance.order,
       'deleted': instance.deleted,
       'ctime': instance.ctime,

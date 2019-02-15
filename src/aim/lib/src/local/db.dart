@@ -77,14 +77,14 @@ class StorageDB {
         await this._manager.db.rawUpdate(sql, [target.order]);
 
         sql = 'update `tb_user_stock` set `order`=? where `code`=?';
-        await this._manager.db.rawUpdate(sql, [target.order, source.zqdm]);
+        await this._manager.db.rawUpdate(sql, [target.order, source.id]);
       } else {
         // move source down
         String sql = 'update `tb_user_stock` set `order`=`order`+1 where `order`>=? and `order`<?';
         await this._manager.db.rawUpdate(sql, [target.order, source.order]);
 
         sql = 'update `tb_user_stock` set `order`=? where `code`=?';
-        await this._manager.db.rawUpdate(sql, [target.order, source.zqdm]);
+        await this._manager.db.rawUpdate(sql, [target.order, source.id]);
       }
     }catch(e){}
   }

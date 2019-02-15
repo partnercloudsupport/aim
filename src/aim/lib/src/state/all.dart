@@ -7,7 +7,7 @@ import 'search.dart';
 // app state
 class AppState {
   // app state
-  App app;
+  AppData app;
   // user state
   User user;
   // news state
@@ -21,7 +21,7 @@ class AppState {
 
   factory AppState.init() {
     return AppState(
-      app: App.init(),
+      app: AppData.init(),
       user: User.init(),
       news: News.init(),
       market: Market.init(),
@@ -29,3 +29,5 @@ class AppState {
     );
   }
 }
+
+// selectors

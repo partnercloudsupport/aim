@@ -14,11 +14,18 @@ final List<Middleware<AppState>> appMiddleware = [
 
   TypedMiddleware<AppState, ActionUserLogin>(userLogin),
   TypedMiddleware<AppState, ActionSessionLogin>(sessionLogin),
+  TypedMiddleware<AppState, ActionGetUserStocks>(getUserStocks),
 
-  TypedMiddleware<AppState, ActionLoadNewsData>(loadNewsData),
 
+  TypedMiddleware<AppState, ActionGetNewsCategories>(getNewsCategories),
+
+  TypedMiddleware<AppState, ActionGetStocks>(getStocks),
   TypedMiddleware<AppState, ActionGetStockDetail>(getStockDetail),
+  TypedMiddleware<AppState, ActionGetStockQuote>(getStockQuote),
+  TypedMiddleware<AppState, ActionGetStocksQuote>(getStocksQuote),
 
-  TypedMiddleware<AppState, ActionLoadMarketData>(loadMarketData),
-  TypedMiddleware<AppState, ActionUpdateMarketIndexesQuote>(updateMarketIndexesQuote),
+  TypedMiddleware<AppState, ActionGetIndexes>(getIndexes),
+  TypedMiddleware<AppState, ActionGetIndexDetail>(getIndexDetail),
+  TypedMiddleware<AppState, ActionGetIndexQuote>(getIndexQuote),
+  TypedMiddleware<AppState, ActionGetIndexesQuote>(getIndexesQuote),
 ];

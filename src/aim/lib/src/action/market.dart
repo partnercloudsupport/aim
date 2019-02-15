@@ -69,8 +69,8 @@ class ActionGetIndexesQuoteFailed {
 class ActionGetStocks {}
 
 class ActionGetStocksSucceed {
-  List<ModelIndex> indexes;
-  ActionGetStocksSucceed({this.indexes});
+  List<ModelStock> stocks;
+  ActionGetStocksSucceed({this.stocks});
 }
 
 class ActionGetStocksFailed {

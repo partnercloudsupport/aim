@@ -1,7 +1,6 @@
 import 'base.dart';
+export 'base.dart';
 import '../model/user.dart';
-import '../model/stock.dart';
-import '../model/quote.dart';
 
 class User {
   // user login state

@@ -40,7 +40,7 @@ class ActionSessionLoginFailed {
 class ActionGetUserStocks{}
 
 class ActionGetUserStocksSucceed {
-  List<String> stocks;
+  List<ModelUserStock> stocks;
   ActionGetUserStocksSucceed({this.stocks});
 }
 

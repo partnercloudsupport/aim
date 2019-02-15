@@ -1,35 +1,25 @@
 import 'package:redux/redux.dart';
-
+import '../model/index.dart';
 import '../state/market.dart';
 import '../action/market.dart';
 
 // market indexes
-final marketIndexesReducer = combineReducers<Map<String, ModelIndex>>([
-  TypedReducer<Map<String, ModelIndex>, ActionGetMainIndexes>(_getMainIndexes),
-  TypedReducer<Map<String, ModelIndex>, ActionGetMainIndexesSucceed>(_getMainIndexesSucceed),
-  TypedReducer<Map<String, ModelIndex>, ActionGetMainIndexesFailed>(_getMainIndexesFailed),
+final marketIndexesReducer = combineReducers<MarketIndexes>([
+  TypedReducer<MarketIndexes, ActionGetIndexes>(_getIndexes),
+  TypedReducer<MarketIndexes, ActionGetIndexesSucceed>(_getIndexesSucceed),
+  TypedReducer<MarketIndexes, ActionGetIndexesFailed>(_getIndexesFailed),
 ]);
 
-
-
-// market main indexes
-final marketMainIndexesReducer = combineReducers<MarketMainIndexes>([
-  TypedReducer<MarketMainIndexes, ActionGetMainIndexes>(_getMainIndexes),
-  TypedReducer<MarketMainIndexes, ActionGetMainIndexesSucceed>(_getMainIndexesSucceed),
-  TypedReducer<MarketMainIndexes, ActionGetMainIndexesFailed>(_getMainIndexesFailed),
-]);
-
-
-MarketMainIndexes _getMainIndexes(MarketMainIndexes state, ActionGetMainIndexes action) {
-  return state.copyWith(status: ActionStatus.doing);
+MarketIndexes _getIndexes(MarketIndexes state, ActionGetIndexes action) {
+  return state.copyWith(status: DataStatus.loading);
 }
 
-MarketMainIndexes _getMainIndexesSucceed(MarketMainIndexes state, ActionGetMainIndexesSucceed action) {
-  return state.copyWith(indexes: action.indexes, status: ActionStatus.done);
+MarketIndexes _getIndexesSucceed(MarketIndexes state, ActionGetIndexesSucceed action) {
+  return state.copyWith(indexes: Map.fromIterable(action.indexes, key: (index)=>index.id), status: DataStatus.loaded);
 }
 
-MarketMainIndexes _getMainIndexesFailed(MarketMainIndexes state, ActionGetMainIndexesFailed action) {
-  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+MarketIndexes _getIndexesFailed(MarketIndexes state, ActionGetIndexesFailed action) {
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
 }
 
 

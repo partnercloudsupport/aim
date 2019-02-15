@@ -6,12 +6,10 @@ class ActionGetNewsCategories{}
 
 class ActionGetNewsCategoriesSucceed{
   final List<ModelNewsCategory> categories;
-  ActionGetNewsCategoriesSucceed(this.categories);
+  ActionGetNewsCategoriesSucceed({this.categories});
 }
 
 class ActionGetNewsCategoriesFailed {
   final String error;
   ActionGetNewsCategoriesFailed(this.error);
 }
-
-

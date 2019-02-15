@@ -15,27 +15,27 @@ final userLoginReducer = combineReducers<UserLogin>([
 ]);
 
 UserLogin _userLogin(UserLogin state, ActionUserLogin action) {
-  return state.copyWith(status: ActionStatus.doing);
+  return state.copyWith(status: DataStatus.loading);
 }
 
 UserLogin _userLoginSucceed(UserLogin state, ActionUserLoginSucceed action) {
-  return state.copyWith(user: action.user, status: ActionStatus.done);
+  return state.copyWith(user: action.user, status: DataStatus.loaded);
 }
 
 UserLogin _userLoginFailed(UserLogin state, ActionUserLoginFailed action) {
-  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
 }
 
 UserLogin _sessionLogin(UserLogin state, ActionSessionLogin action) {
-  return state.copyWith(status: ActionStatus.doing);
+  return state.copyWith(status: DataStatus.loading);
 }
 
 UserLogin _sessionLoginSucceed(UserLogin state, ActionSessionLoginSucceed action) {
-  return state.copyWith(user: action.user, status: ActionStatus.done);
+  return state.copyWith(user: action.user, status: DataStatus.loaded);
 }
 
 UserLogin _sessionLoginFailed(UserLogin state, ActionSessionLoginFailed action) {
-  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
 }
 
 
@@ -48,13 +48,13 @@ final userStocksReducer = combineReducers<UserStocks>([
 
 
 UserStocks _getUserStocksData(UserStocks state, ActionGetUserStocks action) {
-  return state.copyWith(status: ActionStatus.doing);
+  return state.copyWith(status: DataStatus.loading);
 }
 
 UserStocks _getUserStocksDataSucceed(UserStocks state, ActionGetUserStocksSucceed action) {
-  return state.copyWith(status: ActionStatus.done, stocks: action.stocks);
+  return state.copyWith(status: DataStatus.loaded, stocks: action.stocks?.map((stock){return stock.id;})?.toList());
 }
 
 UserStocks _getUserStocksDataFailed(UserStocks state, ActionGetUserStocksFailed action) {
-  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
 }

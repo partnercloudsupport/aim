@@ -3,7 +3,6 @@ import '../app.dart';
 import '../config.dart';
 import '../state/all.dart';
 import '../local/all.dart';
-import '../model/user.dart';
 import '../action/app.dart';
 import '../action/user.dart';
 

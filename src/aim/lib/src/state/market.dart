@@ -1,4 +1,5 @@
 import 'base.dart';
+export 'base.dart';
 import '../model/index.dart';
 import '../model/stock.dart';
 import '../model/quote.dart';
@@ -32,7 +33,7 @@ class MarketStocks extends DataState{
   // market indexes
   Map<String, ModelStock> stocks;
 
-  MarketStocks({this.stocks});
+  MarketStocks({this.stocks, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory MarketStocks.init() {
     return MarketStocks(
@@ -61,7 +62,7 @@ class MarketStocks extends DataState{
 class MarketStockDetail extends DataState {
   // market stock detail
   ModelStockDetail stock;
-  MarketStockDetail({this.stock});
+  MarketStockDetail({this.stock, DataStatus status, String tip}): super(status: status, tip: tip);
   factory MarketStockDetail.init() {
     return MarketStockDetail();
   }
@@ -72,11 +73,19 @@ class MarketIndexes extends DataState {
   // market indexes
   Map<String, ModelIndex> indexes;
 
-  MarketIndexes({this.indexes});
+  MarketIndexes({this.indexes, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory MarketIndexes.init() {
     return MarketIndexes(
       indexes: {}
+    );
+  }
+
+  MarketIndexes copyWith({Map<String, ModelIndex> indexes, DataStatus status, String tip}) {
+    return MarketIndexes(
+      indexes: indexes??this.indexes,
+      status: status??this.status,
+      tip: status??this.tip
     );
   }
 
@@ -105,7 +114,7 @@ class MarketIndexes extends DataState {
 class MarketIndexDetail extends DataState {
   // market index detail
   ModelIndexDetail index;
-  MarketIndexDetail({this.index});
+  MarketIndexDetail({this.index, DataStatus status, String tip}): super(status: status, tip: tip);
   factory MarketIndexDetail.init() {
     return MarketIndexDetail();
   }

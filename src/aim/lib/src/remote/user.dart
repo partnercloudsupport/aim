@@ -32,10 +32,10 @@ class UserService extends RemoteService {
     return user;
   }
 
-  Future<List<ModelStock>> getUserStocks() async {
+  Future<List<ModelUserStock>> getUserStocks() async {
     String path = '/user/stock/get';
     var data = await this.get(path);
-    return ModelStocks.fromJson(data??{})?.items;
+    return ModelUserStocks.fromJson(data??{})?.items;
 
   }
 }

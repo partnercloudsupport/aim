@@ -31,7 +31,7 @@ class SmdsService extends RemoteService {
   }
 
   // 获取多个指数行情
-  Future<List<ModelQuote>> getIndexQuotes(List<String> ids) async {
+  Future<List<ModelQuote>> getIndexesQuote(List<String> ids) async {
     String path = '/index/quote';
     var params = {'id': ids.join(',')};
     var data = await this.get(path, data: params);
@@ -63,7 +63,7 @@ class SmdsService extends RemoteService {
   }
 
   // 获取多个股票行情
-  Future<List<ModelQuote>> getStockQuotes(List<String> ids) async {
+  Future<List<ModelQuote>> getStocksQuote(List<String> ids) async {
     String path = '/stock/quote';
     var params = {'id': ids.join(',')};
     var data = await this.get(path, data: params);
