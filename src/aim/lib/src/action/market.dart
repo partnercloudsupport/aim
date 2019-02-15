@@ -2,8 +2,8 @@ import '../model/index.dart';
 import '../model/stock.dart';
 import '../model/quote.dart';
 
-
-// action for get market indexes
+////////////////////////////////////////actions about index//////////////////////////////
+/// action for get market indexes
 class ActionGetIndexes {}
 
 class ActionGetIndexesSucceed {
@@ -16,19 +16,37 @@ class ActionGetIndexesFailed {
   ActionGetIndexesFailed({this.error});
 }
 
-/// action for get market stocks
-class ActionGetStocks {}
-
-class ActionGetStocksSucceed {
-  List<ModelIndex> indexes;
-  ActionGetStocksSucceed({this.indexes});
+/// action for get index detail
+class ActionGetIndexDetail {
+  final String id;
+  ActionGetIndexDetail({this.id});
 }
 
-class ActionGetStocksFailed {
+class ActionGetIndexDetailSucceed{
+  final ModelIndexDetail index;
+  ActionGetIndexDetailSucceed({this.index});
+}
+
+class ActionGetIndexDetailFailed {
   final String error;
-  ActionGetStocksFailed({this.error});
+  ActionGetIndexDetailFailed({this.error});
 }
 
+/// action for get index quote
+class ActionGetIndexQuote {
+  final String id;
+  ActionGetIndexQuote({this.id});
+}
+
+class ActionGetIndexQuoteSucceed {
+  final ModelQuote quote;
+  ActionGetIndexQuoteSucceed({this.quote});
+}
+
+class ActionGetIndexQuoteFailed {
+  final String error;
+  ActionGetIndexQuoteFailed({this.error});
+}
 
 /// action for get indexes quote
 class ActionGetIndexesQuote {
@@ -46,14 +64,28 @@ class ActionGetIndexesQuoteFailed {
   ActionGetIndexesQuoteFailed({this.error});
 }
 
-// action for get stock detail data
+////////////////////////////////////////actions about stock//////////////////////////////
+/// action for get market stocks
+class ActionGetStocks {}
+
+class ActionGetStocksSucceed {
+  List<ModelIndex> indexes;
+  ActionGetStocksSucceed({this.indexes});
+}
+
+class ActionGetStocksFailed {
+  final String error;
+  ActionGetStocksFailed({this.error});
+}
+
+/// action for get stock detail data
 class ActionGetStockDetail {
   final String id;
   ActionGetStockDetail({this.id});
 }
 
 class ActionGetStockDetailSucceed{
-  final ModelStock stock;
+  final ModelStockDetail stock;
   ActionGetStockDetailSucceed({this.stock});
 }
 
@@ -61,7 +93,6 @@ class ActionGetStockDetailFailed {
   final String error;
   ActionGetStockDetailFailed({this.error});
 }
-
 
 /// action for get stock quote
 class ActionGetStockQuote {

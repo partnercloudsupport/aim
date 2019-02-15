@@ -1,7 +1,6 @@
 import 'base.dart';
-import '../status.dart';
 
-class App {
+class AppData {
   // app selected tab
   AppTab tab;
   // app launch state
@@ -9,9 +8,9 @@ class App {
   // app upgrade state
   AppUpgrade upgrade;
 
-  App({this.tab, this.launch, this.upgrade});
-  factory App.init() {
-    return App(
+  AppData({this.tab, this.launch, this.upgrade});
+  factory AppData.init() {
+    return AppData(
       tab: AppTab.news,
       launch: AppLaunch.init(),
       upgrade: AppUpgrade.init()
@@ -34,7 +33,7 @@ class AppLaunch extends DataState {
   // launch finished
   bool finished;
 
-  AppLaunch({this.duration, this.assetKey, this.imageUrl, this.finished, Status status, String tip}): super(status: status, tip: tip);
+  AppLaunch({this.duration, this.assetKey, this.imageUrl, this.finished, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory AppLaunch.init() {
     return AppLaunch(
@@ -42,7 +41,7 @@ class AppLaunch extends DataState {
     );
   }
 
-  AppLaunch copyWith({int duration, String assetKey, String imageUrl, bool finished, Status status, String tip}) {
+  AppLaunch copyWith({int duration, String assetKey, String imageUrl, bool finished, DataStatus status, String tip}) {
     return AppLaunch(
         duration: duration??this.duration,
         status: status??this.status,
@@ -57,7 +56,7 @@ class AppLaunch extends DataState {
 // app upgrade state
 class AppUpgrade extends DataState {
   bool canceled;
-  AppUpgrade({this.canceled, Status status, String tip}): super(status: status, tip: tip);
+  AppUpgrade({this.canceled, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory AppUpgrade.init() {
     return AppUpgrade(
@@ -65,4 +64,3 @@ class AppUpgrade extends DataState {
     );
   }
 }
-

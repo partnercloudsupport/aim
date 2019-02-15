@@ -1,10 +1,10 @@
 import 'package:redux/redux.dart';
 
+import 'app.dart';
 import 'user.dart';
 import 'news.dart';
-import 'stock.dart';
 import 'market.dart';
-import 'launch.dart';
+import 'search.dart';
 
 import '../state/all.dart';
 import '../action/all.dart';

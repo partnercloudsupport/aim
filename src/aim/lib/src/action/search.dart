@@ -2,46 +2,41 @@ import '../model/index.dart';
 import '../model/stock.dart';
 import '../model/quote.dart';
 
+// action for get user search history
+class ActionGetSearchHistory {}
 
-/// action for get main index
-class ActionGetIndexes {}
-
-class ActionGetIndexesSucceed {
-  List<ModelIndex> indexes;
-  ActionGetIndexesSucceed({this.indexes});
+class ActionGetSearchHistorySucceed {
+  List<ModelStock> stocks;
+  ActionGetSearchHistorySucceed({this.stocks});
 }
 
-class ActionGetIndexesFailed {
+class ActionGetSearchHistoryFailed {
   final String error;
-  ActionGetIndexesFailed({this.error});
+  ActionGetSearchHistoryFailed({this.error});
 }
 
+// action for get hottest search stocks
+class ActionGetSearchHottest {}
 
-/// action for get indexes quote
-class ActionGetIndexesQuote {
-  List<String> indexes;
-  ActionGetIndexesQuote({this.indexes});
+class ActionGetSearchHottestSucceed {
+  List<ModelStock> stocks;
+  ActionGetSearchHottestSucceed({this.stocks});
 }
 
-class ActionGetIndexesQuoteSucceed {
-  List<ModelQuote> quotes;
-  ActionGetIndexesQuoteSucceed({this.quotes});
-}
-
-class ActionGetIndexesQuoteFailed {
+class ActionGetSearchHottestFailed {
   final String error;
-  ActionGetIndexesQuoteFailed({this.error});
+  ActionGetSearchHottestFailed({this.error});
 }
 
 
-// action for search stock
+// action for search stock by words(stock code/jianpin/quanpin)
 class ActionSearchStock {
   final String words;
   ActionSearchStock({this.words});
 }
 
 class ActionSearchStockSucceed{
-  final List<String> stocks;
+  final List<ModelStock> stocks;
   ActionSearchStockSucceed({this.stocks});
 }
 

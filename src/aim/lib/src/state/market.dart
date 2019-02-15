@@ -1,8 +1,7 @@
 import 'base.dart';
-export 'base.dart';
-import '../../model/index.dart';
-import '../../model/stock.dart';
-import '../../model/quote.dart';
+import '../model/index.dart';
+import '../model/stock.dart';
+import '../model/quote.dart';
 
 // market data
 class Market {
@@ -11,12 +10,19 @@ class Market {
   // market index data
   MarketIndexes indexes;
 
-  Market({this.stocks, this.indexes});
+  // current market stock detail
+  MarketStockDetail stock;
+  // current market index detail
+  MarketIndexDetail index;
+
+  Market({this.stocks, this.indexes, this.stock, this.index});
 
   factory Market.init() {
     return Market(
       stocks: MarketStocks.init(),
       indexes: MarketIndexes.init(),
+      stock: MarketStockDetail.init(),
+      index: MarketIndexDetail.init()
     );
   }
 }
@@ -51,6 +57,16 @@ class MarketStocks extends DataState{
   }
 }
 
+// market stock detail data
+class MarketStockDetail extends DataState {
+  // market stock detail
+  ModelStockDetail stock;
+  MarketStockDetail({this.stock});
+  factory MarketStockDetail.init() {
+    return MarketStockDetail();
+  }
+}
+
 // market indexes
 class MarketIndexes extends DataState {
   // market indexes
@@ -60,7 +76,7 @@ class MarketIndexes extends DataState {
 
   factory MarketIndexes.init() {
     return MarketIndexes(
-        indexes: {}
+      indexes: {}
     );
   }
 
@@ -82,5 +98,15 @@ class MarketIndexes extends DataState {
 
   void updateQuotes(List<ModelQuote> quotes) {
     quotes.forEach((quote){this.updateQuote(quote);});
+  }
+}
+
+// market index detail data
+class MarketIndexDetail extends DataState {
+  // market index detail
+  ModelIndexDetail index;
+  MarketIndexDetail({this.index});
+  factory MarketIndexDetail.init() {
+    return MarketIndexDetail();
   }
 }

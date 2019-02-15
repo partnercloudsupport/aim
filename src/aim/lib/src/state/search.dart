@@ -1,6 +1,4 @@
 import 'base.dart';
-import '../model/stock.dart';
-
 
 // market search data
 class Search {
@@ -25,7 +23,7 @@ class Search {
 class SearchHistory extends DataState {
   List<String> stocks;
 
-  SearchHistory({this.stocks, Status status, String tip}): super(status: status, tip: tip);
+  SearchHistory({this.stocks, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory SearchHistory.init() {
     return SearchHistory(
@@ -33,7 +31,7 @@ class SearchHistory extends DataState {
     );
   }
 
-  SearchHistory copyWith({List<String> stocks, Status status, String tip}) {
+  SearchHistory copyWith({List<String> stocks, DataStatus status, String tip}) {
     return SearchHistory(
         stocks: stocks??this.stocks,
         status: status??this.status,
@@ -45,7 +43,7 @@ class SearchHistory extends DataState {
 class SearchHottest extends DataState {
   List<String> stocks;
 
-  SearchHottest({this.stocks, Status status, String tip}): super(status: status, tip: tip);
+  SearchHottest({this.stocks, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory SearchHottest.init() {
     return SearchHottest(
@@ -53,7 +51,7 @@ class SearchHottest extends DataState {
     );
   }
 
-  SearchHottest copyWith({List<String> stocks, Status status, String tip}) {
+  SearchHottest copyWith({List<String> stocks, DataStatus status, String tip}) {
     return SearchHottest(
         stocks: stocks??this.stocks,
         status: status??this.status,
@@ -65,7 +63,7 @@ class SearchHottest extends DataState {
 class SearchResults extends DataState {
   List<String> stocks;
 
-  SearchResults({this.stocks, Status status, String tip}): super(status: status, tip: tip);
+  SearchResults({this.stocks, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory SearchResults.init() {
     return SearchResults(
@@ -73,7 +71,7 @@ class SearchResults extends DataState {
     );
   }
 
-  SearchResults copyWith({List<String> stocks, Status status, String tip}) {
+  SearchResults copyWith({List<String> stocks, DataStatus status, String tip}) {
     return SearchResults(
         stocks: stocks??this.stocks,
         status: status??this.status,

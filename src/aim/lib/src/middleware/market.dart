@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
 
-import '../state/app.dart';
+import '../state/all.dart';
 import '../local/all.dart';
 import '../remote/all.dart';
 import '../model/index.dart';
@@ -37,5 +37,20 @@ Future<void> updateMarketIndexesQuote(Store<AppState> store, action, NextDispatc
     store.dispatch(ActionUpdateMarketIndexesQuoteSucceed(indexes: indexes));
   }catch(e) {
     store.dispatch(ActionUpdateMarketIndexesQuoteFailed(error: e.toString()));
+  }
+}
+
+
+Future<void> getStockDetail(Store<AppState> store, ActionGetStockDetail action, NextDispatcher next) async {
+  try{
+    // dispatch next action
+    next(action);
+    // get stock detail
+    ModelStock detail = await Remote.smds.getStockDetail(action.id);
+    // dispatch succeed action
+    store.dispatch(ActionGetStockDetailSucceed(detail: detail));
+  }catch(e){
+    // dispatch failed action
+    store.dispatch(ActionGetStockDetailFailed(error: e.toString()));
   }
 }

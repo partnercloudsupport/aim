@@ -1,8 +1,7 @@
 import 'base.dart';
-import '../status.dart';
-import '../../model/user.dart';
-import '../../model/stock.dart';
-import '../../model/quote.dart';
+import '../model/user.dart';
+import '../model/stock.dart';
+import '../model/quote.dart';
 
 class User {
   // user login state
@@ -34,13 +33,13 @@ class UserLogin extends DataState {
   // user object
   ModelUser user;
 
-  UserLogin({this.user, Status status, String tip}): super(status: status, tip: tip);
+  UserLogin({this.user, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory UserLogin.init() {
     return UserLogin();
   }
 
-  UserLogin copyWith({ModelUser user, Status status, String tip}){
+  UserLogin copyWith({ModelUser user, DataStatus status, String tip}){
     return UserLogin(
       user: user??this.user,
       status: status??this.status,
@@ -56,7 +55,7 @@ class UserStocks extends DataState {
   // user optional stocks
   List<String> stocks;
 
-  UserStocks({this.stocks, Status status, String tip}): super(status: status, tip: tip);
+  UserStocks({this.stocks, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory UserStocks.init() {
     return UserStocks(
@@ -64,7 +63,7 @@ class UserStocks extends DataState {
     );
   }
 
-  UserStocks copyWith({List<String> stocks, Status status, String tip}) {
+  UserStocks copyWith({List<String> stocks, DataStatus status, String tip}) {
     return UserStocks(
       stocks: stocks??this.stocks,
       status: status??this.status,
