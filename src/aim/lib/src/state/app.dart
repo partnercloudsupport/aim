@@ -33,7 +33,9 @@ class AppLaunch extends DataState {
   AppLaunch({this.config, this.finished, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory AppLaunch.init() {
-    return AppLaunch();
+    return AppLaunch(
+      finished: false
+    );
   }
 
   AppLaunch copyWith({LaunchConfig config, bool finished, DataStatus status, String tip}) {

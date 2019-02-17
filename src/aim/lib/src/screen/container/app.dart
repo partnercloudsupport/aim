@@ -17,9 +17,9 @@ class DataContainer<DataModel extends DataState> extends StatefulWidget {
   // condition when to ignore state change
   final bool Function(AppState) ignore;
   // app state changed
-  final void Function(DataModel) changed;
+  final void Function(dynamic) changed;
   // child builder
-  final Widget Function(BuildContext, DataModel) builder;
+  final Widget Function(BuildContext, dynamic) builder;
 
   DataContainer({Key key, @required this.action, this.when, @required this.select, this.ignore, this.changed, @required this.builder}): super(key: key);
 

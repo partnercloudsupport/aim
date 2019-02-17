@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'app.dart';
 import '../../routes.dart';
@@ -15,7 +16,9 @@ class LaunchContainer extends StatelessWidget {
         return state.appLaunch;
       },
       changed: (state){
-        if(state.isLoaded) {
+        if(state.isLoaded && !state.finished) {
+          // notify app launch fined
+          StoreProvider.of<AppState>(context).dispatch(ActionAppLaunchFinished());
           // delay for duration to home page
           Future.delayed(Duration(seconds: state.config.duration)).then((value){
             Navigator.of(context).pushReplacementNamed(AppRoutes.home);
