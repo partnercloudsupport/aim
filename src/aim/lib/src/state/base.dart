@@ -25,21 +25,3 @@ abstract class DataState {
   bool get isExpired => this.status != DataStatus.loaded || this.life == null || DateTime.now().difference(this._born) > this.life ;
   bool get isUsable => this.status == DataStatus.loaded && (this.life == null || (DateTime.now().difference(this._born) > this.life));
 }
-
-
-// view status
-enum ViewStatus {toload, loading, loaded, failed}
-
-// view state base class
-abstract class ViewState {
-  // view status
-  ViewStatus status;
-  String tip;
-
-  ViewState({this.status=ViewStatus.toload, this.tip});
-
-  bool get isToLoad => this.status == ViewStatus.toload;
-  bool get isLoading => this.status == ViewStatus.loading;
-  bool get isLoaded => this.status == ViewStatus.loaded;
-  bool get isFailed => this.status == ViewStatus.failed;
-}

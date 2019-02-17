@@ -18,7 +18,7 @@ class StockSearchPage extends StatelessWidget {
         history: List.filled(10, ModelStock.initWith(id: '000001', name: '中国平安')),
         hottest: List.filled(10, ModelStock.initWith(id: '000001',name: '中国平安')),
         onTap: (stock){
-          AimNav.push(context, StockPage(zqdm: stock.zqdm));
+          AppNav.push(context, StockDetailPage(id: stock.id, name: stock.name));
         },
       )
     );

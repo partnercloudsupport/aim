@@ -12,8 +12,9 @@ class StorageDB {
   final _SqfliteDBManager _manager = _SqfliteDBManager();
 
   /// init storage database
-  Future<void> init() async {
+  Future<StorageDB> init() async {
     await _manager.init();
+    return this;
   }
 
   /// get user optional stocks

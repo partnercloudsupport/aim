@@ -5,7 +5,7 @@ import 'screen/home.dart';
 import 'screen/search.dart';
 
 
-class AimRoutes {
+class AppRoutes {
   static final launch = "/";
   static final home = "/home";
 
@@ -27,7 +27,7 @@ class AimRoutes {
 }
 
 
-class AimNav {
+class AppNav {
   // push a new page
   static Future<T> push<T>(BuildContext context, dynamic page) async {
     if(page is String) {

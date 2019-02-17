@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-
-import '../state/app.dart';
-import '../state/apptab.dart';
-import '../action/apptab.dart';
-
-import 'package:aim/src/screen/news.dart';
-import 'package:aim/src/screen/market.dart';
-import 'package:aim/src/screen/trade.dart';
-import 'package:aim/src/screen/mine.dart';
+import 'news.dart';
+import 'market.dart';
+import 'trade.dart';
+import 'mine.dart';
+import 'container/home.dart';
 
 
 class HomePage extends StatelessWidget {
   // home pages
-  final List<Widget> homePages = [ NewsPage(), MarketPage(), TradePage(), MinePage() ];
+  final List<Widget> pages = [ NewsHomePage(), MarketHomePage(), TradeHomePage(), MineHomePage() ];
 
   // nav bar items for home pages
-  final List<BottomNavigationBarItem> navBarItems = [
+  final List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('资讯')),
     BottomNavigationBarItem(icon: Icon(Icons.mail), title: Text('行情')),
     BottomNavigationBarItem(icon: Icon(Icons.attach_money), title: Text('交易')),
@@ -25,26 +20,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, AppTab>(
-      converter: (store){
-        return Selector.activeTab(store.state);
-      },
-      builder: (context, appTab){
-        return Scaffold(
-          body: IndexedStack(
-            index: appTab.index,
-            children: this.homePages,
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: this.navBarItems,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: appTab.index,
-            onTap: (index){
-              StoreProvider.of<AppState>(context).dispatch(ActionChangeAppTab(AppTab.values[index]));
-            },
-          ),
-        );
-      },
+    return Scaffold(
+      body: HomeBodyContainer(pages: this.pages),
+      bottomNavigationBar: HomeNavContainer(items: this.items),
     );
   }
 }

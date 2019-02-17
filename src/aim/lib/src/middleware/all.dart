@@ -10,7 +10,7 @@ import '../state/all.dart';
 import '../action/all.dart';
 
 final List<Middleware<AppState>> appMiddleware = [
-  TypedMiddleware<AppState, ActionLaunch>(launchApp),
+  TypedMiddleware<AppState, ActionAppLaunch>(appLaunch),
 
   TypedMiddleware<AppState, ActionUserLogin>(userLogin),
   TypedMiddleware<AppState, ActionSessionLogin>(sessionLogin),

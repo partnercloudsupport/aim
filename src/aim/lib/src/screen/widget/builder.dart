@@ -5,7 +5,7 @@ import '../../widget/basics.dart';
 
 
 /// load widget with state status
-class StateBuilder<T extends StateBase> extends StatelessWidget {
+class StateBuilder<T extends DataState> extends StatelessWidget {
   // state object
   final T state;
   // load action
@@ -18,12 +18,12 @@ class StateBuilder<T extends StateBase> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(this.state.isTodo){
+    if(this.state.isToLoad){
       return ToLoadIndicator(load: this.action);
-    } else if(this.state.isDoing){
+    } else if(this.state.isLoading){
       return LoadingIndicator();
     } else if(this.state.isFailed){
-      return FailureIndicator(msg: this.state.error, retry: this.action);
+      return FailureIndicator(msg: this.state.tip, retry: this.action);
     } else {
       return builder(context, this.state);
     }

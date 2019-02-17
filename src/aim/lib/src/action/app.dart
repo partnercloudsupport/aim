@@ -1,4 +1,6 @@
 import '../state/app.dart';
+import '../model/config.dart';
+import '../model/launch.dart';
 
 // action for change app tab
 class ActionChangeAppTab {
@@ -6,23 +8,36 @@ class ActionChangeAppTab {
   ActionChangeAppTab(this.tab);
 }
 
-
-// action for launch app
-class ActionLaunch {}
-
-class ActionLaunchSucceed {
-  // delay duration in seconds
-  int duration;
-  // remote launch image url
-  String imageUrl;
-  // local asset image key
-  String assetKey;
-  ActionLaunchSucceed(this.duration, this.imageUrl, this.assetKey);
+// action for get app config
+class ActionGetAppConfig {}
+class ActionGetAppConfigSucceed {
+  final AppConfig config;
+  ActionGetAppConfigSucceed(this.config);
 }
-
-class ActionLaunchFailed {
+class ActionGetAppConfigFailed {
   final String error;
-  ActionLaunchFailed({this.error});
+  ActionGetAppConfigFailed({this.error});
 }
 
-class ActionLaunchFinished{}
+// action for get launch config
+class ActionGetLaunchConfig {}
+class ActionGetLaunchConfigSucceed {
+  final LaunchConfig config;
+  ActionGetLaunchConfigSucceed(this.config);
+}
+class ActionGetLaunchConfigFailed {
+  final String error;
+  ActionGetLaunchConfigFailed({this.error});
+}
+
+// action for app launch
+class ActionAppLaunch{}
+class ActionAppLaunchSucceed {
+  final LaunchConfig config;
+  ActionAppLaunchSucceed(this.config);
+}
+class ActionAppLaunchFailed {
+  final String error;
+  ActionAppLaunchFailed({this.error});
+}
+class ActionAppLaunchFinished{}

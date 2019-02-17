@@ -1,31 +1,30 @@
 import '../model/config.dart';
 import '../logger.dart';
 
-import 'conf.dart';
+import 'app.dart';
 import 'news.dart';
 import 'smds.dart';
 import 'user.dart';
 
 class Remote {
-  // configure service for app
-  static ConfService conf;
+  // app service
+  AppService app;
   // news service
-  static NewsService news;
+  NewsService news;
   // securities service
-  static SmdsService smds;
+  SmdsService smds;
   // user service
-  static UserService user;
+  UserService user;
 
+  Remote({this.app, this.news, this.smds, this.user});
 
   /// init remote service with app configure
-  static Future<void> init(AppConfig cfg) async {
-    try{
-      conf = ConfService(baseUrl: cfg.service.conf)..usePersistCookie();
-      news = NewsService(baseUrl: cfg.service.news)..usePersistCookie();
-      smds = SmdsService(baseUrl: cfg.service.smds)..usePersistCookie();
-      user = UserService(baseUrl: cfg.service.user)..usePersistCookie();
-    }catch(e){
-      Log.fatal(e);
-    }
+  static Future<Remote> init(ServiceConfig cfg) async {
+    return Remote(
+      app: AppService(baseUrl: cfg.app)..usePersistCookie(),
+      news: NewsService(baseUrl: cfg.news)..usePersistCookie(),
+      smds: SmdsService(baseUrl: cfg.smds)..usePersistCookie(),
+      user: UserService(baseUrl: cfg.user)..usePersistCookie(),
+    );
   }
 }

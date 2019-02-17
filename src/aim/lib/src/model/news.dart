@@ -14,7 +14,7 @@ class ModelNewsCategory {
   int ctime;
   int mtime;
 
-  ModelNewsCategory(int id, this.code, this.name, this.brief, this.order, this.disabled, this.ctime, this.mtime);
+  ModelNewsCategory({this.id, this.code, this.name, this.brief, this.order, this.disabled, this.ctime, this.mtime});
 
   factory ModelNewsCategory.fromJson(Map<String, dynamic> json) => _$ModelNewsCategoryFromJson(json);
   Map<String, dynamic> toJson() => _$ModelNewsCategoryToJson(this);
@@ -24,8 +24,9 @@ class ModelNewsCategory {
 @JsonSerializable()
 class ModelNewsCategories {
   int total;
+  int selected;
   List<ModelNewsCategory> items;
-  ModelNewsCategories({this.total, this.items});
+  ModelNewsCategories({this.total, this.selected, this.items});
 
   factory ModelNewsCategories.fromJson(Map<String, dynamic> json) => _$ModelNewsCategoriesFromJson(json);
   Map<String, dynamic> toJson() => _$ModelNewsCategoriesToJson(this);
@@ -48,7 +49,7 @@ class ModelNewsItem {
   int ctime;
   int mtime;
 
-  ModelNewsItem(this.id, this.code, this.title, this.brief, this.images, this.source, this.disabled, this.ptime, this.ctime, this.mtime);
+  ModelNewsItem({this.id, this.code, this.title, this.brief, this.images, this.source, this.disabled, this.ptime, this.ctime, this.mtime});
 
   factory ModelNewsItem.fromJson(Map<String, dynamic> json) => _$ModelNewsItemFromJson(json);
   Map<String, dynamic> toJson() => _$ModelNewsItemToJson(this);
@@ -60,7 +61,7 @@ class ModelNewsItems {
   int total;
   int page;
   List<ModelNewsItem> items;
-  ModelNewsItems(this.total, this.page, this.items);
+  ModelNewsItems({this.total, this.page, this.items});
 
   factory ModelNewsItems.fromJson(Map<String, dynamic> json) => _$ModelNewsItemsFromJson(json);
   Map<String, dynamic> toJson() => _$ModelNewsItemsToJson(this);
@@ -82,7 +83,7 @@ class ModelNewsDetail {
   int ctime;
   int mtime;
 
-  ModelNewsDetail(this.id, this.code, this.title, this.brief, this.body, this.images, this.disabled, this.ptime, this.ctime, this.mtime);
+  ModelNewsDetail({this.id, this.code, this.title, this.brief, this.body, this.images, this.disabled, this.ptime, this.ctime, this.mtime});
 
   factory ModelNewsDetail.fromJson(Map<String, dynamic> json) => _$ModelNewsDetailFromJson(json);
   Map<String, dynamic> toJson() => _$ModelNewsDetailToJson(this);

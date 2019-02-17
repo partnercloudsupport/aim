@@ -41,20 +41,35 @@ class MarketStocks extends DataState{
     );
   }
 
-  void addStock(ModelStock stock) {
-    ModelStock old = this.stocks[stock.id];
-    if(old != null && stock.quote == null){
-      stock.quote = old.quote;
+  MarketStocks copyWith({Map<String, ModelStock> stocks, DataStatus status, String tip}) {
+    return MarketStocks(
+      stocks: stocks??this.stocks,
+      status: status??this.status,
+      tip: tip??this.tip
+    );
+  }
+
+  MarketStocks updateWith(dynamic obj) {
+    if (obj is ModelStock) {
+      this.stocks[obj.id] = obj;
+    } else if( obj is ModelQuote) {
+      this.stocks[obj.zqdm]?.quote = obj;
+    } else if (obj is List<ModelQuote>) {
+      obj.forEach((quote){this.stocks[quote.zqdm]?.quote=quote;});
     }
-    this.stocks[stock.id] = stock;
+
+    return this;
   }
 
-  void updateQuote(ModelQuote quote) {
-    this.stocks[quote.zqdm]?.quote = quote;
-  }
-
-  void updateQuotes(List<ModelQuote> quotes) {
-    quotes.forEach((quote){this.updateQuote(quote);});
+  List<ModelStock> selectByIds(List<String> ids) {
+    List<ModelStock> stocks = [];
+    ids?.forEach((id){
+      var stock = this.stocks??this.stocks[id];
+      if (stock != null) {
+        stocks.add(stock);
+      }
+    });
+    return stocks;
   }
 }
 
@@ -62,9 +77,19 @@ class MarketStocks extends DataState{
 class MarketStockDetail extends DataState {
   // market stock detail
   ModelStockDetail stock;
+
   MarketStockDetail({this.stock, DataStatus status, String tip}): super(status: status, tip: tip);
+
   factory MarketStockDetail.init() {
     return MarketStockDetail();
+  }
+
+  MarketStockDetail copyWith({ModelStockDetail stock, DataStatus status, String tip}) {
+    return MarketStockDetail(
+      stock: stock??this.stock,
+      status: status??this.status,
+      tip: tip??this.tip
+    );
   }
 }
 
@@ -89,24 +114,20 @@ class MarketIndexes extends DataState {
     );
   }
 
+  MarketIndexes updateWith(dynamic obj) {
+    if (obj is ModelIndex) {
+      this.indexes[obj.id] = obj;
+    } else if( obj is ModelQuote) {
+      this.indexes[obj.zqdm]?.quote = obj;
+    } else if (obj is List<ModelQuote>) {
+      obj.forEach((quote){this.indexes[quote.zqdm]?.quote=quote;});
+    }
+
+    return this;
+  }
+
   List<ModelIndex> take(int count) {
     return this.indexes.values.take(3).toList();
-  }
-
-  void addIndex(ModelIndex index) {
-    ModelIndex old = this.indexes[index.id];
-    if(old != null && index.quote == null){
-      index.quote = old.quote;
-    }
-    this.indexes[index.id] = index;
-  }
-
-  void updateQuote(ModelQuote quote) {
-    this.indexes[quote.zqdm]?.quote = quote;
-  }
-
-  void updateQuotes(List<ModelQuote> quotes) {
-    quotes.forEach((quote){this.updateQuote(quote);});
   }
 }
 
@@ -114,8 +135,18 @@ class MarketIndexes extends DataState {
 class MarketIndexDetail extends DataState {
   // market index detail
   ModelIndexDetail index;
+
   MarketIndexDetail({this.index, DataStatus status, String tip}): super(status: status, tip: tip);
+
   factory MarketIndexDetail.init() {
     return MarketIndexDetail();
+  }
+
+  MarketIndexDetail copyWith({ModelIndexDetail index, DataStatus status, String tip}) {
+    return MarketIndexDetail(
+        index: index??this.index,
+        status: status??this.status,
+        tip: tip??this.tip
+    );
   }
 }

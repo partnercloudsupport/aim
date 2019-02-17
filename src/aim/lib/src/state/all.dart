@@ -28,6 +28,24 @@ class AppState {
       search: Search.init()
     );
   }
+
+  // app data selectors
+  AppTab get appTab => app.tab;
+  int get appTabIndex => app.tab.index;
+
+  AppLaunch get appLaunch => app.launch;
+
+  // users data selectors
+  UserStocks get userStocks => user.stocks;
+
+  // news data selectors
+  NewsCategories get newsCategories => news.categories;
+
+  // market data selectors
+  MarketStocks get marketStocks => market.stocks;
+  MarketStockDetail get marketStockDetail => market.stock;
+
+  MarketIndexes get marketIndexes => market.indexes;
+  MarketIndexDetail get marketIndexDetail => market.index;
 }
 
-// selectors

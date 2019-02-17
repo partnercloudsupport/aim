@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-
 import '../../theme.dart';
 import '../../model/index.dart';
 
-
-
-class IndexesWidget extends StatelessWidget {
+class MainIndexesWidget extends StatelessWidget {
   final List<ModelIndex> indexes;
-  IndexesWidget({Key key, @required this.indexes}): super(key: key);
+  final Function(ModelIndex) onTap;
+  MainIndexesWidget({Key key, @required this.indexes, this.onTap}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,175 +17,77 @@ class IndexesWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          IndexWidget(index: (this.indexes?.length??0)>0 ? indexes[0] : null),
+          MainIndexWidget(index: (this.indexes?.length??0)>0 ? indexes[0] : null, onTap: this.onTap),
           VerticalDivider(color: Colors.grey),
-          IndexWidget(index: (this.indexes?.length??0)>1 ? indexes[1] : null),
+          MainIndexWidget(index: (this.indexes?.length??0)>1 ? indexes[1] : null, onTap: this.onTap),
           VerticalDivider(color: Colors.grey),
-          IndexWidget(index: (this.indexes?.length??0)>2 ? indexes[2] : null),
+          MainIndexWidget(index: (this.indexes?.length??0)>2 ? indexes[2] : null, onTap: this.onTap),
         ],
       ),
     );
   }
 }
 
-class IndexWidget extends StatelessWidget {
+class MainIndexWidget extends StatelessWidget {
   final ModelIndex index;
-  IndexWidget({Key key, this.index}): super(key:key);
+  final Function(ModelIndex) onTap;
+  MainIndexWidget({Key key, this.index, this.onTap}): super(key:key);
 
   Color quoteColor() {
-    return AimTheme.colors.price(this.index?.zde);
+    return AppTheme.colors.price(this.index?.quote?.zde);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120.0,
-      height: 70.0,
-      alignment: Alignment.center,
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: Text(
-              this.index?.zqmc??'--',
-              style: AimTheme.text.stockName,
-            )
-          ),
-          Container(
-            child: Text(
-              this.index?.strDqj??'--',
-              style: AimTheme.text.stockQuote.copyWith(color: this.quoteColor(), height: 1.2),
-            )
-          ),
-          Container(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    this.index?.strZde??'--',
-                    textAlign: TextAlign.center,
-                    style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.2),
-                  )
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    this.index?.strZdf??'--',
-                    textAlign: TextAlign.center,
-                    style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.2),
-                  )
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-
-class IndexesWidget1 extends StatelessWidget {
-  final List<ModelIndex> indexes;
-  IndexesWidget1({Key key, @required this.indexes}): super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.center,
-        width: double.infinity,
-        child: Card(
-          elevation: 3.0,
-          margin: EdgeInsets.only(top: 5.0),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: IndexWidget(index: (this.indexes?.length??0)>0 ? indexes[0] : null),
-              ),
-              Expanded(
-                flex: 1,
-                child: IndexWidget(index: (this.indexes?.length??0)>1 ? indexes[1] : null),
-              ),
-              Expanded(
-                flex: 1,
-                child: IndexWidget(index: (this.indexes?.length??0)>2 ? indexes[2] : null),
-              )
-            ],
-          ),
-        )
-    );
-  }
-}
-
-class IndexWidget1 extends StatelessWidget {
-  final ModelIndex index;
-  IndexWidget1({Key key, this.index}): super(key:key);
-
-  Color quoteColor() {
-    return AimTheme.colors.price(this.index?.zde);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 120.0,
-      height: 70.0,
-      color: Colors.grey[100],
-      margin: EdgeInsets.all(1.0),
+    return FlatButton(
+      onPressed: (){
+        if(this.onTap != null){
+          this.onTap(this.index);
+        }
+      },
       child: Container(
+        width: 120.0,
+        height: 70.0,
+        alignment: Alignment.center,
         child: Column(
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Container(
-                  child: Text(
-                    this.index?.zqmc??'--',
-                    style: AimTheme.text.stockName,
-                  )
-              ),
+            Container(
+                child: Text(
+                  this.index?.zqmc??'--',
+                  style: AppTheme.text.stockName,
+                )
             ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                  child: Text(
-                    this.index?.strDqj??'--',
-                    style: AimTheme.text.stockQuote.copyWith(color: this.quoteColor()),
-                  )
-              ),
+            Container(
+                child: Text(
+                  this.index?.quote?.strDqj??'--',
+                  style: AppTheme.text.stockQuote.copyWith(color: this.quoteColor(), height: 1.2),
+                )
             ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              this.index?.strZde??'--',
-                              style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
-                            )
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              this.index?.strZdf??'--',
-                              style: AimTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor()),
-                            )
-                        ),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      flex: 1,
+                      child: Text(
+                        this.index?.quote?.strZde??'--',
+                        textAlign: TextAlign.center,
+                        style: AppTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.2),
                       )
-                    ],
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Text(
+                        this.index?.quote?.strZdf??'--',
+                        textAlign: TextAlign.center,
+                        style: AppTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.2),
+                      )
                   )
+                ],
               ),
             )
           ],
         ),
-      ),
+      )
     );
   }
 }

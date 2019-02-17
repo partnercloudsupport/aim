@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../logger.dart';
 
-class MinePage extends StatefulWidget {
+class MineHomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -11,7 +11,7 @@ class MinePage extends StatefulWidget {
 }
 
 
-class _MinePageState extends State<MinePage> {
+class _MinePageState extends State<MineHomePage> {
   @override
   void initState() {
     // TODO: implement initState

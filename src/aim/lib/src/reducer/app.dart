@@ -16,25 +16,25 @@ AppTab _changeTab(AppTab state, ActionChangeAppTab action) {
 
 // reducer for app launch
 final appLaunchReducer = combineReducers<AppLaunch>([
-  TypedReducer<AppLaunch, ActionLaunch>(_launch),
-  TypedReducer<AppLaunch, ActionLaunchSucceed>(_launchSucceed),
-  TypedReducer<AppLaunch, ActionLaunchFailed>(_launchFailed),
-  TypedReducer<AppLaunch, ActionLaunchFinished>(_launchFinished),
+  TypedReducer<AppLaunch, ActionAppLaunch>(_appLaunch),
+  TypedReducer<AppLaunch, ActionAppLaunchSucceed>(_appLaunchSucceed),
+  TypedReducer<AppLaunch, ActionAppLaunchFailed>(_appLaunchFailed),
+  TypedReducer<AppLaunch, ActionAppLaunchFinished>(_appLaunchFinished),
 ]);
 
-AppLaunch _launch(AppLaunch state, ActionLaunch action) {
-  return state.copyWith(status: ActionStatus.doing);
+AppLaunch _appLaunch(AppLaunch state, ActionAppLaunch action) {
+  return state.copyWith(status: DataStatus.loading);
 }
 
-AppLaunch _launchSucceed(AppLaunch state, ActionLaunchSucceed action) {
-  return state.copyWith(status: ActionStatus.done, duration: action.duration, imageUrl: action.imageUrl, assetKey: action.assetKey);
+AppLaunch _appLaunchSucceed(AppLaunch state, ActionAppLaunchSucceed action) {
+  return state.copyWith(config: action.config, status: DataStatus.loaded);
 }
 
-AppLaunch _launchFailed(AppLaunch state, ActionLaunchFailed action) {
-  return state.copyWith(status: ActionStatus.failed, tip: action.error);
+AppLaunch _appLaunchFailed(AppLaunch state, ActionAppLaunchFailed action) {
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
 }
 
-AppLaunch _launchFinished(AppLaunch state, ActionLaunchFinished action) {
+AppLaunch _appLaunchFinished(AppLaunch state, ActionAppLaunchFinished action) {
   return state.copyWith(finished: true);
 }
 

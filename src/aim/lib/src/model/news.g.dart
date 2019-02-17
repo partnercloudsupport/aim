@@ -8,14 +8,14 @@ part of 'news.dart';
 
 ModelNewsCategory _$ModelNewsCategoryFromJson(Map<String, dynamic> json) {
   return ModelNewsCategory(
-      json['id'] as int,
-      json['code'] as String,
-      json['name'] as String,
-      json['brief'] as String,
-      json['order'] as int,
-      json['disabled'] as int,
-      json['ctime'] as int,
-      json['mtime'] as int);
+      id: json['id'] as int,
+      code: json['code'] as String,
+      name: json['name'] as String,
+      brief: json['brief'] as String,
+      order: json['order'] as int,
+      disabled: json['disabled'] as int,
+      ctime: json['ctime'] as int,
+      mtime: json['mtime'] as int);
 }
 
 Map<String, dynamic> _$ModelNewsCategoryToJson(ModelNewsCategory instance) =>
@@ -33,6 +33,7 @@ Map<String, dynamic> _$ModelNewsCategoryToJson(ModelNewsCategory instance) =>
 ModelNewsCategories _$ModelNewsCategoriesFromJson(Map<String, dynamic> json) {
   return ModelNewsCategories(
       total: json['total'] as int,
+      selected: json['selected'] as int,
       items: (json['items'] as List)
           ?.map((e) => e == null
               ? null
@@ -42,20 +43,24 @@ ModelNewsCategories _$ModelNewsCategoriesFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ModelNewsCategoriesToJson(
         ModelNewsCategories instance) =>
-    <String, dynamic>{'total': instance.total, 'items': instance.items};
+    <String, dynamic>{
+      'total': instance.total,
+      'selected': instance.selected,
+      'items': instance.items
+    };
 
 ModelNewsItem _$ModelNewsItemFromJson(Map<String, dynamic> json) {
   return ModelNewsItem(
-      json['id'] as int,
-      json['code'] as String,
-      json['title'] as String,
-      json['brief'] as String,
-      (json['images'] as List)?.map((e) => e as String)?.toList(),
-      json['source'] as String,
-      json['disabled'] as int,
-      json['ptime'] as int,
-      json['ctime'] as int,
-      json['mtime'] as int)
+      id: json['id'] as int,
+      code: json['code'] as String,
+      title: json['title'] as String,
+      brief: json['brief'] as String,
+      images: (json['images'] as List)?.map((e) => e as String)?.toList(),
+      source: json['source'] as String,
+      disabled: json['disabled'] as int,
+      ptime: json['ptime'] as int,
+      ctime: json['ctime'] as int,
+      mtime: json['mtime'] as int)
     ..url = json['url'] as String;
 }
 
@@ -76,9 +81,9 @@ Map<String, dynamic> _$ModelNewsItemToJson(ModelNewsItem instance) =>
 
 ModelNewsItems _$ModelNewsItemsFromJson(Map<String, dynamic> json) {
   return ModelNewsItems(
-      json['total'] as int,
-      json['page'] as int,
-      (json['items'] as List)
+      total: json['total'] as int,
+      page: json['page'] as int,
+      items: (json['items'] as List)
           ?.map((e) => e == null
               ? null
               : ModelNewsItem.fromJson(e as Map<String, dynamic>))
@@ -94,16 +99,16 @@ Map<String, dynamic> _$ModelNewsItemsToJson(ModelNewsItems instance) =>
 
 ModelNewsDetail _$ModelNewsDetailFromJson(Map<String, dynamic> json) {
   return ModelNewsDetail(
-      json['id'] as int,
-      json['code'] as String,
-      json['title'] as String,
-      json['brief'] as String,
-      json['body'] as String,
-      json['images'] as String,
-      json['disabled'] as int,
-      json['ptime'] as int,
-      json['ctime'] as int,
-      json['mtime'] as int);
+      id: json['id'] as int,
+      code: json['code'] as String,
+      title: json['title'] as String,
+      brief: json['brief'] as String,
+      body: json['body'] as String,
+      images: json['images'] as String,
+      disabled: json['disabled'] as int,
+      ptime: json['ptime'] as int,
+      ctime: json['ctime'] as int,
+      mtime: json['mtime'] as int);
 }
 
 Map<String, dynamic> _$ModelNewsDetailToJson(ModelNewsDetail instance) =>

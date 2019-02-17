@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-class TradePage extends StatefulWidget {
+class TradeHomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -10,7 +10,7 @@ class TradePage extends StatefulWidget {
 }
 
 
-class _TradePageState extends State<TradePage> {
+class _TradePageState extends State<TradeHomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

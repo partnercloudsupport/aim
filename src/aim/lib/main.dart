@@ -26,8 +26,8 @@ class AimApp extends StatelessWidget{
       child: new MaterialApp(
         debugShowMaterialGrid: false,
         showSemanticsDebugger: false,
-        theme: AimTheme.theme,
-        routes: AimRoutes.routes,
+        theme: AppTheme.theme,
+        routes: AppRoutes.routes,
       ),
     );
   }

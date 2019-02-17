@@ -1,5 +1,6 @@
 import 'base.dart';
 export 'base.dart';
+import '../model/launch.dart';
 
 class AppData {
   // app selected tab
@@ -24,32 +25,23 @@ enum AppTab{news, market, trade, mine}
 
 // app launch state
 class AppLaunch extends DataState {
-  // delay duration in seconds
-  int duration;
-  // local asset key
-  String assetKey;
-  // remote image url
-  String imageUrl;
-
+  // launch config
+  LaunchConfig config;
   // launch finished
   bool finished;
 
-  AppLaunch({this.duration, this.assetKey, this.imageUrl, this.finished, DataStatus status, String tip}): super(status: status, tip: tip);
+  AppLaunch({this.config, this.finished, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory AppLaunch.init() {
-    return AppLaunch(
-        finished: false
-    );
+    return AppLaunch();
   }
 
-  AppLaunch copyWith({int duration, String assetKey, String imageUrl, bool finished, DataStatus status, String tip}) {
+  AppLaunch copyWith({LaunchConfig config, bool finished, DataStatus status, String tip}) {
     return AppLaunch(
-        duration: duration??this.duration,
-        status: status??this.status,
-        assetKey: assetKey??this.assetKey,
-        imageUrl: imageUrl??this.imageUrl,
-        finished: finished??this.finished,
-        tip: tip??this.tip
+        config: config??this.config,
+      finished: finished??this.finished,
+      status: status??this.status,
+      tip: tip??this.tip
     );
   }
 }

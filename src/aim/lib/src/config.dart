@@ -1,71 +1,55 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-
-import 'model/config.dart';
-export 'model/config.dart';
-import 'local/all.dart';
-import 'remote/conf.dart';
-
 import 'logger.dart';
 import 'assets.dart';
+import 'local/all.dart';
+import 'model/config.dart';
+import 'model/launch.dart';
 
 class Config {
-  static AppConfig app = _defaultAppConfig;
-
-  static Future<void> init() async {
+  static Future<AppConfig> loadAppConfig(Local local) async {
     try {
-      AppConfig cfg= await loadFromAssets();
-      app = app.copyWith(cfg);
+      _defaultAppConfig.copyWith(AppConfig.fromJson(jsonDecode(await rootBundle.loadString(Assets.appConfig)??'{}')));
     } catch (e) {
       Log.error(e);
     } finally {
       try {
-        AppConfig cfg = await loadFromStorage();
-        app = app.copyWith(cfg);
+        _defaultAppConfig.copyWith(AppConfig.fromJson(jsonDecode(local.sp.getAppConfig()??'{}')));
       } catch (e){
         Log.error(e);
-      } finally {
-        try {
-          AppConfig cfg = await loadFromRemote();
-          app = app.copyWith(cfg);
-        } catch (e){
-          Log.error(e);
-        }
       }
     }
+    return _defaultAppConfig;
   }
 
-  static Future<AppConfig> loadFromAssets() async {
-    String strConfig = await rootBundle.loadString(Assets.appConfig);
-    return AppConfig.fromJson(jsonDecode(strConfig??'{}'));
+  static Future<LaunchConfig> loadLaunchConfig(Local local) async {
+    try {
+      _defaultLaunchConfig.copyWith(LaunchConfig.fromJson(jsonDecode(await rootBundle.loadString(Assets.launchConfig)??'{}')));
+    } catch (e) {
+      Log.error(e);
+    } finally {
+      try {
+        _defaultLaunchConfig.copyWith(LaunchConfig.fromJson(jsonDecode(local.sp.getLaunchConfig()??'{}')));
+      } catch (e){
+        Log.error(e);
+      }
+    }
+    return _defaultLaunchConfig;
   }
-
-  static Future<AppConfig> loadFromStorage() async {
-    String strConfig = Local.sp.getConfig();
-    return AppConfig.fromJson(jsonDecode(strConfig??'{}'));
-  }
-
-  static Future<AppConfig> loadFromRemote() async {
-     return await ConfService(baseUrl: app.service.conf).getAppConfig();
-  }
-
-  static get launchDuration => app.launch.duration;
-  static get launchImageUrl => app.launch.imageUrl;
-  static get launchAssetKey => app.launch.assetKey;
 }
 
-
 // default app config
-AppConfig _defaultAppConfig = AppConfig.initWith(
-  launch: LaunchConfig.initWith(
-    duration: 2,
-    imageUrl: 'http://localhost:9004/files/image/launch.png',
-    assetKey: 'res/image/launch.png'
-  ),
-  service: ServiceConfig.initWith(
-    conf: 'http://localhost:9004',
+AppConfig _defaultAppConfig = AppConfig(
+  service: ServiceConfig(
+    app: 'http://localhost:9004',
     user: 'http://localhost:9002',
     news: 'http://localhost:9004',
     smds: 'http://localhost:9004'
   )
+);
+
+// default launch config
+LaunchConfig _defaultLaunchConfig = LaunchConfig(
+  duration: 2,
+  assetKey: Assets.imageLaunch,
 );

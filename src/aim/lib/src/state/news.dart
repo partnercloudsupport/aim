@@ -4,7 +4,7 @@ import '../model/news.dart';
 
 // news data
 class News {
-  NewsCategories categories;
+  final NewsCategories categories;
 
   News({this.categories});
 
@@ -17,18 +17,23 @@ class News {
 
 // news categories data
 class NewsCategories extends DataState {
-  List<ModelNewsCategory> categories;
+  // current selected index of category list
+  final int selected;
+  // news category list
+  final List<ModelNewsCategory> categories;
 
-  NewsCategories({this.categories, DataStatus status, String tip}): super(status: status, tip: tip);
+  NewsCategories({this.selected, this.categories, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory NewsCategories.init() {
     return NewsCategories(
+      selected: 0,
       categories: [],
     );
   }
 
-  NewsCategories copyWith({List<ModelNewsCategory> categories, DataStatus status, String tip}) {
+  NewsCategories copyWith({int selected, List<ModelNewsCategory> categories, DataStatus status, String tip}) {
     return NewsCategories(
+      selected: selected??this.selected,
       categories: categories??this.categories,
       status: status??this.status,
       tip: tip??this.tip

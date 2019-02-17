@@ -1,19 +1,19 @@
 import 'package:redux/redux.dart';
-import '../local/all.dart';
-import '../remote/all.dart';
+import '../app.dart';
 import '../state/all.dart';
 import '../model/index.dart';
 import '../model/stock.dart';
 import '../model/quote.dart';
 import '../action/market.dart';
 
-
 Future<void> getIndexes(Store<AppState> store, ActionGetIndexes action, NextDispatcher next) async {
   try{
+    if(store.state.marketIndexes.isLoading || store.state.marketIndexes.isUsable)
+      return;
     // dispatch action to next
     next(action);
     // get all indexes
-    List<ModelIndex> indexes = await Remote.smds.getAllIndexes();
+    List<ModelIndex> indexes = await App.remote.smds.getAllIndexes();
     // load all indexes succeed
     store.dispatch(ActionGetIndexesSucceed(indexes: indexes));
   } catch(e) {
@@ -27,7 +27,7 @@ Future<void> getIndexDetail(Store<AppState> store, ActionGetIndexDetail action, 
     // dispatch action to next
     next(action);
     // get index detail
-    ModelIndexDetail index = await Remote.smds.getIndexDetail(action.id);
+    ModelIndexDetail index = await App.remote.smds.getIndexDetail(action.id);
     store.dispatch(ActionGetIndexDetailSucceed(index: index));
   }catch(e) {
     store.dispatch(ActionGetIndexDetailFailed(error: e.toString()));
@@ -39,7 +39,7 @@ Future<void> getIndexQuote(Store<AppState> store, ActionGetIndexQuote action, Ne
     // dispatch action to next
     next(action);
     // get index quote
-    ModelQuote quote = await Remote.smds.getIndexQuote(action.id);
+    ModelQuote quote = await App.remote.smds.getIndexQuote(action.id);
     store.dispatch(ActionGetIndexQuoteSucceed(quote: quote));
   }catch(e) {
     store.dispatch(ActionGetIndexQuoteFailed(error: e.toString()));
@@ -51,7 +51,7 @@ Future<void> getIndexesQuote(Store<AppState> store, ActionGetIndexesQuote action
     // dispatch to next
     next(action);
     // get indexes quote
-    List<ModelQuote> quotes = await Remote.smds.getIndexesQuote(action.indexes);
+    List<ModelQuote> quotes = await App.remote.smds.getIndexesQuote(action.indexes);
     store.dispatch(ActionGetIndexesQuoteSucceed(quotes: quotes));
   }catch(e) {
     store.dispatch(ActionGetIndexesQuoteFailed(error: e.toString()));
@@ -61,10 +61,12 @@ Future<void> getIndexesQuote(Store<AppState> store, ActionGetIndexesQuote action
 
 Future<void> getStocks(Store<AppState> store, action, NextDispatcher next) async {
   try{
+    if (store.state.market.stocks.isLoading || store.state.market.stocks.isUsable)
+      return;
     // dispatch to next
     next(action);
     // get all stocks
-    List<ModelStock> stocks = await Remote.smds.getAllStocks();
+    List<ModelStock> stocks = await App.remote.smds.getAllStocks();
     // load all stocks succeed
     store.dispatch(ActionGetStocksSucceed(stocks: stocks));
   } catch(e) {
@@ -79,7 +81,7 @@ Future<void> getStockDetail(Store<AppState> store, ActionGetStockDetail action, 
     // dispatch next action
     next(action);
     // get stock detail
-    ModelStockDetail stock = await Remote.smds.getStockDetail(action.id);
+    ModelStockDetail stock = await App.remote.smds.getStockDetail(action.id);
     // dispatch succeed action
     store.dispatch(ActionGetStockDetailSucceed(stock: stock));
   }catch(e){
@@ -93,7 +95,7 @@ Future<void> getStockQuote(Store<AppState> store, ActionGetStockQuote action, Ne
     // dispatch action to next
     next(action);
     // get index quote
-    ModelQuote quote = await Remote.smds.getStockQuote(action.id);
+    ModelQuote quote = await App.remote.smds.getStockQuote(action.id);
     store.dispatch(ActionGetStockQuoteSucceed(quote: quote));
   }catch(e) {
     store.dispatch(ActionGetStockQuoteFailed(error: e.toString()));
@@ -105,7 +107,7 @@ Future<void> getStocksQuote(Store<AppState> store, ActionGetStocksQuote action, 
     // dispatch to next
     next(action);
     // get indexes quote
-    List<ModelQuote> quotes = await Remote.smds.getStocksQuote(action.stocks);
+    List<ModelQuote> quotes = await App.remote.smds.getStocksQuote(action.stocks);
     store.dispatch(ActionGetStocksQuoteSucceed(quotes: quotes));
   }catch(e) {
     store.dispatch(ActionGetStocksQuoteFailed(error: e.toString()));

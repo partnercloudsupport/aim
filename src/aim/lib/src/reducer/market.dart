@@ -8,73 +8,129 @@ final marketIndexesReducer = combineReducers<MarketIndexes>([
   TypedReducer<MarketIndexes, ActionGetIndexes>(_getIndexes),
   TypedReducer<MarketIndexes, ActionGetIndexesSucceed>(_getIndexesSucceed),
   TypedReducer<MarketIndexes, ActionGetIndexesFailed>(_getIndexesFailed),
+  
+  TypedReducer<MarketIndexes, ActionGetIndexQuote>(_getIndexQuote),
+  TypedReducer<MarketIndexes, ActionGetIndexQuoteSucceed>(_getIndexQuoteSucceed),
+  TypedReducer<MarketIndexes, ActionGetIndexQuoteFailed>(_getIndexQuoteFailed),
+  
+  TypedReducer<MarketIndexes, ActionGetIndexesQuote>(_getIndexesQuote),
+  TypedReducer<MarketIndexes, ActionGetIndexesQuoteSucceed>(_getIndexesQuoteSucceed),
+  TypedReducer<MarketIndexes, ActionGetIndexesQuoteFailed>(_getIndexesQuoteFailed),
+
 ]);
 
 MarketIndexes _getIndexes(MarketIndexes state, ActionGetIndexes action) {
   return state.copyWith(status: DataStatus.loading);
 }
-
 MarketIndexes _getIndexesSucceed(MarketIndexes state, ActionGetIndexesSucceed action) {
   return state.copyWith(indexes: Map.fromIterable(action.indexes, key: (index)=>index.id), status: DataStatus.loaded);
 }
-
 MarketIndexes _getIndexesFailed(MarketIndexes state, ActionGetIndexesFailed action) {
   return state.copyWith(status: DataStatus.failed, tip: action.error);
 }
 
-
-final marketReducer = combineReducers<MarketState>([
-  TypedReducer<MarketState, ActionLoadMarketData>(_loadMarketData),
-  TypedReducer<MarketState, ActionLoadMarketDataSucceed>(_loadMarketDataSucceed),
-  TypedReducer<MarketState, ActionLoadMarketDataFailed>(_loadMarketDataFailed),
-
-  TypedReducer<MarketState, ActionUpdateMarketIndexesQuote>(_updateMarketIndexesQuote),
-  TypedReducer<MarketState, ActionUpdateMarketIndexesQuoteSucceed>(_updateMarketIndexesQuoteSucceed),
-  TypedReducer<MarketState, ActionUpdateMarketIndexesQuoteFailed>(_updateMarketIndexesQuoteFailed),
-]);
-
-
-MarketState _loadMarketData(MarketState state, ActionLoadMarketData action) {
-  return state.copyWith(status: ActionStatus.doing);
+MarketIndexes _getIndexQuote(MarketIndexes state, ActionGetIndexQuote action) {
+  return state;
 }
-
-MarketState _loadMarketDataSucceed(MarketState state, ActionLoadMarketDataSucceed action) {
-  return state.copyWith(status: ActionStatus.done, indexes: action.indexes, stocks: action.stocks);
+MarketIndexes _getIndexQuoteSucceed(MarketIndexes state, ActionGetIndexQuoteSucceed action) {
+  return state.updateWith(action.quote);
 }
-
-MarketState _loadMarketDataFailed(MarketState state, ActionLoadMarketDataFailed action) {
-  return state.copyWith(status: ActionStatus.failed, error: action.error);
-}
-
-MarketState _updateMarketIndexesQuote(MarketState state, ActionUpdateMarketIndexesQuote action) {
+MarketIndexes _getIndexQuoteFailed(MarketIndexes state, ActionGetIndexQuoteFailed action) {
   return state;
 }
 
-MarketState _updateMarketIndexesQuoteSucceed(MarketState state, ActionUpdateMarketIndexesQuoteSucceed action) {
-  return state.updateWith(indexes: action.indexes);
+MarketIndexes _getIndexesQuote(MarketIndexes state, ActionGetIndexesQuote action) {
+  return state;
 }
-
-MarketState _updateMarketIndexesQuoteFailed(MarketState state, ActionUpdateMarketIndexesQuoteFailed action) {
+MarketIndexes _getIndexesQuoteSucceed(MarketIndexes state, ActionGetIndexesQuoteSucceed action) {
+  return state.updateWith(action.quotes);
+}
+MarketIndexes _getIndexesQuoteFailed(MarketIndexes state, ActionGetIndexesQuoteFailed action) {
   return state;
 }
 
-
-//
-final stockDetailReducer = combineReducers<StockDetailState>([
-  TypedReducer<StockDetailState, ActionGetStockDetail>(_getStockDetail),
-  TypedReducer<StockDetailState, ActionGetStockDetailSucceed>(_getStockDetailSucceed),
-  TypedReducer<StockDetailState, ActionGetStockDetailFailed>(_getStockDetailFailed),
+// get index detail
+final marketIndexDetailReducer = combineReducers<MarketIndexDetail>([
+  TypedReducer<MarketIndexDetail, ActionGetIndexDetail>(_getIndexDetail),
+  TypedReducer<MarketIndexDetail, ActionGetIndexDetailSucceed>(_getIndexDetailSucceed),
+  TypedReducer<MarketIndexDetail, ActionGetIndexDetailFailed>(_getIndexDetailFailed),
 ]);
 
 
-StockDetailState _getStockDetail(StockDetailState state, ActionGetStockDetail action) {
-  return state.copyWith(status: ActionStatus.doing);
+MarketIndexDetail _getIndexDetail(MarketIndexDetail state, ActionGetIndexDetail action) {
+  return state.copyWith(status: DataStatus.loading);
 }
 
-StockDetailState _getStockDetailSucceed(StockDetailState state, ActionGetStockDetailSucceed action) {
-  return state.copyWith(status: ActionStatus.done, detail: action.detail);
+MarketIndexDetail _getIndexDetailSucceed(MarketIndexDetail state, ActionGetIndexDetailSucceed action) {
+  return state.copyWith(index: action.index, status: DataStatus.loaded);
 }
 
-StockDetailState _getStockDetailFailed(StockDetailState state, ActionGetStockDetailFailed action) {
-  return state.copyWith(status: ActionStatus.failed, error: action.error);
+MarketIndexDetail _getIndexDetailFailed(MarketIndexDetail state, ActionGetIndexDetailFailed action) {
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
+}
+
+// market stocks
+final marketStocksReducer = combineReducers<MarketStocks>([
+  TypedReducer<MarketStocks, ActionGetStocks>(_getStocks),
+  TypedReducer<MarketStocks, ActionGetStocksSucceed>(_getStocksSucceed),
+  TypedReducer<MarketStocks, ActionGetStocksFailed>(_getStocksFailed),
+
+  TypedReducer<MarketStocks, ActionGetStockQuote>(_getStockQuote),
+  TypedReducer<MarketStocks, ActionGetStockQuoteSucceed>(_getStockQuoteSucceed),
+  TypedReducer<MarketStocks, ActionGetStockQuoteFailed>(_getStockQuoteFailed),
+
+  TypedReducer<MarketStocks, ActionGetStocksQuote>(_getStocksQuote),
+  TypedReducer<MarketStocks, ActionGetStocksQuoteSucceed>(_getStocksQuoteSucceed),
+  TypedReducer<MarketStocks, ActionGetStocksQuoteFailed>(_getStocksQuoteFailed),
+
+]);
+
+MarketStocks _getStocks(MarketStocks state, ActionGetStocks action) {
+  return state.copyWith(status: DataStatus.loading);
+}
+MarketStocks _getStocksSucceed(MarketStocks state, ActionGetStocksSucceed action) {
+  return state.copyWith(stocks: Map.fromIterable(action.stocks, key: (stock)=>stock.id), status: DataStatus.loaded);
+}
+MarketStocks _getStocksFailed(MarketStocks state, ActionGetStocksFailed action) {
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
+}
+
+MarketStocks _getStockQuote(MarketStocks state, ActionGetStockQuote action) {
+  return state;
+}
+MarketStocks _getStockQuoteSucceed(MarketStocks state, ActionGetStockQuoteSucceed action) {
+  return state.updateWith(action.quote);
+}
+MarketStocks _getStockQuoteFailed(MarketStocks state, ActionGetStockQuoteFailed action) {
+  return state;
+}
+
+MarketStocks _getStocksQuote(MarketStocks state, ActionGetStocksQuote action) {
+  return state;
+}
+MarketStocks _getStocksQuoteSucceed(MarketStocks state, ActionGetStocksQuoteSucceed action) {
+  return state.updateWith(action.quotes);
+}
+MarketStocks _getStocksQuoteFailed(MarketStocks state, ActionGetStocksQuoteFailed action) {
+  return state;
+}
+
+// get stock detail
+final marketStockDetailReducer = combineReducers<MarketStockDetail>([
+  TypedReducer<MarketStockDetail, ActionGetStockDetail>(_getStockDetail),
+  TypedReducer<MarketStockDetail, ActionGetStockDetailSucceed>(_getStockDetailSucceed),
+  TypedReducer<MarketStockDetail, ActionGetStockDetailFailed>(_getStockDetailFailed),
+]);
+
+
+MarketStockDetail _getStockDetail(MarketStockDetail state, ActionGetStockDetail action) {
+  return state.copyWith(status: DataStatus.loading);
+}
+
+MarketStockDetail _getStockDetailSucceed(MarketStockDetail state, ActionGetStockDetailSucceed action) {
+  return state.copyWith(stock: action.stock, status: DataStatus.loaded);
+}
+
+MarketStockDetail _getStockDetailFailed(MarketStockDetail state, ActionGetStockDetailFailed action) {
+  return state.copyWith(status: DataStatus.failed, tip: action.error);
 }

@@ -2,11 +2,17 @@ import 'db.dart';
 import 'sp.dart';
 
 class Local {
-  static StorageSharedPreferences sp = StorageSharedPreferences();
-  static StorageDB db = StorageDB();
+  // shared preference
+  final StorageSharedPreferences sp;
+  // sqlite database
+  final StorageDB db;
 
-  static Future<void> init() async {
-    await sp.init();
-    await db.init();
+  Local({this.sp, this.db});
+
+  static Future<Local> init() async {
+    return Local(
+      sp: await StorageSharedPreferences().init(),
+      db: await StorageDB().init()
+    );
   }
 }

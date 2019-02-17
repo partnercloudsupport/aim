@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-
-import 'stock.dart';
-
 import '../routes.dart';
-import '../state/app.dart';
-import '../state/market.dart';
-import '../action/market.dart';
+import 'container/market.dart';
 
-import 'widget/index.dart';
-import 'widget/stock.dart';
-import 'widget/builder.dart';
-
-class MarketPage extends StatelessWidget {
+class MarketHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,58 +13,12 @@ class MarketPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: (){
-              AimNav.push(context, AimRoutes.searchStock);
+              AppNav.push(context, AppRoutes.searchStock);
             },
           )
         ],
       ),
-      body: StoreConnector<AppState, MarketState>(
-        onInit: (store) {
-          if (Selector.activeTab(store.state) == AppTab.market && Selector.market(store.state).isTodo) {
-            store.dispatch(ActionLoadMarketData());
-          }
-        },
-        converter: (store) {
-          return Selector.market(store.state);
-        },
-        ignoreChange: (state) {
-          return Selector.activeTab(state) != AppTab.market;
-        },
-        onDidChange: (marketState) {
-          var store = StoreProvider.of<AppState>(context);
-          if (Selector.activeTab(store.state)==AppTab.market && marketState.isTodo){
-            store.dispatch(ActionLoadMarketData());
-          }
-        },
-        builder: (context, marketState) {
-          return StateBuilder<MarketState>(
-            state: marketState,
-            action: () {
-              StoreProvider.of<AppState>(context).dispatch(ActionLoadMarketData());
-            },
-            builder: (context, marketState){
-              return Column(
-                children: <Widget>[
-                  IndexesWidget(indexes: marketState.indexes),
-                  UserStockListTitleWidget(),
-                  Expanded(
-                    child: UserStockListWidget(
-                      stocks: marketState.stocks,
-                      onAdd: () {
-                        AimNav.push(context, AimRoutes.searchStock);
-                      },
-                      onTab: (stock){
-                        AimNav.push(context, StockPage(zqdm: stock.zqdm));
-                      },
-                    ),
-                  )
-                ],
-              );
-            },
-          );
-        },
-      )
+      body: MarketContainer()
     );
   }
 }
-

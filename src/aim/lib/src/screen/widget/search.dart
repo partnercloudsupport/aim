@@ -77,7 +77,7 @@ class SearchHottestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AimTheme.colors.background,
+      color: AppTheme.colors.background,
       width: double.infinity,
       height: 168.0,
       margin: EdgeInsets.only(top: 8.0),
@@ -90,7 +90,7 @@ class SearchHottestWidget extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(
               '热门搜索',
-              style: AimTheme.text.mediumRegular.copyWith(color: Colors.grey),
+              style: AppTheme.text.mediumRegular.copyWith(color: Colors.grey),
             ),
           ),
           Divider(),
@@ -121,7 +121,7 @@ class SearchHistoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AimTheme.colors.background,
+      color: AppTheme.colors.background,
       width: double.infinity,
       height: 168.0,
       margin: EdgeInsets.only(top: 8.0),
@@ -134,7 +134,7 @@ class SearchHistoryWidget extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(
               '历史搜索',
-              style: AimTheme.text.mediumRegular.copyWith(color: Colors.grey),
+              style: AppTheme.text.mediumRegular.copyWith(color: Colors.grey),
             ),
           ),
           Divider(),
@@ -185,7 +185,7 @@ class StockItemWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   this.stock?.zqmc??'--',
-                  style: AimTheme.text.stockName,
+                  style: AppTheme.text.stockName,
                 ),
               ),
             ),
@@ -193,7 +193,7 @@ class StockItemWidget extends StatelessWidget {
               child: Center(
                   child: Text(
                     this.stock?.zqdm??'--',
-                    style: AimTheme.text.stockCode,
+                    style: AppTheme.text.stockCode,
                   )
               ),
             )

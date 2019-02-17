@@ -2,7 +2,8 @@
 /// assets keys
 
 class Assets{
-  static final String appConfig = 'res/config/app.json';
+  static final String appConfig = 'res/json/config.json';
+  static final String launchConfig = 'res/json/launch.json';
 
   static final String sqlCreate = 'res/sql/create.sql';
 

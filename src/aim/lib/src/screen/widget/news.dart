@@ -1,16 +1,59 @@
 import 'package:flutter/material.dart';
-
+import 'pager.dart';
+import 'webview.dart';
 import '../../theme.dart';
 import '../../util/time.dart';
 import '../../model/news.dart';
 
+// news list with pager widget
+class NewsPageListWidget extends StatelessWidget {
+  final ModelNewsCategory category;
+  final Future Function(int page) query;
+  final Function(ModelNewsItem) onTap;
+  NewsPageListWidget({Key key, @required this.category, @required this.query, this.onTap}): super(key: key);
 
-// news list item
-class NewsListItemWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return PagerWidget<ModelNewsItem>(
+      query: this.query,
+      builder: (context, item){
+        return NewsItemWidget(
+          item: item,
+          onTap: this.onTap,
+        );
+      },
+    );
+  }
+}
+
+
+// news list widget
+class NewsListWidget extends StatelessWidget {
+  final List<ModelNewsItem> items;
+  final Function(ModelNewsItem) onTap;
+
+  NewsListWidget({Key key, @required this.items, this.onTap}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: this.items?.length??0,
+      itemBuilder: (context, index){
+        return NewsItemWidget(
+          item: this.items[index],
+          onTap: this.onTap,
+        );
+      }
+    );
+  }
+}
+
+// news item widget
+class NewsItemWidget extends StatelessWidget {
   final ModelNewsItem item;
-  final Function() onTap;
+  final Function(ModelNewsItem) onTap;
 
-  NewsListItemWidget({Key key, @required this.item, this.onTap}) : super(key: key);
+  NewsItemWidget({Key key, @required this.item, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +62,11 @@ class NewsListItemWidget extends StatelessWidget {
         FlatButton(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: NewsItemMixedWidget(item: this.item),
-          onPressed: this.onTap??(){},
+          onPressed: () {
+            if(this.onTap != null){
+              this.onTap(this.item);
+            }
+          },
         ),
         Divider(height: 8.0)
       ],
@@ -67,7 +114,7 @@ class NewsItemImage0Widget extends StatelessWidget {
                   textAlign: TextAlign.left,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: AimTheme.text.newsBrief,
+                  style: AppTheme.text.newsBrief,
                 )),
           ),
           Expanded(
@@ -80,7 +127,7 @@ class NewsItemImage0Widget extends StatelessWidget {
                 textAlign: TextAlign.left,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AimTheme.text.newsSource,
+                style: AppTheme.text.newsSource,
               ),
             ),
           )
@@ -117,7 +164,7 @@ class NewsItemImage1Widget extends StatelessWidget {
                             textAlign: TextAlign.start,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: AimTheme.text.newsTitle,
+                            style: AppTheme.text.newsTitle,
                           ),
                         )),
                     Expanded(
@@ -130,7 +177,7 @@ class NewsItemImage1Widget extends StatelessWidget {
                           textAlign: TextAlign.left,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AimTheme.text.newsSource,
+                          style: AppTheme.text.newsSource,
                         ),
                       ),
                     )
@@ -171,7 +218,7 @@ class NewsItemImage3Widget extends StatelessWidget {
               textAlign: TextAlign.start,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: AimTheme.text.newsTitle,
+              style: AppTheme.text.newsTitle,
             ),
           ),
           Container(
@@ -218,7 +265,7 @@ class NewsItemImage3Widget extends StatelessWidget {
               textAlign: TextAlign.left,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AimTheme.text.newsSource,
+              style: AppTheme.text.newsSource,
             ),
           ),
         ],

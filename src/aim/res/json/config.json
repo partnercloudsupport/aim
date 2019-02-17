@@ -1,0 +1,8 @@
+{
+  "service": {
+    "conf": "http://localhost:9004",
+    "user": "http://localhost:9002",
+    "news": "http://localhost:9004",
+    "smds": "http://localhost:9004"
+  }
+}

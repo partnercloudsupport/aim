@@ -24,16 +24,10 @@ AppState appReducer(AppState state, action) {
       categories: newsCategoriesReducer(state.news.categories, action)
     ),
     market: Market(
-      index: MarketIndex(
-        indexes: state.market.index.indexes,
-        mainIndexes: marketMainIndexesReducer(state.market.index.mainIndexes, action)
-      ),
-      stock: MarketStock(
-        stocks: state.market.stock.stocks,
-      ),
-      search: MarketSearch(
-
-      )
+      indexes: marketIndexesReducer(state.market.indexes, action),
+      index:marketIndexDetailReducer(state.market.index, action),
+      stocks: marketStocksReducer(state.market.stocks, action),
+      stock: marketStockDetailReducer(state.market.stock, action)
     )
   );
 }

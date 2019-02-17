@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:aim/src/style.dart';
 
 
-class AimTheme {
+class AppTheme {
   static get theme {
     return ThemeData.light();
   }
