@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'webview.dart';
 import '../../theme.dart';
 import '../../model/index.dart';
 
@@ -11,17 +12,31 @@ class MainIndexesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: 80.0,
       alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(vertical: 4.0),
+      margin: EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          MainIndexWidget(index: (this.indexes?.length??0)>0 ? indexes[0] : null, onTap: this.onTap),
-          VerticalDivider(color: Colors.grey),
-          MainIndexWidget(index: (this.indexes?.length??0)>1 ? indexes[1] : null, onTap: this.onTap),
-          VerticalDivider(color: Colors.grey),
-          MainIndexWidget(index: (this.indexes?.length??0)>2 ? indexes[2] : null, onTap: this.onTap),
+          Expanded(
+            child: MainIndexWidget(
+              index: (this.indexes?.length??0)>0 ? indexes[0] : null,
+              onTap: this.onTap
+            ),
+          ),
+          VerticalDivider(color: Colors.grey, width: 0),
+          Expanded(
+            child: MainIndexWidget(
+                index: (this.indexes?.length??0)>1 ? indexes[1] : null,
+                onTap: this.onTap
+            ),
+          ),
+          VerticalDivider(color: Colors.grey, width: 0),
+          Expanded(
+            child: MainIndexWidget(
+              index: (this.indexes?.length??0)>2 ? indexes[2] : null,
+              onTap: this.onTap
+            ),
+          ),
         ],
       ),
     );
@@ -46,15 +61,13 @@ class MainIndexWidget extends StatelessWidget {
         }
       },
       child: Container(
-        width: 120.0,
-        height: 70.0,
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
             Container(
                 child: Text(
                   this.index?.zqmc??'--',
-                  style: AppTheme.text.stockName,
+                  style: AppTheme.text.stockName.copyWith(height: 1.2),
                 )
             ),
             Container(
@@ -71,7 +84,7 @@ class MainIndexWidget extends StatelessWidget {
                       child: Text(
                         this.index?.quote?.strZde??'--',
                         textAlign: TextAlign.center,
-                        style: AppTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.2),
+                        style: AppTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.6),
                       )
                   ),
                   Expanded(
@@ -79,7 +92,7 @@ class MainIndexWidget extends StatelessWidget {
                       child: Text(
                         this.index?.quote?.strZdf??'--',
                         textAlign: TextAlign.center,
-                        style: AppTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.2),
+                        style: AppTheme.text.stockQuoteSmall.copyWith(color: this.quoteColor(), height: 1.6),
                       )
                   )
                 ],
@@ -88,6 +101,20 @@ class MainIndexWidget extends StatelessWidget {
           ],
         ),
       )
+    );
+  }
+}
+
+class IndexDetailWidget extends StatelessWidget {
+  final ModelIndexDetail index;
+
+  IndexDetailWidget({Key key, @required this.index}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return WebView(
+        url: this.index?.url,
+        scriptSrc: this.index?.tidyjs
     );
   }
 }

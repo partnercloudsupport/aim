@@ -1,5 +1,6 @@
 export 'app.dart';
 export 'user.dart';
 export 'news.dart';
-export 'market.dart';
+export 'index.dart';
+export 'stock.dart';
 export 'search.dart';

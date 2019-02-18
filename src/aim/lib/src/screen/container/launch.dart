@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'app.dart';
+import '../../app.dart';
 import '../../routes.dart';
 import '../../state/all.dart';
 import '../../state/app.dart';
 import '../../action/app.dart';
 
 class LaunchContainer extends StatelessWidget {
+  final Function(int delaySeconds) onFinished;
+  LaunchContainer({Key key, this.onFinished}): super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DataContainer<AppLaunch> (
@@ -15,30 +19,28 @@ class LaunchContainer extends StatelessWidget {
       select: (state) {
         return state.appLaunch;
       },
-      changed: (state){
-        if(state.isLoaded && !state.finished) {
+      changed: (model){
+        if(model.isLoaded && !model.finished) {
           // notify app launch fined
-          StoreProvider.of<AppState>(context).dispatch(ActionAppLaunchFinished());
-          // delay for duration to home page
-          Future.delayed(Duration(seconds: state.config.duration)).then((value){
-            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-          });
+          App.dispatch(context, ActionAppLaunchFinished());
+          // finished action
+          this.onFinished(model.config?.duration??0);
         }
       },
-      builder: (context, state) {
-        if(state.config.imageUrl == null){
+      builder: (context, model) {
+        if(model.config.imageUrl == null){
           return Image.asset(
-            state.config.assetKey,
+            model.config.assetKey,
             height: double.infinity,
             fit: BoxFit.fitHeight,
           );
         } else{
           return CachedNetworkImage(
-              imageUrl: state.config.imageUrl,
+              imageUrl: model.config.imageUrl,
               height: double.infinity,
               fit: BoxFit.fitHeight,
               errorWidget: Image.asset(
-                state.config.assetKey,
+                model.config.assetKey,
                 height: double.infinity,
                 fit: BoxFit.fitHeight,
               )

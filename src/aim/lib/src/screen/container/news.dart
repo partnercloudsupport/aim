@@ -37,7 +37,7 @@ class NewsPageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: this.categories.length,
+      length: this.categories?.length??0,
       initialIndex: this.selected,
       child: Scaffold(
         appBar: AppBar(
@@ -80,7 +80,7 @@ class NewsTabViewWidget extends StatelessWidget {
           },
           onTap: this.onTap
         );
-      })
+      })?.toList()??[]
     );
   }
 }

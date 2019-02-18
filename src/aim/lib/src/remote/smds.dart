@@ -46,6 +46,13 @@ class SmdsService extends RemoteService {
     return ModelStocks.fromJson(data??'{}')?.items;
   }
 
+  // 获取热门股票列表
+  Future<List<ModelStock>> getHottestStocks() async {
+    String path = '/stock/hottest';
+    var data = await this.get(path);
+    return ModelStocks.fromJson(data??'{}')?.items;
+  }
+
   // 获取单个股票详情
   Future<ModelStockDetail> getStockDetail(String id) async {
     String path = '/stock/detail';

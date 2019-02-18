@@ -32,10 +32,24 @@ class UserService extends RemoteService {
     return user;
   }
 
+  // 获取用户自选股票
   Future<List<ModelUserStock>> getUserStocks() async {
     String path = '/user/stock/get';
     var data = await this.get(path);
     return ModelUserStocks.fromJson(data??{})?.items;
+  }
 
+  // 添加用户自选股票
+  Future<void> addUserStock(String id) async {
+    String path = '/user/stock/add';
+    var params = {'id': id??''};
+    var data = await this.post(path, data: params);
+  }
+
+  // 删除用户自选股票
+  Future<void> delUserStock(String id) async {
+    String path = '/user/stock/del';
+    var params = {'id': id??''};
+    var data = await this.post(path, data: params);
   }
 }

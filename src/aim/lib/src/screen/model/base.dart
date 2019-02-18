@@ -19,23 +19,31 @@ abstract class ViewState {
   bool get canLoad => this.status != ViewStatus.loading && this.status != ViewStatus.loaded;
 }
 
+ViewStatus convertStatus(DataStatus ds) {
+  if(ds == DataStatus.toload){
+    return ViewStatus.toload;
+  } else if(ds == DataStatus.loading){
+    return ViewStatus.loading;
+  } else if(ds == DataStatus.loaded) {
+    return ViewStatus.loaded;
+  } else if(ds == DataStatus.failed) {
+    return ViewStatus.failed;
+  } else {
+    return ViewStatus.toload;
+  }
+}
+
 ViewStatus joinStatus(List<DataStatus> dss) {
-  ViewStatus viewStatus = ViewStatus.loaded;
   for (var status in dss) {
     if(status == null || status == DataStatus.toload){
-      viewStatus = ViewStatus.toload;
-      break;
+      return ViewStatus.toload;
     } else if(status == DataStatus.loading) {
-      viewStatus = ViewStatus.loading;
-      break;
+      return ViewStatus.loading;
     } else if(status == DataStatus.failed) {
-      viewStatus = ViewStatus.failed;
-      break;
-    } else {
-      ;
-    }
+      return ViewStatus.failed;
+    } else {}
   }
-  return viewStatus;
+  return ViewStatus.loaded;
 }
 
 String joinTips(List<String> tips) {

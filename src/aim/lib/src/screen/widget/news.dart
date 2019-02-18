@@ -16,6 +16,7 @@ class NewsPageListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return PagerWidget<ModelNewsItem>(
       query: this.query,
+      keepAlive: true,
       builder: (context, item){
         return NewsItemWidget(
           item: item,

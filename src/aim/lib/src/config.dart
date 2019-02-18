@@ -9,12 +9,13 @@ import 'model/launch.dart';
 class Config {
   static Future<AppConfig> loadAppConfig(Local local) async {
     try {
-      _defaultAppConfig.copyWith(AppConfig.fromJson(jsonDecode(await rootBundle.loadString(Assets.appConfig)??'{}')));
+      String config = await rootBundle.loadString(Assets.appConfig)??'{}';
+      _defaultAppConfig.copyWith(AppConfig.fromJson(jsonDecode(config)));
     } catch (e) {
       Log.error(e);
     } finally {
       try {
-        _defaultAppConfig.copyWith(AppConfig.fromJson(jsonDecode(local.sp.getAppConfig()??'{}')));
+        _defaultAppConfig.copyWith(local.sp.getAppConfig());
       } catch (e){
         Log.error(e);
       }
@@ -24,12 +25,13 @@ class Config {
 
   static Future<LaunchConfig> loadLaunchConfig(Local local) async {
     try {
-      _defaultLaunchConfig.copyWith(LaunchConfig.fromJson(jsonDecode(await rootBundle.loadString(Assets.launchConfig)??'{}')));
+      String config = await rootBundle.loadString(Assets.launchConfig)??'{}';
+      _defaultLaunchConfig.copyWith(LaunchConfig.fromJson(jsonDecode(config)));
     } catch (e) {
       Log.error(e);
     } finally {
       try {
-        _defaultLaunchConfig.copyWith(LaunchConfig.fromJson(jsonDecode(local.sp.getLaunchConfig()??'{}')));
+        _defaultLaunchConfig.copyWith(local.sp.getLaunchConfig());
       } catch (e){
         Log.error(e);
       }

@@ -27,7 +27,7 @@ class AimApp extends StatelessWidget{
         debugShowMaterialGrid: false,
         showSemanticsDebugger: false,
         theme: AppTheme.theme,
-        routes: AppRoutes.routes,
+        routes: Routes.routes,
       ),
     );
   }

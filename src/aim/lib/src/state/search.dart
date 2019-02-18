@@ -1,22 +1,23 @@
 import 'base.dart';
 export 'base.dart';
+import '../model/stock.dart';
 
 // market search data
 class Search {
   // user search history
-  SearchHistory history;
+  final SearchHistory history;
   // hottest search stocks
-  SearchHottest hottest;
+  final SearchHottest hottest;
   // current search results
-  SearchResults results;
+  final SearchResults results;
 
   Search({this.history, this.hottest, this.results});
 
   factory Search.init() {
     return Search(
-        history: SearchHistory.init(),
-        hottest: SearchHottest.init(),
-        results: SearchResults.init()
+      history: SearchHistory.init(),
+      hottest: SearchHottest.init(),
+      results: SearchResults.init()
     );
   }
 }
@@ -29,6 +30,7 @@ class SearchHistory extends DataState {
   factory SearchHistory.init() {
     return SearchHistory(
       stocks: [],
+      status: DataStatus.toload
     );
   }
 
@@ -49,6 +51,7 @@ class SearchHottest extends DataState {
   factory SearchHottest.init() {
     return SearchHottest(
       stocks: [],
+      status: DataStatus.toload
     );
   }
 
@@ -62,21 +65,27 @@ class SearchHottest extends DataState {
 }
 
 class SearchResults extends DataState {
-  List<String> stocks;
+  // search words
+  final String words;
+  // search results
+  final List<ModelStock> stocks;
 
-  SearchResults({this.stocks, DataStatus status, String tip}): super(status: status, tip: tip);
+  SearchResults({this.words, this.stocks, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory SearchResults.init() {
     return SearchResults(
+      words: null,
       stocks: [],
+      status: DataStatus.loaded
     );
   }
 
-  SearchResults copyWith({List<String> stocks, DataStatus status, String tip}) {
+  SearchResults copyWith({String words, List<ModelStock> stocks, DataStatus status, String tip}) {
     return SearchResults(
-        stocks: stocks??this.stocks,
-        status: status??this.status,
-        tip: tip??this.tip
+      words: words,
+      stocks: stocks??[],
+      status: status??DataStatus.toload,
+      tip: tip
     );
   }
 }

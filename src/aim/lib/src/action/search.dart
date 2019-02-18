@@ -6,7 +6,7 @@ import '../model/quote.dart';
 class ActionGetSearchHistory {}
 
 class ActionGetSearchHistorySucceed {
-  List<ModelStock> stocks;
+  List<String> stocks;
   ActionGetSearchHistorySucceed({this.stocks});
 }
 
@@ -30,17 +30,19 @@ class ActionGetSearchHottestFailed {
 
 
 // action for search stock by words(stock code/jianpin/quanpin)
-class ActionSearchStock {
+class ActionGetSearchResults {
   final String words;
-  ActionSearchStock({this.words});
+  ActionGetSearchResults({this.words});
 }
 
-class ActionSearchStockSucceed{
+class ActionGetSearchResultsSucceed{
+  final String words;
   final List<ModelStock> stocks;
-  ActionSearchStockSucceed({this.stocks});
+  ActionGetSearchResultsSucceed({this.words, this.stocks});
 }
 
-class ActionSearchStockFailed {
+class ActionGetSearchResultsFailed {
+  final String words;
   final String error;
-  ActionSearchStockFailed({this.error});
+  ActionGetSearchResultsFailed({this.words, this.error});
 }

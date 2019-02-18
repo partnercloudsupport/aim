@@ -35,7 +35,9 @@ class UserLogin extends DataState {
   UserLogin({this.user, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory UserLogin.init() {
-    return UserLogin();
+    return UserLogin(
+      status: DataStatus.toload
+    );
   }
 
   UserLogin copyWith({ModelUser user, DataStatus status, String tip}){
@@ -59,6 +61,7 @@ class UserStocks extends DataState {
   factory UserStocks.init() {
     return UserStocks(
       stocks: [],
+      status: DataStatus.toload
     );
   }
 

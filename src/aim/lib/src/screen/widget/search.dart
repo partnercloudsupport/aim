@@ -40,28 +40,18 @@ class SearchInputWidget extends StatelessWidget {
   }
 }
 
-class SearchResultWidget extends StatelessWidget {
+class SearchResultsWidget extends StatelessWidget {
+  final String words;
+  final List<ModelStock> results;
+  final List<String> collected;
+  final void Function(ModelStock) onTapStock;
+  final void Function(ModelStock) onCollectStock;
+
+  SearchResultsWidget({Key key, this.words, this.results, this.collected, this.onTapStock, this.onCollectStock}): super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return null;
-  }
-}
-
-class SearchHomeWidget extends StatelessWidget {
-  final List<ModelStock> history;
-  final List<ModelStock> hottest;
-  final void Function(ModelStock) onTap;
-
-  SearchHomeWidget({Key key, @required this.history, @required this.hottest, this.onTap}): super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        SearchHistoryWidget(stocks: this.history, onTap: this.onTap),
-        SearchHottestWidget(stocks: this.hottest, onTap: this.onTap)
-      ],
-    );
   }
 }
 
@@ -70,9 +60,9 @@ class SearchHottestWidget extends StatelessWidget {
   final int maxDisplayCount = 8;
 
   final List<ModelStock> stocks;
-  final void Function(ModelStock) onTap;
+  final void Function(ModelStock) onTapStock;
 
-  SearchHottestWidget({Key key, @required this.stocks, this.onTap}): super(key: key);
+  SearchHottestWidget({Key key, @required this.stocks, this.onTapStock}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +79,7 @@ class SearchHottestWidget extends StatelessWidget {
             height: 24.0,
             margin: EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(
-              '热门搜索',
+              '热门股票',
               style: AppTheme.text.mediumRegular.copyWith(color: Colors.grey),
             ),
           ),
@@ -100,7 +90,9 @@ class SearchHottestWidget extends StatelessWidget {
               primary: true,
               crossAxisCount: this.rowItemCount,
               childAspectRatio: 1.6,
-              children: stocks.map((stock){return StockItemWidget(stock: stock, onTap: this.onTap);}).take(this.maxDisplayCount).toList(),
+              children: this.stocks?.map((stock){
+                return StockItemWidget(stock: stock, onTap: this.onTapStock);
+              })?.take(this.maxDisplayCount)?.toList()??[],
             ),
           )
         ],
@@ -114,9 +106,9 @@ class SearchHistoryWidget extends StatelessWidget {
   final int maxDisplayCount = 8;
 
   final List<ModelStock> stocks;
-  final void Function(ModelStock) onTap;
+  final void Function(ModelStock) onTapStock;
 
-  SearchHistoryWidget({Key key, @required this.stocks, this.onTap});
+  SearchHistoryWidget({Key key, @required this.stocks, this.onTapStock});
   
   @override
   Widget build(BuildContext context) {
@@ -133,7 +125,7 @@ class SearchHistoryWidget extends StatelessWidget {
             height: 24.0,
             margin: EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(
-              '历史搜索',
+              '搜索历史',
               style: AppTheme.text.mediumRegular.copyWith(color: Colors.grey),
             ),
           ),
@@ -144,7 +136,9 @@ class SearchHistoryWidget extends StatelessWidget {
               primary: true,
               crossAxisCount: this.rowItemCount,
               childAspectRatio: 1.6,
-              children: stocks.map((stock){return StockItemWidget(stock: stock, onTap: this.onTap,);}).take(this.maxDisplayCount).toList(),
+              children: this.stocks?.map((stock){
+                return StockItemWidget(stock: stock, onTap: this.onTapStock,);
+              })?.take(this.maxDisplayCount)?.toList()??[],
             ),
           )
         ],

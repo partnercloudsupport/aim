@@ -16,7 +16,7 @@ class StorageSharedPreferences {
 
   /// get app configure json string
   AppConfig getAppConfig() {
-    String str = this.preferences.getString(_Keys.appConfig);
+    String str = this.preferences.getString(_Keys.appConfig)??'{}';
     return AppConfig.fromJson(jsonDecode(str));
   }
   /// set app configure
@@ -26,7 +26,7 @@ class StorageSharedPreferences {
 
   /// get app launch configure json string
   LaunchConfig getLaunchConfig() {
-    String str = this.preferences.getString(_Keys.launchConfig);
+    String str = this.preferences.getString(_Keys.launchConfig)??'{}';
     return LaunchConfig.fromJson(jsonDecode(str));
   }
   /// set config
@@ -37,8 +37,8 @@ class StorageSharedPreferences {
   /// get user information
   ModelUser getUser() {
     try{
-      String strUser = this.preferences.getString(_Keys.user);
-      return ModelUser.fromJson(jsonDecode(strUser??'{}'));
+      String strUser = this.preferences.getString(_Keys.user)??'{}';
+      return ModelUser.fromJson(jsonDecode(strUser));
     } catch(e) {
       return ModelUser.fromJson({});
     }
@@ -49,6 +49,26 @@ class StorageSharedPreferences {
     try{
       String strUser = jsonEncode(user.toJson());
       return await this.preferences.setString(_Keys.user, strUser);
+    }catch(e){
+      return false;
+    }
+  }
+
+  /// get user search history
+  Future<List<String>> getSearchHistory() async {
+    try{
+      String str = this.preferences.getString(_Keys.searchHistory)??'[]';
+      return jsonDecode(str);
+    } catch(e) {
+      return [];
+    }
+  }
+
+  /// set user information
+  Future<bool> setSearchHistory(List<String>stocks) async {
+    try{
+      String str = jsonEncode(stocks);
+      return await this.preferences.setString(_Keys.searchHistory, str);
     }catch(e){
       return false;
     }
@@ -64,4 +84,7 @@ class _Keys {
 
   // app user information
   static final user = 'user';
+
+  // user search history
+  static final searchHistory = 'search_history';
 }

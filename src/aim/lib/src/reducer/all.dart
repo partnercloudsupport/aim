@@ -1,13 +1,16 @@
 import 'app.dart';
 import 'user.dart';
 import 'news.dart';
-import 'market.dart';
+import 'index.dart';
+import 'stock.dart';
+import 'search.dart';
 
 import '../state/all.dart';
 import '../state/app.dart';
 import '../state/user.dart';
 import '../state/news.dart';
 import '../state/market.dart';
+import '../state/search.dart';
 
 AppState appReducer(AppState state, action) {
   return AppState(
@@ -28,6 +31,11 @@ AppState appReducer(AppState state, action) {
       index:marketIndexDetailReducer(state.market.index, action),
       stocks: marketStocksReducer(state.market.stocks, action),
       stock: marketStockDetailReducer(state.market.stock, action)
+    ),
+    search: Search(
+      history: searchHistoryReducer(state.search.history, action),
+      hottest: searchHottestReducer(state.search.hottest, action),
+      results: searchResultsReducer(state.search.results, action)
     )
   );
 }

@@ -21,7 +21,7 @@ class DataContainer<DataModel extends DataState> extends StatefulWidget {
   // child builder
   final Widget Function(BuildContext, dynamic) builder;
 
-  DataContainer({Key key, @required this.action, this.when, @required this.select, this.ignore, this.changed, @required this.builder}): super(key: key);
+  DataContainer({Key key, this.action, this.when, @required this.select, this.ignore, this.changed, @required this.builder}): super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -34,7 +34,7 @@ class _DataContainerState<DataModel extends DataState> extends State<DataContain
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DataModel>(
       onInit: (store) {
-        if (this.widget.when!=null?this.widget.when(store.state):true && !this.widget.select(store.state).isUsable){
+        if (this.widget.action != null && this.widget.when!=null?this.widget.when(store.state):true && !this.widget.select(store.state).isUsable){
           store.dispatch(this.widget.action);
         }
       },
@@ -77,9 +77,9 @@ class ViewContainer<ViewModel extends ViewState> extends StatefulWidget {
   // app state selector
   final ViewModel Function(AppState) select;
   // child builder
-  final Widget Function(BuildContext, ViewModel) builder;
+  final Widget Function(BuildContext, dynamic) builder;
 
-  ViewContainer({Key key, @required this.action, this.when, @required this.select, @required this.builder}): super(key: key);
+  ViewContainer({Key key, this.action, this.when, @required this.select, @required this.builder}): super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -92,8 +92,9 @@ class _ViewContainerState<ViewModel extends ViewState> extends State<ViewContain
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ViewModel>(
       onInit: (store) {
-        if(this.widget.when??this.widget.when(store.state)??true && this.widget.select(store.state).canLoad)
+        if(this.widget.action != null && (this.widget.when!=null ? this.widget.when(store.state) : true) && this.widget.select(store.state).canLoad){
           store.dispatch(this.widget.action);
+        }
       },
       converter: (store) {
         return this.widget.select(store.state);

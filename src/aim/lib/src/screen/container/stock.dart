@@ -3,7 +3,7 @@ import 'app.dart';
 
 import '../widget/stock.dart';
 import '../../state/market.dart';
-import '../../action/market.dart';
+import '../../action/stock.dart';
 
 
 class StockDetailContainer extends StatelessWidget {
@@ -15,10 +15,10 @@ class StockDetailContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return DataContainer<MarketStockDetail>(
       action: ActionGetStockDetail(id: this.id),
-      select: (state) => state.marketStockDetail,
-      builder: (context, state) {
+      select: (state) => state.market?.stock,
+      builder: (context, model) {
         return StockDetailWidget(
-          stock: state.stock,
+          stock: model.stock,
           buy: (stock) {
 
           },

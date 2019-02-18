@@ -28,6 +28,7 @@ class NewsCategories extends DataState {
     return NewsCategories(
       selected: 0,
       categories: [],
+      status: DataStatus.toload
     );
   }
 

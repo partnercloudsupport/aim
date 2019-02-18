@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'index.dart';
+import 'stock.dart';
+import 'container/user.dart';
+import 'container/index.dart';
+import '../app.dart';
 import '../routes.dart';
-import 'container/market.dart';
 
 class MarketHomePage extends StatelessWidget {
   @override
@@ -13,12 +17,33 @@ class MarketHomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: (){
-              AppNav.push(context, AppRoutes.searchStock);
+              App.push(context, Routes.searchStock);
             },
           )
         ],
       ),
-      body: MarketContainer()
+      body: Column(
+        children: <Widget>[
+          MainIndexesContainer(
+            onTap: (index) {
+              // go to index detail page
+              App.push(context, IndexDetailPage(id: index.id, name: index.name));
+            },
+          ),
+          Expanded(
+            child: UserStocksContainer(
+              onAdd: () {
+                // go to search page
+                App.push(context, Routes.searchStock);
+              },
+              onTap: (stock) {
+                // go to stock detail page
+                App.push(context, StockDetailPage(id: stock.id, name: stock.name));
+              },
+            ),
+          )
+        ],
+      )
     );
   }
 }

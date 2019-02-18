@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widget/webview.dart';
 import 'container/news.dart';
-import '../routes.dart';
+import '../app.dart';
 import '../model/news.dart';
 
 
@@ -11,7 +11,7 @@ class NewsHomePage extends StatelessWidget {
     return Scaffold(
       body: NewsContainer(
         onTap: (item) {
-          AppNav.push(context, NewsDetailPage(item: item));
+          App.push(context, NewsDetailPage(item: item));
         },
       )
     );

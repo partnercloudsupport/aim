@@ -34,13 +34,14 @@ class AppLaunch extends DataState {
 
   factory AppLaunch.init() {
     return AppLaunch(
-      finished: false
+      finished: false,
+      status: DataStatus.toload
     );
   }
 
   AppLaunch copyWith({LaunchConfig config, bool finished, DataStatus status, String tip}) {
     return AppLaunch(
-        config: config??this.config,
+      config: config??this.config,
       finished: finished??this.finished,
       status: status??this.status,
       tip: tip??this.tip
@@ -55,7 +56,8 @@ class AppUpgrade extends DataState {
 
   factory AppUpgrade.init() {
     return AppUpgrade(
-      canceled: false
+      canceled: false,
+      status: DataStatus.toload
     );
   }
 }

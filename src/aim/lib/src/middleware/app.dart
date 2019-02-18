@@ -12,24 +12,23 @@ Future<void> appLaunch(Store<AppState> store, ActionAppLaunch action, NextDispat
   try{
     // next action
     next(action);
-    // init app
-    await App.init();
 
     // update app config
     store.dispatch(ActionGetAppConfig());
     // update launch config
     store.dispatch(ActionGetLaunchConfig());
 
-    // wait a while for get new launch config
-    await Future.delayed(Duration(milliseconds: 100));
+    // wait a while for get new config
+    await Future.delayed(Duration(milliseconds: 500));
+
+    // init app
+    await App.init();
 
     // user session login
     store.dispatch(ActionSessionLogin(user: App.local.sp.getUser()));
-    
-    // get app launch config
-    LaunchConfig launchConfig = await App.launchConfig();
+
     // launch succeed
-    store.dispatch(ActionAppLaunchSucceed(launchConfig));
+    store.dispatch(ActionAppLaunchSucceed(App.launch));
   } catch(e) {
     // launch failed
     store.dispatch(ActionAppLaunchFailed(error: e.toString()));

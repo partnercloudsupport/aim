@@ -5,7 +5,7 @@ import 'screen/home.dart';
 import 'screen/search.dart';
 
 
-class AppRoutes {
+class Routes {
   static final launch = "/";
   static final home = "/home";
 
@@ -21,29 +21,7 @@ class AppRoutes {
       return HomePage();
     },
     searchStock: (context) {
-      return StockSearchPage();
+      return SearchStockPage();
     }
   };
-}
-
-
-class AppNav {
-  // push a new page
-  static Future<T> push<T>(BuildContext context, dynamic page) async {
-    if(page is String) {
-      return await Navigator.of(context).pushNamed(page);
-    } else if(page is Widget){
-      return await Navigator.of(context).push(MaterialPageRoute(builder: (context){return page;}));
-    } else {
-      throw 'unsupported page type';
-    }
-  }
-
-  // replace
-
-  // pop current page
-  static bool pop<T>(BuildContext context, [T result]) {
-    return Navigator.of(context).pop(result);
-  }
-
 }

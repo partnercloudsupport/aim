@@ -37,7 +37,8 @@ class MarketStocks extends DataState{
 
   factory MarketStocks.init() {
     return MarketStocks(
-        stocks: {}
+      stocks: null,
+      status: DataStatus.toload
     );
   }
 
@@ -64,8 +65,18 @@ class MarketStocks extends DataState{
   List<ModelStock> selectByIds(List<String> ids) {
     List<ModelStock> stocks = [];
     ids?.forEach((id){
-      var stock = this.stocks??this.stocks[id];
+      var stock = this.stocks!=null ? this.stocks[id] : null;
       if (stock != null) {
+        stocks.add(stock);
+      }
+    });
+    return stocks;
+  }
+
+  List<ModelStock> searchByWords(String words) {
+    List<ModelStock> stocks = [];
+    this.stocks?.forEach((key, stock){
+      if(stock.id.startsWith(words) || stock.jianpin.startsWith(words) || stock.quanpin.startsWith(words) || stock.name.startsWith(words)){
         stocks.add(stock);
       }
     });
@@ -81,7 +92,9 @@ class MarketStockDetail extends DataState {
   MarketStockDetail({this.stock, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory MarketStockDetail.init() {
-    return MarketStockDetail();
+    return MarketStockDetail(
+      status: DataStatus.toload
+    );
   }
 
   MarketStockDetail copyWith({ModelStockDetail stock, DataStatus status, String tip}) {
@@ -102,7 +115,8 @@ class MarketIndexes extends DataState {
 
   factory MarketIndexes.init() {
     return MarketIndexes(
-      indexes: {}
+      indexes: null,
+      status: DataStatus.toload
     );
   }
 
@@ -110,7 +124,7 @@ class MarketIndexes extends DataState {
     return MarketIndexes(
       indexes: indexes??this.indexes,
       status: status??this.status,
-      tip: status??this.tip
+      tip: tip??this.tip
     );
   }
 
@@ -127,7 +141,7 @@ class MarketIndexes extends DataState {
   }
 
   List<ModelIndex> take(int count) {
-    return this.indexes.values.take(3).toList();
+    return this.indexes?.values?.take(3)?.toList();
   }
 }
 
@@ -139,7 +153,9 @@ class MarketIndexDetail extends DataState {
   MarketIndexDetail({this.index, DataStatus status, String tip}): super(status: status, tip: tip);
 
   factory MarketIndexDetail.init() {
-    return MarketIndexDetail();
+    return MarketIndexDetail(
+      status: DataStatus.toload
+    );
   }
 
   MarketIndexDetail copyWith({ModelIndexDetail index, DataStatus status, String tip}) {

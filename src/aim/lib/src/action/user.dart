@@ -36,7 +36,7 @@ class ActionSessionLoginFailed {
 }
 
 
-// user self selected stocks
+// user stocks
 class ActionGetUserStocks{}
 
 class ActionGetUserStocksSucceed {
@@ -47,4 +47,22 @@ class ActionGetUserStocksSucceed {
 class ActionGetUserStocksFailed {
   final String error;
   ActionGetUserStocksFailed({this.error});
+}
+
+
+// user collection
+class ActionUserCollectStock{
+  final String id;
+  ActionUserCollectStock({this.id});
+}
+
+class ActionUserCollectStockSucceed {
+  final String id;
+  ActionUserCollectStockSucceed({this.id});
+}
+
+class ActionUserCollectStockFailed {
+  final String id;
+  final String error;
+  ActionUserCollectStockFailed({this.id, this.error});
 }

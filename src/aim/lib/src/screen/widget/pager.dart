@@ -51,8 +51,6 @@ class _PagerWidgetState<Item> extends State<PagerWidget<Item>> with AutomaticKee
   List<Item> _items;
 
   Future<void> _initPage() async {
-    if(!this.mounted)
-      return;
     try{
       // set page to first page
       this._page = 1;
@@ -69,21 +67,22 @@ class _PagerWidgetState<Item> extends State<PagerWidget<Item>> with AutomaticKee
       }
 
       // change to loaded
-      setState(() {
-        this._state = PagerState.loaded();
-      });
-
+      if(this.mounted){
+        setState(() {
+          this._state = PagerState.loaded();
+        });
+      }
     } catch(e) {
       // query first page failed
-      setState(() {
-        this._state = PagerState.failed(e.toString());
-      });
+      if(this.mounted){
+        setState(() {
+          this._state = PagerState.failed(e.toString());
+        });
+      }
     }
   }
 
   Future<void> _loadFirstPage() async {
-    if(!this.mounted)
-      return;
     // set page to first page
     this._page = 1;
     // query page data
@@ -96,13 +95,13 @@ class _PagerWidgetState<Item> extends State<PagerWidget<Item>> with AutomaticKee
     if(this._items.length==0){
       throw NoMorePage();
     } else {
-      setState(() {});
+      if(this.mounted){
+        setState(() {});
+      }
     }
   }
 
   Future<void> _loadNextPage() async {
-    if(!this.mounted)
-      return;
     // add page
     this._page = this._page==null ? 1 : this._page+1;
     // query page data
@@ -112,9 +111,11 @@ class _PagerWidgetState<Item> extends State<PagerWidget<Item>> with AutomaticKee
         this._page = this._page - 1;
         throw NoMorePage();
       } else {
-        setState(() {
-          this._items.addAll(items);
-        });
+        if(this.mounted){
+          setState(() {
+            this._items.addAll(items);
+          });
+        }
       }
     }
   }
