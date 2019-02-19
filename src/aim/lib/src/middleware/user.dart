@@ -47,7 +47,7 @@ Future<void> getUserStocks(Store<AppState> store, ActionGetUserStocks action, Ne
     if(store.state?.user?.isLogin??false){
       stocks = await App.remote.user.getUserStocks();
     } else {
-      stocks = await App.local.db.getUserStocks();
+      stocks = await App.local.db.tableUserStock.list();
     }
     // get user stocks success
     store.dispatch(ActionGetUserStocksSucceed(stocks: stocks));
@@ -57,7 +57,7 @@ Future<void> getUserStocks(Store<AppState> store, ActionGetUserStocks action, Ne
   }
 }
 
-Future<void> setUserStock(Store<AppState> store, ActionUserCollectStock action, NextDispatcher dispatcher) async {
+Future<void> setUserStock(Store<AppState> store, ActionSetUserStock action, NextDispatcher dispatcher) async {
   try{
     // set user collection
     if(store.state?.user?.isLogin??false){
@@ -68,15 +68,15 @@ Future<void> setUserStock(Store<AppState> store, ActionUserCollectStock action, 
       }
     } else {
       if(store.state.user?.stocks?.stocks?.contains(action.id)??false) {
-        await App.local.db.removeUserStock(action.id);
+        await App.local.db.tableUserStock.delete(action.id);
       } else {
-        await App.local.db.addUserStock(action.id, '');
+        await App.local.db.tableUserStock.insert(action.id, action.name);
       }
     }
     // get user stocks success
-    store.dispatch(ActionUserCollectStockSucceed(id: action.id));
+    store.dispatch(ActionSetUserStockSucceed(id: action.id));
   } catch(e) {
     // get user stocks failed
-    store.dispatch(ActionUserCollectStockFailed(id: action.id, error: e.toString()));
+    store.dispatch(ActionSetUserStockFailed(id: action.id, error: e.toString()));
   }
 }

@@ -88,7 +88,7 @@ class StockListItemWidget extends StatelessWidget {
           Expanded(
               flex: 1,
               child: Container(
-                width: double.infinity,
+                width: 64,
                 alignment: Alignment.centerLeft,
                 child: Text(
                   this.stock?.zqmc??'--',
@@ -99,7 +99,7 @@ class StockListItemWidget extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-                width: double.infinity,
+                width: 64,
                 alignment: Alignment.centerLeft,
                 child: Text(
                   this.stock?.zqdm??'--',

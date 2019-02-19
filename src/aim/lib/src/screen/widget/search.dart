@@ -255,21 +255,21 @@ class StockItemWidget extends StatelessWidget {
         padding: EdgeInsets.all(4.0),
         alignment: Alignment.center,
         child: Column(
-          children: <Widget>[
-            Center(
+        children: <Widget>[
+          Center(
+            child: Text(
+              this.stock?.zqmc??'--',
+              style: AppTheme.text.stockName,
+            ),
+          ),
+          Center(
               child: Text(
-                this.stock?.zqmc??'--',
-                style: AppTheme.text.stockName,
-              ),
-            ),
-            Center(
-                child: Text(
-                  this.stock?.zqdm??'--',
-                  style: AppTheme.text.stockCode,
-                )
-            ),
-          ],
-        ),
+                this.stock?.zqdm??'--',
+                style: AppTheme.text.stockCode,
+              )
+          ),
+        ],
+      ),
       ),
       onPressed: (){
         if(this.onTap != null){

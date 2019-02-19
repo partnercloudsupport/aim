@@ -51,18 +51,19 @@ class ActionGetUserStocksFailed {
 
 
 // user collection
-class ActionUserCollectStock{
+class ActionSetUserStock{
   final String id;
-  ActionUserCollectStock({this.id});
+  final String name;
+  ActionSetUserStock({this.id, this.name});
 }
 
-class ActionUserCollectStockSucceed {
+class ActionSetUserStockSucceed {
   final String id;
-  ActionUserCollectStockSucceed({this.id});
+  ActionSetUserStockSucceed({this.id});
 }
 
-class ActionUserCollectStockFailed {
+class ActionSetUserStockFailed {
   final String id;
   final String error;
-  ActionUserCollectStockFailed({this.id, this.error});
+  ActionSetUserStockFailed({this.id, this.error});
 }

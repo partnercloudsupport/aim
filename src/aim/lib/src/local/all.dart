@@ -12,7 +12,7 @@ class Local {
   static Future<Local> init() async {
     return Local(
       sp: await StorageSharedPreferences().init(),
-      db: await StorageDB().init()
+      db: await StorageDB().open()
     );
   }
 }

@@ -44,6 +44,9 @@ final userStocksReducer = combineReducers<UserStocks>([
   TypedReducer<UserStocks, ActionGetUserStocks>(_getUserStocksData),
   TypedReducer<UserStocks, ActionGetUserStocksSucceed>(_getUserStocksDataSucceed),
   TypedReducer<UserStocks, ActionGetUserStocksFailed>(_getUserStocksDataFailed),
+
+  TypedReducer<UserStocks, ActionSetUserStockSucceed>(_setUserStocksDataSuccess),
+  TypedReducer<UserStocks, ActionSetUserStockFailed>(_setUserStocksDataFailed),
 ]);
 
 
@@ -57,4 +60,20 @@ UserStocks _getUserStocksDataSucceed(UserStocks state, ActionGetUserStocksSuccee
 
 UserStocks _getUserStocksDataFailed(UserStocks state, ActionGetUserStocksFailed action) {
   return state.copyWith(status: DataStatus.failed, tip: action.error);
+}
+
+UserStocks _setUserStocksDataSuccess(UserStocks state, ActionSetUserStockSucceed action) {
+  var stocks = state.stocks;
+  if(stocks.contains(action.id)){
+    stocks?.remove(action.id);
+  } else {
+    stocks?.add(action.id);
+  }
+  return state.copyWith(
+    stocks: stocks,
+  );
+}
+
+UserStocks _setUserStocksDataFailed(UserStocks state, ActionSetUserStockFailed action) {
+  return state.copyWith();
 }

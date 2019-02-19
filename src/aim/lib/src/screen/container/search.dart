@@ -30,7 +30,7 @@ class SearchResultsContainer extends StatelessWidget {
             collected: model?.collected,
             onTapStock: this.onTapStock,
             onCollectStock: (stock) {
-              App.dispatch(context, ActionUserCollectStock(id: stock?.id));
+              App.dispatch(context, ActionSetUserStock(id: stock?.id, name: stock?.name??'--'));
             },
           );
         } else{

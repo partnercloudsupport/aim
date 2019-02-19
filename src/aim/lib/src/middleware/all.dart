@@ -17,7 +17,7 @@ final List<Middleware<AppState>> appMiddleware = [
   TypedMiddleware<AppState, ActionSessionLogin>(sessionLogin),
 
   TypedMiddleware<AppState, ActionGetUserStocks>(getUserStocks),
-  TypedMiddleware<AppState, ActionUserCollectStock>(setUserStock),
+  TypedMiddleware<AppState, ActionSetUserStock>(setUserStock),
 
   TypedMiddleware<AppState, ActionGetNewsCategories>(getNewsCategories),
 
