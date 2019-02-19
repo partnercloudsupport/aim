@@ -46,3 +46,6 @@ class ActionGetSearchResultsFailed {
   final String error;
   ActionGetSearchResultsFailed({this.words, this.error});
 }
+
+// action for clear search results
+class ActionClearSearchResults {}

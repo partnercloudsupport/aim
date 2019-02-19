@@ -13,8 +13,12 @@ class UserStocksContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewContainer<UserStocksViewModel>(
-      action: ActionGetUserStocks(),
-      select: UserStocksViewModel.fromAppState,
+      init: (store) {
+        store.dispatch( ActionGetUserStocks());
+      },
+      select: (store) {
+        return UserStocksViewModel.fromAppState(store.state);
+      },
       builder: (context, model) {
         return UserStocksWidget(
           stocks: model?.stocks,

@@ -67,4 +67,3 @@ Future<void> getSearchResults(Store<AppState> store, ActionGetSearchResults acti
     store.dispatch(ActionGetSearchResultsFailed(words: action.words, error: e.toString()));
   }
 }
-

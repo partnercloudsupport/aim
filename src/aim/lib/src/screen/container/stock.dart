@@ -14,8 +14,12 @@ class StockDetailContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataContainer<MarketStockDetail>(
-      action: ActionGetStockDetail(id: this.id),
-      select: (state) => state.market?.stock,
+      init: (store) {
+        store.dispatch(ActionGetStockDetail(id: this.id));
+      },
+      select: (store) {
+        return store.state.market?.stock;
+      },
       builder: (context, model) {
         return StockDetailWidget(
           stock: model.stock,

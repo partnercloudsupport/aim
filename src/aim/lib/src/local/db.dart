@@ -26,9 +26,13 @@ class StorageDB {
 
   /// get user stock by stock code
   Future<ModelUserStock> getUserStock(String code) async {
-    String sql = 'select `id`, `code`, `name`, `order`, `deleted`, `ctime`, `dtime` from `tb_user_stock` where `code`=?';
-    var results = await this._manager.db.rawQuery(sql, [code]);
-    return results?.map<ModelUserStock>((item){return ModelUserStock.initWith(zqdm: item['code'], zqmc: item['name'], order: item['order'], deleted: item['deleted'], ctime: item['ctime'], dtime: item['dtime']);})?.toList()?.first;
+    try{
+      String sql = 'select `id`, `code`, `name`, `order`, `deleted`, `ctime`, `dtime` from `tb_user_stock` where `code`=?';
+      var results = await this._manager.db.rawQuery(sql, [code]);
+      return results?.map<ModelUserStock>((item){return ModelUserStock.initWith(zqdm: item['code'], zqmc: item['name'], order: item['order'], deleted: item['deleted'], ctime: item['ctime'], dtime: item['dtime']);})?.toList()?.first;
+    }catch(e){
+      return null;
+    }
   }
 
   /// get current user stocks max order value

@@ -13,8 +13,12 @@ class MainIndexesContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataContainer<MarketIndexes>(
-      action: ActionGetIndexes(),
-      select: (state) => state.market?.indexes,
+      init: (store) {
+        store.dispatch(ActionGetIndexes());
+      },
+      select: (store) {
+        return store.state.market?.indexes;
+      },
       builder: (context, model) {
         return MainIndexesWidget(
           indexes: model?.take(3),
@@ -33,8 +37,12 @@ class IndexDetailContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataContainer<MarketIndexDetail>(
-      action: ActionGetIndexDetail(id: this.id),
-      select: (state) => state.market?.index,
+      init: (store) {
+        store.dispatch(ActionGetIndexDetail(id: this.id));
+      },
+      select: (store) {
+        return store.state.market?.index;
+      },
       builder: (context, model) {
         return IndexDetailWidget(
           index: model?.index,

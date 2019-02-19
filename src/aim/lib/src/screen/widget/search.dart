@@ -12,7 +12,7 @@ class SearchInputWidget extends StatelessWidget {
     return Container(
       height: 40,
       width: 280,
-      child: TextField(
+      child:TextField(
         autofocus: true,
         maxLength: 16,
         keyboardType: TextInputType.text,
@@ -51,7 +51,88 @@ class SearchResultsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return null;
+    if((this.results?.length??0) > 0) {
+      return ListView.builder(
+        itemCount: this.results?.length??0,
+        itemBuilder: (context, index) {
+          var stock = this.results?.elementAt(index);
+          return SearchResultItemWidget(
+            stock: stock,
+            collected: this.collected?.contains(stock?.id) ?? false,
+            onTap: this.onTapStock,
+            onCollect: this.onCollectStock,
+          );
+        },
+      );
+    } else{
+      return Container(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        alignment: Alignment.topCenter,
+        child: Text(
+          '没有找到相关股票'
+        ),
+      );
+    }
+  }
+}
+
+class SearchResultItemWidget extends StatelessWidget {
+  final bool collected;
+  final ModelStock stock;
+  final Function(ModelStock) onTap;
+  final Function(ModelStock) onCollect;
+  SearchResultItemWidget({Key key, @required this.stock, @required this.collected, this.onTap, this.onCollect}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: FlatButton(
+                onPressed: (){
+                  if(this.onTap != null){
+                    this.onTap(this.stock);
+                  }
+                },
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: 85.0,
+                      child: Text(
+                          this.stock?.name??'--'
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        this.stock?.id??'--',
+                        style: AppTheme.text.stockCode,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 16.0),
+              alignment: Alignment.center,
+              child: RaisedButton(
+                onPressed: (){
+                  if(this.onCollect != null) {
+                    this.onCollect(this.stock);
+                  }
+                },
+                child: Text(
+                    this.collected ? '-自选' : '+自选'
+                ),
+              ),
+            ),
+          ],
+        ),
+        Divider(height: 0.0)
+      ],
+    );
   }
 }
 
@@ -69,7 +150,7 @@ class SearchHottestWidget extends StatelessWidget {
     return Container(
       color: AppTheme.colors.background,
       width: double.infinity,
-      height: 168.0,
+      //height: 168.0,
       margin: EdgeInsets.only(top: 8.0),
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
@@ -175,22 +256,18 @@ class StockItemWidget extends StatelessWidget {
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
-            Expanded(
-              child: Center(
-                child: Text(
-                  this.stock?.zqmc??'--',
-                  style: AppTheme.text.stockName,
-                ),
+            Center(
+              child: Text(
+                this.stock?.zqmc??'--',
+                style: AppTheme.text.stockName,
               ),
             ),
-            Expanded(
-              child: Center(
-                  child: Text(
-                    this.stock?.zqdm??'--',
-                    style: AppTheme.text.stockCode,
-                  )
-              ),
-            )
+            Center(
+                child: Text(
+                  this.stock?.zqdm??'--',
+                  style: AppTheme.text.stockCode,
+                )
+            ),
           ],
         ),
       ),

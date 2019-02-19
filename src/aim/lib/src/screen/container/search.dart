@@ -16,7 +16,12 @@ class SearchResultsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewContainer<SearchResultsModel>(
-      select: SearchResultsModel.fromAppState,
+      select: (store) {
+        return SearchResultsModel.fromAppState(store.state);
+      },
+      dispose: (store) {
+        store.dispatch(ActionClearSearchResults());
+      },
       builder: (context, model) {
         if((model?.words??'') != ''){
           return SearchResultsWidget(
@@ -53,8 +58,12 @@ class SearchHistoryContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewContainer<SearchHistoryModel>(
-      action: ActionGetSearchHistory(),
-      select: SearchHistoryModel.fromAppState,
+      init: (store) {
+        store.dispatch(ActionGetSearchHistory());
+      },
+      select: (store) {
+        return SearchHistoryModel.fromAppState(store.state);
+      },
       builder: (context, model){
         return SearchHistoryWidget(
           stocks: model.stocks,
@@ -72,8 +81,12 @@ class SearchHottestContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewContainer<SearchHottestModel>(
-      action: ActionGetSearchHottest(),
-      select: SearchHottestModel.fromAppState,
+      init: (store) {
+        store.dispatch(ActionGetSearchHottest());
+      },
+      select: (store) {
+        return SearchHottestModel.fromAppState(store.state);
+      },
       builder: (context, model){
         return SearchHottestWidget(
           stocks: model.stocks,

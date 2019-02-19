@@ -47,6 +47,7 @@ final searchResultsReducer = combineReducers<SearchResults>([
   TypedReducer<SearchResults, ActionGetSearchResults>(_getSearchResults),
   TypedReducer<SearchResults, ActionGetSearchResultsSucceed>(_getSearchResultsSucceed),
   TypedReducer<SearchResults, ActionGetSearchResultsFailed>(_getSearchResultsFailed),
+  TypedReducer<SearchResults, ActionClearSearchResults>(_clearSearchResults),
 ]);
 
 SearchResults _getSearchResults(SearchResults state, ActionGetSearchResults action) {
@@ -59,4 +60,8 @@ SearchResults _getSearchResultsSucceed(SearchResults state, ActionGetSearchResul
 
 SearchResults _getSearchResultsFailed(SearchResults state, ActionGetSearchResultsFailed action) {
   return state.copyWith(words: action.words, status: DataStatus.failed, tip: action.error);
+}
+
+SearchResults _clearSearchResults(SearchResults state, ActionClearSearchResults action) {
+  return SearchResults.init();
 }

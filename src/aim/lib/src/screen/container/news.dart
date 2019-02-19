@@ -14,12 +14,13 @@ class NewsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  DataContainer<NewsCategories> (
-      action: ActionGetNewsCategories(),
-      when: (state){
-        return state.appTab == AppTab.news && !state.newsCategories.isUsable;
+      init: (store) {
+        if(store.state.appTab == AppTab.news && !store.state.newsCategories.isUsable){
+          store.dispatch(ActionGetNewsCategories());
+        }
       },
-      select: (state) {
-        return state.newsCategories;
+      select: (store) {
+        return store.state.newsCategories;
       },
       builder: (context, state){
         return NewsPageWidget(selected: state.selected, categories: state.categories, onTap: this.onTap);

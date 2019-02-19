@@ -1,4 +1,5 @@
 import 'base.dart';
+import '../../state/all.dart';
 import '../../model/stock.dart';
 
 class SearchHistoryModel extends ViewState {
@@ -6,7 +7,7 @@ class SearchHistoryModel extends ViewState {
 
   SearchHistoryModel({this.stocks, ViewStatus status, String tip}): super(status: status, tip: tip);
 
-  static SearchHistoryModel fromAppState(state) {
+  static SearchHistoryModel fromAppState(AppState state) {
     return SearchHistoryModel(
         stocks: state.market?.stocks?.selectByIds(state.search?.history?.stocks),
         status: convertStatus(state.search?.history?.status),
@@ -20,7 +21,7 @@ class SearchHottestModel extends ViewState {
 
   SearchHottestModel({this.stocks, ViewStatus status, String tip}): super(status: status, tip: tip);
 
-  static SearchHottestModel fromAppState(state) {
+  static SearchHottestModel fromAppState(AppState state) {
     return SearchHottestModel(
         stocks: state.market?.stocks?.selectByIds(state.search?.hottest?.stocks),
         status: convertStatus(state.search?.hottest?.status),
@@ -36,7 +37,7 @@ class SearchResultsModel extends ViewState {
 
   SearchResultsModel({this.words, this.results, this.collected, ViewStatus status, String tip}): super(status: status, tip: tip);
 
-  static SearchResultsModel fromAppState(state) {
+  static SearchResultsModel fromAppState(AppState state) {
     return SearchResultsModel(
         words: state.search?.results?.words,
         results: state.search?.results?.stocks,

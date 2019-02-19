@@ -61,16 +61,16 @@ Future<void> setUserStock(Store<AppState> store, ActionUserCollectStock action, 
   try{
     // set user collection
     if(store.state?.user?.isLogin??false){
-      if(store.state.user?.stocks?.stocks?.contains(action.id)??false) {
-        await App.local.db.addUserStock(action.id, '');
-      } else {
-        await App.local.db.removeUserStock(action.id);
+      if(store.state.user?.stocks?.stocks?.contains(action.id)??false){
+        await App.remote.user.delUserStock(action.id);
+      } else{
+        await App.remote.user.addUserStock(action.id);
       }
     } else {
-      if(store.state.user?.stocks?.stocks?.contains(action.id)??false){
-        await App.remote.user.addUserStock(action.id);
-      } else{
-        await App.remote.user.delUserStock(action.id);
+      if(store.state.user?.stocks?.stocks?.contains(action.id)??false) {
+        await App.local.db.removeUserStock(action.id);
+      } else {
+        await App.local.db.addUserStock(action.id, '');
       }
     }
     // get user stocks success

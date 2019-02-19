@@ -15,17 +15,18 @@ class LaunchContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataContainer<AppLaunch> (
-      action: ActionAppLaunch(),
-      select: (state) {
-        return state.appLaunch;
+      init: (store) {
+        store.dispatch(ActionAppLaunch());
       },
-      changed: (model){
-        if(model.isLoaded && !model.finished) {
+      select: (store) {
+        var model = store.state.appLaunch;
+        if((model?.isLoaded??false) && !(model?.finished??false)) {
           // notify app launch fined
           App.dispatch(context, ActionAppLaunchFinished());
           // finished action
           this.onFinished(model.config?.duration??0);
         }
+        return model;
       },
       builder: (context, model) {
         if(model.config.imageUrl == null){
@@ -48,6 +49,5 @@ class LaunchContainer extends StatelessWidget {
         }
       }
     );
-
   }
 }
